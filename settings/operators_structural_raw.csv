@@ -1,0 +1,18 @@
+Op_ID;Signature;Level;Function;Keyp;Oplus
+circ_coh_kappa;A×A → A*;micro→meso;typed concat.;cohesion policy, smoothing kappa;no
+oplus_pi_p;A*×A* → A*;meso;choice comp.;choice policy pi, select prob p;yes
+v_alpha_sigma;A → A (lift A*);micro;controlled var.;magnitude alpha {1,2,3}, scope sigma {S,D,K};yes
+embed_d_r;A → A (lift A*);micro;structural embed.;depth d, role r {frame,aside};yes
+beta_m_pi_g;A → P(A*);micro/meso;branching/ alts.;branches m, policy pi, guard g;yes
+zeta_lambda_chi;A → A*;micro↔meso;zoom/scaling;intensity lambda {1,2,3}, target chi {p,c,i,e,s};yes
+zeta_out_kappa_upsilon;A* → A;meso→macro-atom;zoom-out/compress;compression kappa, summary style upsilon;yes
+Phi_tau_w;A* → M;meso;arc constr.;arc type tau, window w;yes
+Phi_up_l_theta;M → G;meso→macro;arc promotion;link policy l, threshold theta;no
+G_type_theta;M → Graph;macro;causal/thematic graph;graph type, edge cutoff theta;no
+T_omega_gamma;M → R^d;macro;temporal map;time-warp omega, granularity gamma;yes
+rho_L_voice_Sigma;A* → R;realization;text gen.;length vec L, voice, style bundle Sigma;yes
+A_eta_theta;R → (A*,G,T);analysis;inverse map;parser conf eta, accept thresh theta;no
+circ_ad_coh_c;A×A → A*;micro/meso;adaptive concat.;cohesion, connective c;no
+otimes_b_tau_xi;(S,D)→A ∪ R;ML-aug.;generative ext.;budget b, temp tau, accept rule xi;no
+uplus_w_sigma;A×A → A;meso;symbolic fusion;weights w, scope sigma {S,D,K};yes
+Delta_epi_epsilon_phi;A → A;micro/meso;epiphanic beat;strength epsilon, placement phi;yes

@@ -1,0 +1,74 @@
+Op_ID;Signature;Level;Scope;Function
+DO_fb;A* → A*;discourse-program;SN;flashback / backward reorder
+DO_ff;A* → A*;discourse-program;SN;flashforward / anticipatory reorder
+DO_imr;A* → A*;discourse-program;SN;in medias res / alternate entry point
+DO_ch;A* → A*;discourse-program;SN;cliffhanger / truncation
+DO_ra;A* → A*;discourse-program;SN;Rashomon / branching viewpoints
+DO_frm;A* → A*;discourse-program;SN;frame narrative / external wrapper
+DO_aby;A* → A*;discourse-program;SN;mise en abyme / recursive mirroring
+DO_frg;A* → A*;discourse-program;SN;fragmentation / nonlinear ordering
+DO_meta;A* → A*;discourse-program;SN;metalepsis / level transgression
+DO_tfoc;A* → A*;discourse-program;SN;focalization shift
+DO_hetero;A* → A*;discourse-program;SN;heterodiegetic switch
+DO_epi;A* → A*;discourse-program;SN;epiphany insertion
+DO_caus;A* → A*;discourse-program;SN;causal coherence normalization
+DO_cont;A* → A*;discourse-program;SN;continuity normalization
+DO_merge;A* → A*;discourse-program;SN/DE;role/persona merge
+DO_split;A* → A*;discourse-program;SN/DE;persona split
+DO_xcut;A* → A*;discourse-program;SN;cross-cutting threads
+DO_braid;A* → A*;discourse-program;SN;braided subplots
+DO_ring;A* → A*;discourse-program;SN;ring composition
+DO_callbk;A* → A*;discourse-program;SN;callback / reprise
+DO_maskid;A* → A*;discourse-program;Ki;identity concealment on roles
+DO_pt;(A*,ρ) → (A*,ρ′);realization-control;ρ;plot twist / reinterpretation
+DO_rh;(A*,ρ) → (A*,ρ′);realization-control;ρ;red herring
+DO_fsh;(A*,ρ) → (A*,ρ′);realization-control;ρ;foreshadowing
+DO_cg;(A*,ρ) → (A*,ρ′);realization-control;ρ;Chekhov's gun
+DO_mgf;(A*,ρ) → (A*,ρ′);realization-control;ρ;MacGuffin
+DO_unr;(A*,ρ) → (A*,ρ′);realization-control;ρ;unreliable narrator
+DO_dist;(A*,ρ) → (A*,ρ′);realization-control;ρ;narrative distance
+DO_susp;(A*,ρ) → (A*,ρ′);realization-control;ρ;delayed realization
+DO_pers;(A*,ρ) → (A*,ρ′);realization-control;ρ;person shift
+DO_mode;(A*,ρ) → (A*,ρ′);realization-control;ρ;epistolary/documentary mode
+DO_mood;(A*,ρ) → (A*,ρ′);realization-control;ρ;show–tell density
+DO_comm;(A*,ρ) → (A*,ρ′);realization-control;ρ;narrator commentary
+DO_tone;(A*,ρ) → (A*,ρ′);realization-control;ρ;tonal modulation
+DO_subtext;(A*,ρ) → (A*,ρ′);realization-control;ρ;implicit meaning / subtext
+DO_motif;(A*,ρ) → (A*,ρ′);realization-control;ρ;recurring imagery
+DO_info;(A*,ρ) → (A*,ρ′);realization-control;ρ;exposition pacing
+DO_focus;(A*,ρ) → (A*,ρ′);realization-control;ρ;lexical spotlighting
+DO_breaks;(A*,ρ) → (A*,ρ′);realization-control;ρ;sentence/paragraph granularity
+\Sigma;(A*,ρ) → (A*,ρ′);stylistic;ρ;local style mix (tempo, action, grain)
+\Sigma_{\text{dlg}};(A*,ρ) → (A*,ρ′);stylistic;ρ;dialogue share control
+\Sigma_{\text{voice}};(A*,ρ,K) → (A*,ρ′);stylistic;Ki/ρ;per-character speech distribution
+\Sigma_{\text{reg}};(A*,ρ) → (A*,ρ′);stylistic;ρ;register (familiar/neutral/formal/poetic/ironic)
+\Sigma_{\text{lyr}};(A*,ρ) → (A*,ρ′);stylistic;ρ;lyric density
+\Sigma_{\text{tempo}};(A*,ρ) → (A*,ρ′);stylistic;ρ;pacing
+\Sigma_{\text{cad}};(A*,ρ) → (A*,ρ′);stylistic;ρ;sentence cadence pattern
+\Lambda_{\text{ell}};(A*,ρ) → (A*,ρ_φ);figurative;ρ;ellipsis (temporal/causal omission)
+\Lambda_{\text{meta}};(A*,ρ) → (A*,ρ_φ);figurative;ρ;metaphoric/symbolic intensity
+\Lambda_{\text{cine}};(A*,ρ) → (A*,ρ_φ);figurative;ρ;cinematic effects (cut/fade/zoom)
+\Lambda_{\text{assoc}};(A*,ρ) → (A*,ρ_φ);figurative;ρ;associative imagery linkage
+\Lambda_{\text{min}};(A*,ρ) → (A*,ρ_φ);figurative;ρ;minimalism
+\Lambda_{\text{syn}};(A*,ρ) → (A*,ρ_φ);figurative;ρ;controlled synesthesia
+\Lambda_{\text{oxym}};(A*,ρ) → (A*,ρ_φ);figurative;ρ;oxymoron/antithesis density
+\Gamma;(A*,ρ) → (A*,ρ′);dramatic;ρ;dramatic intensity (pressure/energy)
+\Gamma_{\text{conf}};(A*,ρ) → (A*,ρ′);dramatic;ρ;micro-conflicts injection
+\Gamma_{\text{aff}};(A*,ρ) → (A*,ρ′);dramatic;DE/ρ;affect amplification
+\Gamma_{\text{comp}};(A*,ρ) → (A*,ρ′);dramatic;ρ;compression (urgency)
+\Gamma_{\text{release}};(A*,ρ) → (A*,ρ′);dramatic;ρ;anti-climax / release
+\Gamma_{\text{cresc}};(A*,ρ) → (A*,ρ′);dramatic;ρ;progressive intensity build-up (crescendo)
+\Gamma_{\text{dec}};(A*,ρ) → (A*,ρ′);dramatic;ρ;gradual tension decrease (decrescendo)
+\Gamma_{\text{echo}};(A*,ρ) → (A*,ρ′);structural;A_i,A_j;motif reactivation / structural resonance
+\Gamma_{\text{rev}};(A*,ρ) → (A*,ρ′);structural;A_i;inversion of narrative polarity (reversal)
+\Gamma_{\text{ell}};(A*,ρ) → (A*,ρ′);temporal;A*;temporal ellipse / compression of narrative time
+\Gamma_{\text{dil}};(A*,ρ) → (A*,ρ′);temporal;A_i;temporal dilation / extended focus
+\Gamma_{\text{xcut}};(A*,ρ) → (A*,ρ′);structural;A_i,A_j;cross-cutting / parallel alternation
+\Gamma_{\text{fus}};(A*,ρ) → (A*,ρ′);structural;A_i,A_j;fusion of narrative threads / motif weaving
+\Gamma_{\text{dis}};(A*,ρ) → (A*,ρ′);affective;DE;controlled dissonance / emotional tension
+\Gamma_{\text{stab}};(A*,ρ) → (A*,ρ′);affective;DE;thematic stabilization / emotional anchoring
+\Gamma_{\text{amp}};(A*,ρ) → (A*,ρ′);stylistic;A_i;narrative amplification / reinforcement
+\Gamma_{\text{rb}};(A*,ρ) → (A*,ρ′);stylistic;A_i;light reprise / micro-repetition
+\Gamma_{\text{ant}};(A*,ρ) → (A*,ρ′);structural;A_j;anticipation / soft foreshadowing
+\Gamma_{\text{dev}};(A*,ρ) → (A*,ρ′);structural;A_i→A_j;narrative deviation / side-step transition
+\Gamma_{\text{rec}};(A*,ρ) → (A*,ρ′);structural;A_i,A_j;reconciliation / closure of parallel threads

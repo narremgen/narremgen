@@ -1,0 +1,110 @@
+﻿Code;Name;Narrative_Structure
+SN1;Mini-shift;Situation -> Detail -> Change
+SN2;Recognized Error;Error -> Confrontation -> Change
+SN3;Broken Routine;Habit -> Break -> Reinvention
+SN4;Clarified Uncertainty;Uncertainty -> Trial -> Clarification
+SN5;Tested Certainty;Certainty -> Confrontation -> Adjustment
+SN6;Excess Managed;Excess -> Discomfort -> Adjustment
+SN7;Guided Curiosity;Observation -> Discovery -> Appropriation
+SN8;Indirect Transmission;Model -> Observation -> Imitation -> Mastery
+SN9;Smooth Transition;Dual situation -> Transition -> Stabilization
+SN10;Silent Reflection;Observation -> Identification -> Adjustment
+SN11;Error then Correction;Error -> Brief reflection -> Correction -> Improvement
+SN12;Learning by Observation;Observe a model -> Careful appropriation -> Simple application -> Gentle feedback
+SN13;Learning by Automation;Short repetitions -> Flow -> Light mastery
+SN14;Adjusted Perception;Attention -> Precise observation -> Minimal adjustment -> Clarity
+SN15;Trial–Error that Pays Off;Short trial -> Minimal fix -> Noticeable improvement -> Maintenance
+SN16;Focus–Reactivity;Minor distraction -> Brief refocus -> Adequate response -> Return to calm
+SN17;Risk Assessment;Light uncertainty -> Quick analysis -> Careful decision -> Relief
+SN18;Feedback Handling;Gentle feedback -> Brief reflection -> Targeted improvement -> Stabilization
+SN19;Progressive Autonomy;Initial help -> Guided attempts -> Calm independence -> Consolidation
+SN20;Repetition -> Mastery;Short readjustments -> Improvement -> Stable mastery
+SN21;Error Anticipation;Spot a light risk -> If…then planning -> Avoid/Bypass -> Relief
+SN22;Acceptance of Limits;Moderate overestimation -> Quiet realization -> Readjustment -> Relief
+SN23;Context Adaptation;Changing context -> Simple adjustment -> Quick check -> Stabilization
+SN24;Personal Strategy;Situation -> Simple plan (≤2 rules) -> Brief application -> Improvement
+SN25;Breaking an Automatism;Light bad habit -> Awareness -> Targeted change -> Stabilization
+SN26;Theory into Practice;Clear principle -> Short example -> Concrete gesture -> Consolidation
+SN27;Explicit Lesson;Brief lecture -> Focused attention -> Appropriation
+SN28;Guided Correction;Light error -> Supportive help -> Adjustment
+SN29;Demonstration;Presentation -> Observation -> Appropriation
+SN30;Direct Q&A;Question -> Answer -> Reformulation
+SN31;Shared Observation;Observation -> Discussion -> Appropriation
+SN32;Peer Support;Request/Support -> Interaction/Information -> Joint understanding
+SN33;Initiatory Quest;Departure -> Trials -> Revelation -> Transformed return
+SN34;Unexpected Collaboration;Initial distrust -> Shared circumstances -> Cooperation -> Resolution (or Not)
+SN35;Confrontation with the Unknown;Routine -> Strange event -> Investigation -> Explanation/Resolved mystery (or Not)
+SN36;Lifestyle Change;Risky behavior -> Information -> Motivation -> Change/Resistance
+SN37;Skill Acquisition;Incompetence -> Initiation -> Training -> Mastery
+SN38;Problem Solving;Obstacle -> Analysis -> Search for solutions -> Resolution (or Not)
+SN39;Group Collaboration;Common task -> Role distribution -> Interaction -> Collective production
+SN40;Motivation and Perseverance;Initial interest -> Difficulties -> Discouragement -> Sustained effort -> Resolution
+SN41;Intergenerational Transmission;Ancient knowledge -> Young learner -> Transmission -> Continuity/Transformation
+SN42;Confronting One’s Fears;Avoidance -> Gradual confrontation -> Overcoming -> Personal growth
+SN43;Loss of Control;Routine -> Disruptive event -> Disorientation -> Return to normality/Chaos
+SN44;Adaptation to a New Environment;Departure -> Arrival -> Discovery -> Integration/Rejection
+SN45;Breakup and Reconstruction;Established relationship -> Crisis -> Separation -> Self‑reconstruction
+SN46;Awareness;Ignorance -> Observation -> Concern -> Action/Inaction
+SN47;Inner Exploration;Existential questioning -> Introspection -> Self‑discovery -> Transformation
+SN48;Risk Awareness;Ignorance -> Mild symptom -> Alert -> Preventive/Curative action
+SN49;Adopting a New Habit;Reluctance -> Trial -> Observation/Repetition -> Integration into routine
+SN50;Crisis Management;Trigger -> Crisis/Acute symptoms -> Seeking help -> Stabilization
+SN51;Reliable Information Seeking;Trigger -> Multiple sources -> Sorting and analysis -> Informed decision
+SN52;Problem Prevention;Risk factors -> Information -> Behavior change -> Risk reduction
+SN53;Supporting a Loved One;Worry -> Support -> Encouragement -> Improvement/Stagnation
+SN54;Cognitive Advice Arc (low ΔD);Light risk perception -> Brief explicit advice -> Simple adjustment -> Stabilization
+SN55;Explanatory Fable Structure;Concrete example -> Reflection -> Guideline -> Application
+SN56;Mistake -> Insight -> Correction -> Balance;Minor mistake -> Realization -> Correction -> Settled routine
+SN57;Advice via Micro‑Experience;Small doubt or discomfort -> Guided trial (micro‑action) -> Noticed benefit -> Quiet integration
+SN58;Reflection -> Reframing -> Integration;Stuck thought -> Recontextualization -> Acceptance/Integration -> Stabilized adjustment
+SN59;Support and Recovery;Mild distress -> Concrete help -> Initiative resumes -> Confidence regained
+SN60;Learning through Observation;Observe others -> Identify -> Personal application -> Consolidation
+SN61;If‑Then Intent Setting;Cue -> If‑then plan -> Application -> Stabilization
+SN62;Habit Stacking (gentle);Existing habit -> Add micro‑action -> Short repetition -> Anchoring
+SN63;Light Accountability (supportive peer);Simple agreement -> Brief check‑in -> Adjustment -> Maintenance
+SN64;Conversational De‑escalation;Tension cue -> Pause/name -> Rephrase -> Calm closure
+SN65;Express Decision Hygiene;Key question -> Max 2 options -> Simple choice -> Quick review
+SN66;Environment Redesign;Visual cue -> Small context change -> Trial -> Stabilization
+SN67;Recovery after Lapse;Minor lapse -> Normalize -> Micro‑correction -> Back to routine
+SN68;Micro‑celebration -> Consolidation;Small success -> Name/validate -> Repeat -> Anchor
+SN69;Gentle Re‑attribution;Harsh interpretation -> Gentle causal reframing -> Adjustment -> Relief
+SN70;90‑Second Attention Reset;Interruption -> Breathe/stretch -> Refocus -> Smooth resume
+SN71;Dramatic Arc (Freytag Pyramid) (long);Exposition -> Rising Action -> Climax -> Falling Action -> Denouement
+SN72;Three-Act Structure (Aristotelian) (long);Setup -> Confrontation -> Resolution
+SN73;Hero’s Journey (Campbell/Vogler) (long);Call -> Trials -> Ordeal/Death -> Revelation -> Return (transformed)
+SN74;Story Circle (Dan Harmon) (long);You -> Need -> Go -> Search -> Find -> Take -> Return -> Change
+SN75;Save the Cat (Beat Sheet – compact) (long);Setup -> Catalyst -> Debate -> Break‑Into‑2 -> Midpoint -> Bad‑to‑Worse -> Break‑Into‑3 -> Finale
+SN76;Fichtean Curve (Chain of Crises) (long);Incident -> Crisis₁ -> Crisis₂ -> Crisis₃ -> Climax -> Aftermath
+SN77;Seven‑Point Plot (long);Hook -> First Plot Pt -> First Pinch -> Midpoint -> Second Pinch -> Second Plot Pt -> Resolution
+SN78;Kishōtenketsu (non‑conflict) (long);Ki (intro) -> Shō (development) -> Ten (twist) -> Ketsu (synthesis)
+SN79;Rags‑to‑Riches (Ascending Arc) (long);Lack -> Opportunity -> Trials -> Breakthrough -> Reward/Stability
+SN80;Voyage‑and‑Return (long);Ordinary World -> Departure -> Strange World -> Ordeal -> Return (lessons kept)
+SN81;Tragedy (Fall) (long);Promise -> Hubris/Flaw -> Reversal -> Catastrophe -> Aftermath
+SN82;Branching Case (Interactive/Advice) (long);Setup -> Decision between {Path A or Path B} -> End
+SN83;Story Spine (Pixar/Kenn Adams) (long);Once upon a time… -> Every day… -> But/One day… -> Because of that… (x2+) -> Until finally… -> Ever since then…
+SN84;Overcoming the Problem (Booker—softened) (long);Concrete problem -> Diagnosis -> Simple plan -> Implementation -> Evaluation -> Stabilization
+SN85;The Quest (Booker) (long);Call to quest -> Journey & trials -> Approach/Ordeal -> Goal achieved -> Return & lesson
+SN86;Comedy (Booker) (long);Misunderstandings/Confusion -> Complications -> Revelations/Recognitions -> Union/Resolution
+SN87;Rebirth (Booker) (long);Enchantment/Stagnation -> Lowest point -> Empathy trigger -> Transformation -> Renewal
+SN88;Whodunit / Mystery (long);Crime/mystery -> Investigation (clues & red herrings) -> Revelation (unmasking) -> Denouement
+SN89;Story Grid — Five Commandments (long);Inciting Incident -> Progressive Complications -> Crisis -> Climax -> Resolution
+SN90;Dan Wells — Seven‑Point (long);Hook -> Plot Turn 1 -> Pinch 1 -> Midpoint -> Pinch 2 -> Plot Turn 2 -> Resolution
+SN91;27‑Chapter Method (Kat O’Keeffe) (long);Act I (9 blocks) -> Act II (9 blocks) -> Act III (9 blocks) — 3×9 chapter progression
+SN92;Aristotle’s Poetics (complex plot) (long);Setup/Complication -> Peripeteia (reversal) + Anagnorisis (recognition) -> Resolution
+SN93;Heroine’s Journey (Murdock) (long);Separation from the feminine -> Identification with the masculine -> Trials -> Illusion of success/aridity -> Re‑integration/Union
+SN94;Romancing the Beat (Gwen Hayes) (long);Setup -> Internal/external complications -> Crisis/Risk of breakup -> HEA/HFN
+SN95;Snowflake Method (Ingermanson) (long);One sentence -> One paragraph -> Character sheets -> One page per character -> Four‑page plot -> Scene lists (iterative)
+SN96;Story Genius (Lisa Cron) (long);Inside outline: causal backstory -> Inner need -> Scene chain cause->effect -> POV & theme made explicit
+SN97;Thematic Square (Robert McKee) (long);Value -> Contrary -> Contradictory -> Negation of the negation
+SN98;Five‑Act Structure (long);Exposition -> Rising Action -> Climax -> Falling Action -> Denouement
+SN99;In medias res (long);Start in the middle of the action -> Fill in backstory (flashbacks/dialogue) -> Rising action -> Climax -> Resolution
+SN100;Adventure Arc (long);Ordinary world -> Departure into unstable world -> Sequence of escalating obstacles -> Survival/escape/resolution -> Return or open ending
+SN101;Chase Arc (long);Threat appears -> Flight -> Alternating pursuit cycles -> Close call or reversal -> Capture or escape resolution
+SN102;Rescue Arc (long);Victim captured -> Discovery -> Quest toward antagonist -> Confrontation -> Liberation (or failure)
+SN103;Escape Arc (long);Unjust captivity -> Failed attempts -> Ingenuity/ally support -> Breakout -> Pursuit aftermath or freedom
+SN104;Revenge Arc (long);Initial harm -> Moral shock/decision -> Preparation and escalation -> Confrontation -> Retribution or moral collapse
+SN105;Enigma/Mystery Arc (long);Unknown phenomenon -> Clues collected -> False leads and revelations -> Core discovery -> Explanation/resolution
+SN106;Rivalry Arc (long);Two forces introduced -> Competition escalates -> Retaliations/strategic shifts -> Decisive confrontation -> Victory
+SN107;Outsider Arc (long);Disadvantaged protagonist -> Social or systemic resistance -> Small breakthroughs -> Major proving test -> Recognition or dignified failure
+SN108;Temptation Arc (long);Desire or forbidden lure -> Internal conflict -> Yielding or resisting -> Consequences -> Reassessment/transformation
+SN109;Sacrifice Arc (long);Rising stakes -> Moral dilemma -> Costly choice -> Self-sacrifice -> Restoration or tragic consequence

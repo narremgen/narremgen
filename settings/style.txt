@@ -1,0 +1,93 @@
+\section*{Charte de génération narrative}
+
+\textbf{Objectif général} \\
+Produire 16 micro-récits incarnés, chacun associé à :
+\begin{itemize}[itemsep=0pt]
+    \item 1 groupe thématique précis (ex. : « Attente au feu », « Lire une carte »),
+    \item 1 structure narrative (SN) prédéfinie,
+    \item 1 dynamique émotionnelle (DE) parmi un ensemble de 49.
+\end{itemize}
+
+\textbf{Contraintes formelles}
+\begin{itemize}
+    \item \textbf{Personnages} : humains uniquement, adultes uniquement, sans noms propres. Maximum 2 ou 3 personnages par scène.
+    \item \textbf{Ambiance urbaine} : réaliste, actuelle, sans anachronisme, sans esthétisation.
+    \item \textbf{Environnement} : rue, croisement, feu piéton, circulation, mobilier urbain, foule.
+    \item \textbf{Tonalité} : neutre, incarnée, sans lyrisme ni moralisme, sans fable ni comédie.
+    \item \textbf{Style narratif} : fluide mais sobre, pas de phrases de 2 mots, vocabulaire strictement fonctionnel.
+    \item Éviter les phrases trop courtes (moins de 5 mots) : elles nuisent au rythme et à la densité du texte. 
+    \item Le style doit rester fluide, narratif, avec un corps légèrement tassé pour limiter l’encombrement sur la page. 
+    \item Ne pas écrire de ligne vide mais des paragraphes pleins.
+    \item \textbf{Respect de la DE} : la dynamique émotionnelle doit se manifester par des faits perceptibles.
+    \item Si la situation est simple, fluide ou peu conflictuelle, éviter les micro-gestes exagérés : la progression narrative peut rester incarnée sans multiplication de détails insignifiants. L’essentiel est d’ancrer chaque étape (SN, DE) dans des éléments visibles ou implicites, sans forcer une chorégraphie artificielle.
+    \item \textbf{Respect de la SN} : la progression narrative suit le canevas structurel assigné (refus, bascule, etc.).
+    \item \textbf{Longueur} : environ 350 à 400 mots par récit.
+    \item \textbf{Résolution} : implicite, incarnée, sans formulation de morale.
+    \item \textbf{Narration} : externe, comportementale, sans introspection ni dialogue intérieur.
+    \item \textbf{Balisage} : Chaque récit doit comporter un en-tête explicite (\subsubsection*{}) mentionnant le numéro, le titre descriptif, la structure narrative (SN) et la dynamique émotionnelle (DE).
+    \item \textbf{Pédagogie} : Chaque récit doit expliciter avec précision les gestes de déplacement ou d’interaction, en particulier lorsqu’ils impliquent une marche, une traversée ou une trajectoire décalée. Le lecteur ne doit jamais hésiter sur ce que fait le personnage, ni sur la manière dont il le fait (correctement, partiellement, maladroitement, etc.). Toute ambiguïté spatiale ou gestuelle doit être levée par la narration.
+    \item \textbf{Ambiance} : Les récits doivent éviter toute ambiance anxiogène, oppressante ou interprétable comme malsaine. Aucune situation ne doit induire de malaise implicite, de menace sociale floue ou de tension dramatique inutile. L’environnement urbain est neutre, vivant ou calme ; il ne doit jamais évoquer d’insécurité ou d’agression latente, sauf si cela fait explicitement partie d’un apprentissage comportemental maîtrisé et justifié.
+    \item \textbf{Motifs perceptifs attendus} : chaque récit peut intégrer un ou plusieurs gestes usuels du piéton urbain (ralentir, s'écarter, tourner la tête, faire un pas de côté, lever les yeux...), afin d’incarner les ajustements discrets à l’environnement. Ces gestes ne doivent pas être exagérés ni symboliques, mais s’insérer naturellement dans le flux du récit.
+    \item Les consignes de sécurité usuelles (ex. : regarder à gauche et à droite, respecter les feux, rester visible, etc.) doivent être respectées dans la narration, sauf si une structure narrative (SN) ou dynamique émotionnelle (DE) implique volontairement une erreur suivie d’une correction. Elles se superposent par défaut à tous les récits.
+    \item \textbf{Cohérence d’ensemble} : chaque récit doit s’inscrire dans un cadre urbain crédible et modeste, en respectant la continuité des attitudes humaines. Aucun comportement ne doit paraître incohérent, surjoué ou artificiellement omis : les réactions attendues (regards, gestes, inflexions) doivent être évoquées quand elles sont vraisemblables, même brièvement.
+    \item \textbf{Interactions secondaires} : la présence d’un second personnage (ou plusieurs) est autorisée, mais son interaction doit rester cohérente avec les dynamiques sociales urbaines : brèves, contextuelles, souvent unilatérales ou implicites. Éviter la répétition de gestes symboliques (salut, hochement de tête...) entre inconnus. En revanche, un dialogue discret, une cohabitation du trottoir, ou une micro-décision partagée (ralentir, s'écarter, suivre un mouvement) sont encouragés.
+    \item \textbf{Personnages secondaires} : un second personnage ne doit apparaître que si la situation le justifie directement (ex. : gestion d’un croisement, mouvement coordonné, action mutuelle). Aucune interaction ne doit être ajoutée sans nécessité structurelle ou thématique explicite. L’absence de dialogue ou de contact est souvent plus réaliste, sauf court et conseil.
+    \item \textbf{Modes de dialogue (implémentation)} : selon le paramétrage du pipeline, un récit peut ne comporter aucun dialogue direct, une seule phrase de dialogue unique (mode standard, phrase existante communiquée avec le conseil/advice avant rédaction du texte), ou un court échange de 2 à 4 répliques centrées sur le conseil de sécurité. Ces dialogues relèvent uniquement du choix de réalisation stylistique et ne modifient pas la structure abstraite SN/DE.
+  \item \textbf{MANDATORY – Global safety constraint:}
+  \texttt{[SAFETY_CONSTRAINT_START]}\\
+  The text must remain suitable for all audiences: do not use violent vocabulary
+  (e.g. kill, hit, blood, torture, extreme hatred, etc.) and do not depict explicit
+  physical or psychological violence. If a conflict is needed, keep it mild,
+  symbolic, and quickly resolved.\\
+  \texttt{[SAFETY_CONSTRAINT_END]}
+\end{itemize}
+
+\subsection*{Extensions narratives}
+
+\begin{itemize}
+    \item \textbf{Position variable du personnage secondaire} : un personnage secondaire peut apparaître au début, au milieu ou à la fin du récit. Il n’est pas nécessaire qu’il interagisse explicitement avec le personnage principal, tant que sa présence contribue à l’environnement narratif ou au contexte perceptif.
+
+    \item \textbf{Appui narratif par personnages secondaires} : d’autres personnages peuvent être introduits dans le récit pour renforcer implicitement le conseil ou la conduite observée. Ils peuvent illustrer une erreur courante, une stratégie opposée, ou une alternative silencieuse.
+
+    \item \textbf{Accentuation des gestes secondaires} : les gestes, actions ou attitudes des personnages secondaires peuvent être légèrement accentués (ralentissement, précipitation, regard, immobilité, etc.) lorsque cela sert à mettre en valeur la réponse du personnage principal ou à souligner la situation.
+
+    \item \textbf{Annotation de validation en fin de récit} : chaque récit peut se conclure par un bloc de commentaire technique (non narratif) au format :
+    \begin{verbatim}
+[%#SN: explication courte validant l’usage du SN sélectionné pour le thème
+ %#DE: explication courte validant l’usage du DE sélectionné pour le thème]
+    \end{verbatim}
+    Ce bloc sert à justifier la structure du récit dans une logique de relecture, d’évaluation ou d’édition pédagogique. Il ne doit pas apparaître dans une version publique.
+    1) Affiche la structure complète de la SN (chaîne fléchée) et celle de la DE (séquence émotionnelle).
+    2) Montre concrètement comment cette structure est incarnée dans le récit, en citant ou paraphrasant des morceaux du texte lui-même (phrases, tournures ou événements narratifs), pour :
+    a. ancrer chaque étape de la SN dans une partie du texte ;
+    b. illustrer chaque moment-clé de la DE avec une situation émotionnelle vécue.
+
+
+\end{itemize}
+
+\textbf{Éléments à exclure}
+\begin{itemize}
+    \item Métaphores ou images sensorielles déplacées (ex. : « le vent dans ses pensées »).
+    \item Langage affectif exagéré ou psychologique (ex. : « il sentit quelque chose en lui »).
+    \item Surdramatique ou lyrisme urbain (ex. : « la foule haletante », « crissements stridents »).
+    \item Surnarration intérieure (pas de réflexions subjectives détaillées ou états d’âme).
+\end{itemize}
+
+
+% --- Addendum EXEMPLE USAGE DE DE1 : Style narratif immersif et apaisé ---
+
+\section*{Addendum : Style DE1 – Sérénité joyeuse}
+
+Les récits construits dans la dynamique émotionnelle DE1 (Sérénité → Observation → Joie) doivent respecter les contraintes suivantes :
+
+\begin{itemize}
+  \item \textbf{Paragraphes courts} : environ 40 mots chacun pour maximiser la lisibilité et le rythme.
+  \item \textbf{Présence de dialogues} : en mode standard, intégration d’une seule réplique en style direct, composée d’une phrase unique, pour incarner l'interaction. Selon le paramétrage du pipeline, cette réplique peut être remplacée par un court dialogue (2 à 4 répliques incluant cette phrase de conseil) ou par une absence totale de dialogue ; dans tous les cas, suivre strictement la consigne de zéro / une / court dialogue indiquée en entrée. Ces variantes de dialogue relèvent uniquement du choix de réalisation stylistique et ne modifient pas la structure abstraite SN/DE.
+  \item \textbf{Cadre calme et accessible} : les récits doivent se dérouler dans un contexte quotidien, non dramatique.
+  \item \textbf{Ton bienveillant} : la narration doit éviter le sarcasme ou les ruptures de ton trop abruptes.
+  \item \textbf{Focalisation interne} : les pensées ou perceptions du personnage principal doivent être accessibles.
+\end{itemize}
+
+\\vspace{0.3cm}
+
+Ce type de style favorise l’identification douce et l’appropriation implicite de micro-conseils comportementaux.

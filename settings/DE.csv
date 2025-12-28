@@ -1,0 +1,11 @@
+Code;Name;Emotional_Sequence
+DE1;Joyful Serenity;Serenity -> Observation -> Joy
+DE2;Gratified Curiosity;Curiosity -> Observation -> Joy
+DE3;Clarified Surprise;Surprise -> Reflection -> Clarification
+DE4;Eased Discomfort;Discomfort/Shame -> Adjustment -> Serenity
+DE5;Released Fear;Fear -> Relief -> Serenity
+DE6;Resolved Fear;Fear -> Liberation -> Relief
+DE7;Overcome Fear;Fear -> Confrontation -> Serenity
+DE8;Overcome Doubt;Doubt -> Fear -> Serenity
+DE9;Eased Doubt;Doubt -> Observation -> Serenity
+DE10;Persistent Doubt;Doubt -> Observation -> Doubt

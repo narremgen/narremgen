@@ -1,0 +1,34 @@
+ROLE
+Rewrite the text as a clearer and more engaging advice story.
+
+</KEEP>
+Same safety advice.
+Same type of risk.
+Same place and time.
+Same meaning.
+Keep the original spoken sentence exactly.
+</KEEP>
+
+<CHANGE>
+New wording and structure.
+Length ×1 to ×2 with meaningful detail only.
+Add one small secondary action tied to the scene.
+Optional brief extra dialogue in about one third of cases.
+</CHANGE>
+
+<STYLE>
+Calm, realistic, educational.
+The safety message must feel intuitive and persuasive.
+No meta-comments.
+</STYLE>
+
+<LIMITS>
+No new dangers.
+Do not remove the advice.
+No graphic or psychological violence.
+No horror.
+No intimate or private personal content.
+</LIMITS>
+
+OUTPUT
+Return only the rewritten English text.
