@@ -1,0 +1,37 @@
+Num;Character;Presence;Location;Sensation;Time;Moment;First_Name
+1;man;bicycle;central intersection;flashing light;09:00;clear;Lucas
+2;young woman;car;crosswalk;traffic noise;09:00;;Emma
+3;elderly person;group;wide sidewalk;reflections on window;12:00;sunny;Hugo
+4;thirty-something;family;quiet street;damp ground;14:00;;Clara
+5;young man;none;shopping street;moving crowd;12:00;cloudy;Noah
+6;young woman;other pedestrians;semi-pedestrian zone;light breeze;12:00;;Lina
+7;adult;child on scooter;open avenue;urban heating;12:00;;Jules
+8;female pedestrian;elderly person;paved square;flashing light;18:00;;Camille
+9;pedestrian;delivery person;side street;smell of bakery;18:00;bright;Leo
+10;city dweller;couple;metro entrance;sun rays;18:00;calm;Manon
+11;young adult;tourist;tree-lined path;wind in the trees;09:00;cool;Arthur
+12;man;cyclist;cobbled street;distant music;12:00;warm;Tom
+13;young woman;street maintenance worker;shared lane;overlapping voices;12:00;windy;Ines
+14;city woman;person on the phone;pedestrian path;smell of coffee;19:00;light;Lea
+15;man;distracted pedestrian;multiple crossing;sound of heels;18:00;;Nathan
+16;pedestrian;leashed animal;sloped sidewalk;idling engine;09:00;sunny;Zoe
+17;passerby;small talking group;low-traffic area;distant horn;18:00;soft;Enzo
+18;user;electric scooter;street corner;metallic reflections;09:00;grey;Chloe
+19;female pedestrian;hurried youth;wide intersection;residual droplets;21:00;bright;Emma
+20;city dweller;still person;esplanade;gravel underfoot;07:00;clear;Lucie
+21;passerby;pedestrian with stroller;parallel bike path;stretched shadows;12:00;vivid;Mathis
+22;city woman;man in a suit;metro entrance;wobbly sign;09:00;;Sarah
+23;young adult;student;school zone;scanning gaze;09:00;lively;Axel
+24;female pedestrian;athlete;building entrance;traffic light color;23:00;night;Anna
+25;pedestrian;loaded person;neighborhood square;shimmering light;09:00;calm;Louis
+26;person;street vendor;park edge;pedestrian ticking sound;12:00;;Elise
+27;female user;hesitant pedestrian;pedestrian street;synchronized footsteps;10:30;Saturday;Mila
+28;pedestrian;person stopping;delivery area;children’s voices;15:00;noisy;Adam
+29;calm city woman;slowing pedestrian;near market;chain rattling;09:00;;Nina
+30;young adult;municipal agent;open hall;subtle echo;09:00;quiet;Theo
+31;citizen;discreet couple;adjacent alley;light backlight;11:00;lively;Raphael
+32;female pedestrian;passerby on phone;construction zone;smell of rain;12:00;peaceful;Mae
+33;pedestrian;child looking around;pedestrian arcade;constant buzzing;12:00;saturated;Timeo
+34;explorer;tourist taking photos;pedestrian bridge;muffled sounds;08:30;;Ludovic
+35;walker;music-listening passerby;pedestrian street, shops;high-pitched cries;16:30;calm;Maxime
+36;female user;focused pedestrian;park entrance;sound slowdowns;09:00;;Jeanne

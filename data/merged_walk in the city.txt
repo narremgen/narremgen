@@ -1,0 +1,896 @@
+\paragraph{Text 1 ? Wait for the green light (SN6$^c$, DE1)}
+
+% SN: Focus-reactivity ? Distraction ? Focus ? Quick Reaction  
+% DE: Joyful Serenity ? Serenity ? Observation ? Joy
+
+% <i>
+Lucas, a pedestrian, stands at the central intersection just as the morning city wakes up. It?s 9 a.m. The light is clear, and the colors of the traffic signal flicker against the buildings. The air is cool and full of movement?car engines idling, footsteps echoing across the crosswalk, and the changing light playing on the pavement.
+
+% <a>
+He feels a moment?s impatience as the red signal seems to last forever. Other pedestrians fidget or check their phones, some inching forward, tempted to cross before it?s safe.
+
+% <e>
+An older woman at his side glances at the light and says, ?It?s safer to wait for the green light?it?s designed to protect you, not just to look nice.?
+
+% <c>
+Lucas relaxes his shoulders, steps back slightly from the curb, and watches the signal with renewed attention. The world seems to pause with him.
+
+% <f>
+When the green light finally appears, he crosses calmly, blending into the gentle flow of people, feeling a quiet satisfaction from having chosen the right moment.
+
+% <explication>
+% The SN (Distraction ? Focus ? Quick Reaction) plays out in Lucas?s initial distraction and impatience, the external reminder, and his attentive crossing at the right time.  
+% The DE (Serenity ? Observation ? Joy) unfolds through his composed waiting, heightened observation, and a subtle joy in acting safely and harmoniously with the city?s rhythm.
+
+
+\paragraph{Text 2 ? Crossing a busy intersection (SN4, DE4)}
+
+% SN: Clarified Uncertainty ? Uncertainty ? Attempt ? Clarification  
+% DE: Eased Discomfort ? Discomfort/Shame ? Adjustment ? Serenity
+
+% <i>
+Emma, a pedestrian, stands near a wide crosswalk at a bustling intersection. It's 9 a.m. The air vibrates with the sound of car horns and conversations, while the bright morning light glances off the windows. The noise and movement make the crossing seem even more intimidating.
+
+% <a>
+Emma hesitates at the edge of the curb, scanning the traffic and watching others move with varying degrees of confidence. The rush of cars and scattered flow of people increase her uncertainty about when and how to cross.
+
+% <e>
+A calm voice beside her, from another woman waiting with a shopping bag, says, ?Take your time and cross when the flow of people and traffic lines up.?
+
+% <c>
+Emma breathes out, watches carefully, and waits for a pause in the chaos. The group around her seems to move as one, and she senses the right moment approaching.
+
+% <f>
+She steps forward, crossing in sync with the others. As she reaches the other side, her discomfort gives way to a quiet confidence.
+
+% <explication>
+% The SN (Uncertainty ? Attempt ? Clarification) unfolds as Emma hesitates, tries to find her timing, and gains clarity by observing the collective rhythm of the intersection.  
+% The DE (Discomfort/Shame ? Adjustment ? Serenity) emerges from her initial anxiety, the adjustment inspired by a peer?s advice, and the serenity of joining a coordinated movement.
+
+
+\paragraph{Text 3 ? Choosing the shady side (SN13$^c$, DE1)}
+
+% SN: Contextual Adaptation ? Uncertainty ? Observation ? Adaptation  
+% DE: Joyful Serenity ? Serenity ? Observation ? Joy
+
+% <i>
+Hugo, part of a small group of older pedestrians, arrives at a wide, sunlit sidewalk just before midday. The day is bright and warm. Reflections shimmer on nearby shop windows, and the pavement radiates heat.
+
+% <a>
+He pauses, shielding his eyes, uncertain about which side will be most comfortable. The sun is strong, and the air feels heavy.
+
+% <e>
+A companion quietly suggests, ?If you can, walk in the shade?it makes the journey easier and helps you keep your energy.?
+
+% <c>
+Hugo observes the row of trees casting long shadows on one side. He nods, and together the group shifts toward the shaded path.
+
+% <f>
+As they walk under the cool protection of the trees, conversation resumes, and Hugo feels lighter, enjoying the comfort and ease the shade provides.
+
+% <explication>
+% The SN (Uncertainty ? Observation ? Adaptation) is illustrated by Hugo?s initial hesitation, his attention to his surroundings, and the group?s decision to move into the shade.  
+% The DE (Serenity ? Observation ? Joy) is expressed through their calm approach, perceptive adaptation, and the shared pleasure of walking comfortably on a hot day.
+
+
+\paragraph{Text 4 ? Don?t block the passage (SN12$^c$, DE6)}
+
+% SN: Acceptance of Limits ? Overestimation ? Realization ? Adjustment  
+% DE: Fear Resolved ? Fear ? Release ? Relief
+
+% <i>
+Clara, a woman in her thirties, walks with her family along a quiet street just after lunch. The pavement is damp from an earlier shower, and the afternoon is mild. Their group naturally spreads out, filling most of the narrow path.
+
+% <a>
+Clara pauses to take in a storefront, momentarily blocking the passage. Behind them, she hears footsteps slow and notices a stroller waiting for space.
+
+% <e>
+A gentle voice from behind says, ?Just a small step to the side can let others pass more easily?everyone benefits from a clear path.?
+
+% <c>
+Clara realizes her family is blocking others. She nudges her group closer to the edge, making space on the sidewalk.
+
+% <f>
+As people pass smoothly, Clara feels a quiet sense of relief and the stroll continues, lighter and more relaxed for everyone.
+
+% <explication>
+% The SN (Overestimation ? Realization ? Adjustment) plays out as Clara?s group first takes up too much space, then recognizes the issue, and adjusts.  
+% The DE (Fear ? Release ? Relief) unfolds through initial worry about causing trouble, a gentle prompt, and the shared relief of resolving the situation gracefully.
+
+
+\paragraph{Text 5 ? Don?t cross diagonally (SN1, DE8)}
+
+% SN: Mini-shift ? Situation ? Detail ? Change  
+% DE: Doubt Overcome ? Doubt ? Fear ? Serenity
+
+% <i>
+Noah, a young man, stands at the edge of a bustling shopping street around midday. The sky is cloudy, and the crowd moves quickly, weaving between shops and street performers. The flow of people seems to cut across every direction.
+
+% <a>
+Noah considers crossing diagonally, tempted to take a shortcut through the crowd. But the many distractions and the shifting traffic make him hesitate.
+
+% <e>
+Someone beside him says, ?Crossing in a straight line at the crosswalk helps everyone see you more clearly and keeps you safer.?
+
+% <c>
+He studies the painted lines and waits for a break in the stream of pedestrians. Gathering his resolve, he decides to cross directly at the marked area.
+
+% <f>
+As he reaches the other side, Noah feels calmer, having chosen the safer, clearer route?and noticing others follow his example.
+
+% <explication>
+% The SN (Situation ? Detail ? Change) emerges in Noah?s initial urge to cut diagonally, his attention to the details of movement and markings, and his shift to a safer choice.  
+% The DE (Doubt ? Fear ? Serenity) unfolds from hesitation, a brief fear of confusion or collision, and finally, a feeling of calm and security when crossing in line.
+
+
+\paragraph{Text 6 ? Look both ways before crossing (SN7$^c$, DE8)}
+
+% SN: Risk Evaluation ? Uncertainty ? Analysis ? Decision  
+% DE: Doubt Overcome ? Doubt ? Fear ? Serenity
+
+% <i>
+Lina, a young woman, stands at a semi-pedestrian area in the heart of the city at noon. The sun is high, casting sharp shadows as people hurry by with shopping bags. A gentle breeze stirs the air, mixing city scents with distant laughter and the quiet buzz of traffic nearby.
+
+% <a>
+She steps toward the crosswalk but pauses. A delivery scooter glides past, and a cyclist rings a bell behind her. Though the street seems calm, Lina hesitates, uncertain if she?s really safe to cross.
+
+% <e>
+A man beside her says softly, ?Always look both ways before crossing?even on a one-way street. It?s safer.? Lina takes the advice seriously, her focus sharpening.
+
+% <c>
+She scans both directions, catching sight of an electric car turning unexpectedly and a runner weaving between pedestrians. Lina calculates the risks, waiting for a clear moment.
+
+% <f>
+When it feels truly safe, Lina steps forward, crossing at a steady pace. She feels at ease and proud of her caution, certain she?s made the right decision.
+
+% <explication>
+% The SN (Uncertainty ? Analysis ? Decision) unfolds as Lina?s initial hesitation, careful observation, and her confident, safe crossing.  
+% The DE (Doubt ? Fear ? Serenity) traces her doubt, brief fear of rushing, and the serenity of acting with attentive care.
+
+
+\paragraph{Text 7 ? Stay on the sidewalk (SN3$^c$, DE9)}
+
+% SN: Automated Learning ? Repetition ? Fluidity ? Mastery  
+% DE: Doubt Eased ? Doubt ? Observation ? Serenity
+
+% <i>
+Jules, an adult, walks with a child on a scooter along a broad, open avenue. It?s midday and the sidewalk is warm underfoot, the hum of city life blending with distant laughter and the soft hiss of urban heating vents.
+
+% <a>
+Jules reminds the child to stay near the curb as they move forward. The urge to step off and cut across the street is tempting, especially with so few cars visible.
+
+% <e>
+He says, ?Stay on the sidewalk whenever possible?it?s safer and helps you build good walking habits.? The child looks up, pausing at a driveway, thinking it over.
+
+% <c>
+They continue along the pavement, Jules gently repeating the advice each time they pass an intersection. With every repetition, the movement becomes more natural and relaxed.
+
+% <f>
+Eventually, both walk in rhythm, almost without thinking, moving securely along the wide path. What began as a cautious habit now feels effortless and calm.
+
+% <explication>
+% The SN (Repetition ? Fluidity ? Mastery) follows the routine, the growing ease, and the eventual confidence of sidewalk walking.  
+% The DE (Doubt ? Observation ? Serenity) moves from initial hesitation, through attentive practice, into quiet comfort.
+
+
+\paragraph{Text 8 ? Wait for the signal (SN6$^c$, DE9)}
+
+% SN: Focus-reactivity ? Distraction ? Focus ? Quick Reaction  
+% DE: Doubt Eased ? Doubt ? Observation ? Serenity
+
+% <i>
+Camille, a pedestrian, stands beside an elderly woman in a paved square as dusk approaches. The streetlights flicker on, and the square glows with the pulse of city life. The pedestrian signal blinks, reflecting off the smooth stones.
+
+% <a>
+As the light flashes red, some people edge forward impatiently. Camille feels the urge to cross before the signal changes, unsure if it?s really necessary to wait.
+
+% <e>
+The elderly woman quietly says, ?Cross only when the signal is green?that?s when drivers expect people to cross and it?s safest for you.?
+
+% <c>
+Camille hesitates, then shifts her focus to the changing light and the movements of cars nearby. She waits for the green signal, watching the world slow down around her.
+
+% <f>
+When the light turns, Camille crosses calmly, feeling reassured and in tune with the city?s rhythm. She notices others waiting with her, sharing a subtle sense of trust.
+
+% <explication>
+% The SN (Distraction ? Focus ? Quick Reaction) is shown in Camille?s temptation to cross early, refocusing, and her timely response.  
+% The DE (Doubt ? Observation ? Serenity) starts with uncertainty, becomes attentive waiting, and ends with a peaceful, safe crossing.
+
+
+\paragraph{Text 9 ? Use the crosswalk (SN1, DE7)}
+
+% SN: Mini-shift ? Situation ? Detail ? Change  
+% DE: Fear Overcome ? Fear ? Confrontation ? Serenity
+
+% <i>
+Leo, a pedestrian, pauses at a side street where the scent of fresh bread drifts from a nearby bakery. It?s evening and the street is bright with warm light. A delivery worker wheels a cart along the curb, and city life pulses around the crosswalk.
+
+% <a>
+Leo thinks about cutting across the street where there?s no marked crossing, but spots a cyclist and a car approaching quickly. The situation feels risky.
+
+% <e>
+A passerby remarks, ?Use the crosswalk each time?drivers and cyclists are prepared for you there.? Leo considers the advice and waits at the lines.
+
+% <c>
+He aligns himself with the painted stripes, watching as traffic slows for the crossing. Leo senses the moment is right and steps forward.
+
+% <f>
+Crossing safely, Leo feels his nerves settle, grateful for the guidance and the sense of order the crosswalk brings. He continues on, more confident.
+
+% <explication>
+% The SN (Situation ? Detail ? Change) unfolds in Leo?s impulse, his attention to detail, and his shift to safe crossing.  
+% The DE (Fear ? Confrontation ? Serenity) moves from anxiety, through facing risk, to calm after acting safely.
+
+
+\paragraph{Text 10 ? Walking in the heat (SN6, DE4)}
+
+% SN: Managed Excess ? Excess ? Discomfort ? Adjustment  
+% DE: Eased Discomfort ? Discomfort/Shame ? Adjustment ? Serenity
+
+% <i>
+Manon, a city dweller, exits the metro with a companion as the sun sets. Warm rays spill onto the entrance, making the air feel thick and heavy. The city is calm, and Manon feels both tired and restless from the heat.
+
+% <a>
+She hesitates, wondering whether to walk the sunny side or detour into the shade. The heat prickles her skin and she wipes sweat from her brow.
+
+% <e>
+Her companion offers, ?You?ll feel better if you cross into the shade; it helps you avoid getting too hot, even if it takes a little longer.?
+
+% <c>
+Manon decides to change course, moving into the shadow of tall buildings, feeling immediate relief. The walk slows, but the discomfort fades.
+
+% <f>
+Together, they reach their destination more comfortably, appreciating the cooler path. Manon smiles, feeling grateful for the gentle adjustment.
+
+% <explication>
+% The SN (Excess ? Discomfort ? Adjustment) is present in Manon?s struggle, her shift to shade, and regained comfort.  
+% The DE (Discomfort/Shame ? Adjustment ? Serenity) follows her initial discomfort, the adjustment, and her final relief.
+
+
+\paragraph{Text 11 ? Don?t run into the road (SN4$^c$, DE6)}
+
+% SN: Adjusted Perception ? Attention ? Observation ? Adjustment  
+% DE: Fear Resolved ? Fear ? Release ? Relief
+
+% <i>
+Arthur, a young adult, strolls down a tree-lined avenue early in the morning. The air is fresh and a gentle wind rustles the branches. A group of tourists gathers near a fountain as Arthur enjoys the peacefulness.
+
+% <a>
+A ball rolls into the street and Arthur instinctively thinks about running after it. The road looks empty, but the breeze carries the sound of an approaching car.
+
+% <e>
+A friend warns, ?Don?t run into the street?even if it seems empty. Roads are not playgrounds and cars can appear quickly.?
+
+% <c>
+Arthur stops, watching the car pass by before stepping carefully to retrieve the ball from the curb. He realizes the danger was greater than it first appeared.
+
+% <f>
+Returning safely to the sidewalk, Arthur feels a wave of relief. He resolves to be more cautious, grateful for the timely advice.
+
+% <explication>
+% The SN (Attention ? Observation ? Adjustment) comes through Arthur?s alertness, observation, and changed action.  
+% The DE (Fear ? Release ? Relief) moves from fear, through letting go of impulse, to relief at safety.
+
+
+\paragraph{Text 12 ? Watch your step (SN4$^c$, DE8)}
+
+% SN: Adjusted Perception ? Attention ? Observation ? Adjustment  
+% DE: Doubt Overcome ? Doubt ? Fear ? Serenity
+
+% <i>
+Tom, a pedestrian, walks down a cobblestone street at midday. The sun beats down and the pavement is warm underfoot. In the distance, a cyclist rings a bell and faint music drifts from an open window, giving the street a lively, summery atmosphere.
+
+% <a>
+As Tom walks, he glances up to admire the old buildings and doesn?t notice an uneven patch in the stones. His foot slips slightly, sending a quick jolt of uncertainty through him.
+
+% <e>
+A cyclist nearby calls out, ?Watch where you step as well as where you?re headed?the ground can be uneven.? The advice catches Tom?s attention and makes him more cautious.
+
+% <c>
+He slows down, scanning both his path and the ground ahead. Tom adjusts his pace, carefully placing his feet with each step, regaining his sense of control.
+
+% <f>
+Soon, Tom walks more confidently, no longer anxious about stumbling. The brief moment of doubt fades, replaced by a relaxed and steady stride.
+
+% <explication>
+% The SN (Attention ? Observation ? Adjustment) appears as Tom?s moment of distraction, observation of risk, and adaptation.  
+% The DE (Doubt ? Fear ? Serenity) runs from his initial uncertainty, through brief fear, to the calm of walking safely and attentively.
+
+\paragraph{Text 13 ? Be seen and see others (SN11$^c$, DE7)}
+
+% SN: Error Anticipation ? Observation ? Anticipation ? Avoidance  
+% DE: Fear Overcome ? Fear ? Confrontation ? Serenity
+
+% <i>
+In\`{e}s, a young woman, waits beside a street maintenance worker on a shared pedestrian and cycling path. The midday wind ruffles her light jacket, while voices blend with the distant hum of passing bikes. Sunlight reflects off metal railings and glass shop fronts.
+
+% <a>
+In\`{e}s glances at her clothes and wonders if she stands out enough. With many moving parts?bikes, workers, and distracted walkers?it?s easy to miss someone in the crowd.
+
+% <e>
+The maintenance worker nods toward her and says, ?It?s important to be visible when you share the road?wearing bright colors helps keep everyone safe.?
+
+% <c>
+She checks her reflection in a shop window and decides to adjust her scarf, choosing a brighter side. In\`{e}s stands a bit taller, more aware of her surroundings.
+
+% <f>
+As she continues on, cyclists give a friendly nod and everyone moves around each other with more attention, easing her initial worry.
+
+% <explication>
+% The SN (Observation ? Anticipation ? Avoidance) develops as In\`{e}s observes, anticipates visibility issues, and acts to avoid accidents.  
+% The DE (Fear ? Confrontation ? Serenity) goes from fear of being overlooked, through a proactive adjustment, to calm confidence.
+
+
+\paragraph{Text 14 ? Knowing when to turn around (SN27, DE3)}
+
+% SN: Motivation and Perseverance ? Initial Interest ? Difficulty ? Discouragement ? Sustained Effort ? Resolution  
+% DE: Surprise Clarified ? Surprise ? Reflection ? Clarification
+
+% <i>
+L\'{e}a, a city walker, heads along a pedestrian path at dusk. She passes someone talking loudly on the phone. The air carries the smell of fresh coffee from a nearby caf\'{e}, and a gentle breeze hints at coming night.
+
+% <a>
+Halfway down the path, L\'{e}a finds her way blocked by delivery vans. Frustration builds as the shortcut she hoped for disappears behind traffic and noise.
+
+% <e>
+A passerby calls out, ?If you turn back now, you?ll avoid getting stuck between the delivery vans.? The advice rings true, catching L\'{e}a by surprise.
+
+% <c>
+She pauses, weighing her options. After a moment of hesitation, she turns around, retracing her steps with more awareness.
+
+% <f>
+Freed from the traffic jam, L\'{e}a smiles, feeling both relieved and proud to have listened and adapted before things got complicated.
+
+% <explication>
+% The SN (Initial Interest ? Difficulty ? Discouragement ? Effort ? Resolution) unfolds in L\'{e}a?s determination, encounter with obstacles, discouragement, choice to adjust, and final resolution.  
+% The DE (Surprise ? Reflection ? Clarification) runs from her surprise at the obstacle, reflection on the advice, to the clarity of her decision.
+
+
+\paragraph{Text 15 ? Don?t slow down the group (SN13$^c$, DE5)}
+
+% SN: Contextual Adaptation ? Uncertainty ? Observation ? Adaptation  
+% DE: Fear Released ? Fear ? Relief ? Serenity
+
+% <i>
+Nathan, a man walking in the early evening, is part of a group navigating a busy intersection where the sound of high heels echoes off the pavement. The pace is quick, city lights beginning to glow as everyone rushes to their destination.
+
+% <a>
+Nathan notices his own steps slowing, feeling distracted by the flow of others and the busy crossroads. The group clusters together, sometimes blocking the way for faster walkers.
+
+% <e>
+A distracted pedestrian says, ?It helps everyone if we keep up with the pace of the city.? Nathan catches the hint, sensing a ripple of impatience behind him.
+
+% <c>
+He accelerates slightly, encouraging his group to move forward. The shift in energy helps the group blend smoothly into the evening crowd.
+
+% <f>
+As the street clears, Nathan feels the collective tension fade. Walking at the city?s rhythm brings a new sense of ease and calm.
+
+% <explication>
+% The SN (Uncertainty ? Observation ? Adaptation) is shown in Nathan?s doubt, observation of group flow, and adaptive response.  
+% The DE (Fear ? Relief ? Serenity) unfolds from tension, through relief as pace improves, to a relaxed group movement.
+
+
+\paragraph{Text 16 ? Lower the volume (SN7$^c$, DE4)}
+
+% SN: Risk Evaluation ? Uncertainty ? Analysis ? Decision  
+% DE: Eased Discomfort ? Discomfort/Shame ? Adjustment ? Serenity
+
+% <i>
+Zo\'{e}, a pedestrian, walks on a sloped sidewalk beneath a bright morning sun. A leashed dog tugs ahead, and the low rumble of a nearby engine mingles with passing conversations. The day feels alive and a little chaotic.
+
+% <a>
+Zo\'{e} fumbles with her headphones, music playing loudly, almost drowning out the street?s subtle signals. She senses a slight discomfort, unsure if she?s missing something important.
+
+% <e>
+Someone walking their dog remarks, ?It?s safer to keep one ear open when walking outside, so you can notice what?s happening around you.?
+
+% <c>
+Zo\'{e} lowers her volume, pulling out one earbud to listen more closely. She catches the sound of a moped and the quiet bark of the dog nearby, suddenly more aware.
+
+% <f>
+Feeling safer and less isolated, Zo\'{e} continues down the street, reassured by her new habit and the fuller sense of the world around her.
+
+% <explication>
+% The SN (Uncertainty ? Analysis ? Decision) is expressed in Zo\'{e}?s uncertainty, analysis of her surroundings, and decision to turn down the music.  
+% The DE (Discomfort/Shame ? Adjustment ? Serenity) tracks her discomfort, adjustment, and growing ease.
+
+
+\paragraph{Text 17 ? Hurry slowly (SN9, DE5)}
+
+% SN: Fluid Passage ? Double Situation ? Transition ? Stabilization  
+% DE: Fear Released ? Fear ? Relief ? Serenity
+
+% <i>
+Enzo, a passerby, moves through a quiet zone at dusk. A small group stands talking, their voices blending with the soft honk of a distant car. The fading daylight casts a gentle glow over the nearly empty street.
+
+% <a>
+Enzo feels pressed for time, tempted to weave quickly between people. The urge to rush is strong, but he hesitates, not wanting to disturb the group or risk an accident.
+
+% <e>
+A member of the group notes, ?Moving too fast can make things less safe.? The comment slows Enzo?s momentum, making him rethink his approach.
+
+% <c>
+He adapts his pace, stepping aside when needed and navigating calmly. The city?s rhythm seems to match his new, measured movement.
+
+% <f>
+Enzo arrives at his destination safely, feeling a surprising sense of relief. By slowing down, he found balance and made his walk easier.
+
+% <explication>
+% The SN (Double Situation ? Transition ? Stabilization) appears in Enzo?s initial urgency, adaptation, and smooth transition.  
+% The DE (Fear ? Relief ? Serenity) moves from anxiety, through relief, to tranquility after slowing down.
+
+
+\paragraph{Text 18 ? Learn the map (SN2$^c$, DE9)}
+
+% SN: Observational Learning ? Observation ? Appropriation ? Application  
+% DE: Doubt Eased ? Doubt ? Observation ? Serenity
+
+% <i>
+Chlo\'{e}, a regular transit user, pauses at a street corner where the glint of an electric scooter catches her eye. The early morning sky is gray, and metallic reflections flash from nearby buildings. She unfolds a metro map, trying to orient herself.
+
+% <a>
+Chlo\'{e} hesitates, uncertain which way is south or how best to reach downtown. She watches others scan the map, a subtle anxiety building as time ticks by.
+
+% <e>
+A passerby offers help: ?South is over there?if you want to reach downtown, stay on the right. That marker can be confusing.?
+
+% <c>
+Chlo\'{e} follows the advice, comparing the map with street signs. Step by step, she matches her path to the markers.
+
+% <f>
+With growing confidence, Chlo\'{e} heads toward her destination, relieved by her ability to interpret the clues and navigate the city on her own.
+
+% <explication>
+% The SN (Observation ? Appropriation ? Application) unfolds through Chlo\'{e}?s initial observation, internalization, and practical use of directions.  
+% The DE (Doubt ? Observation ? Serenity) moves from uncertainty, through attentive learning, to confidence and ease.
+
+
+\paragraph{Text 19 ? Take the familiar path when lost (SN9$^c$, DE9)}
+
+% SN: Progressive Autonomy ? Help ? Experience ? Independence  
+% DE: Doubt Eased ? Doubt ? Observation ? Serenity
+
+% <i>
+Emma, a pedestrian, stands at a wide intersection late in the evening. The light is bright, reflecting off wet pavement after a rain. A young person hurries by, and Emma feels momentarily disoriented in the maze of city streets.
+
+% <a>
+Unsure which way to go, Emma scans the signs and tries to recall familiar landmarks. The city feels larger and more confusing at night, making her hesitate.
+
+% <e>
+A passerby suggests, ?If you?re lost, go back to a familiar spot?it?s the best way to find your direction again.?
+
+% <c>
+Emma retraces her steps, seeking a well-known corner. As she recognizes a bakery she passed earlier, her confidence returns.
+
+% <f>
+Back on a known route, Emma?s anxiety eases. She walks with steady steps, reassured by her own sense of direction.
+
+% <explication>
+% The SN (Help ? Experience ? Independence) traces Emma?s need for help, building experience, and finding independence.  
+% The DE (Doubt ? Observation ? Serenity) develops from her confusion, through attentive recognition, to calm self-assurance.
+
+
+\paragraph{Text 20 ? Use visual cues (SN20, DE3)}
+
+% SN: Initiatory Quest ? Departure ? Trials ? Revelation ? Transformed Return  
+% DE: Surprise Clarified ? Surprise ? Reflection ? Clarification
+
+% <i>
+Lucie, a city walker, crosses a gravel esplanade at dawn. The early sun casts long shadows, and each step crunches underfoot. She stops, scanning her surroundings for the right direction, as the city wakes behind her.
+
+% <a>
+A large statue stands near the main entrance, catching Lucie?s eye. She hesitates, uncertain which path leads north.
+
+% <e>
+A nearby woman points and says, ?See that statue? It lines up with the main entrance, so north is to your right.?
+
+% <c>
+Lucie follows the line, comparing the statue?s position with her map. The revelation clarifies her route and dispels her confusion.
+
+% <f>
+She heads forward, more assured and a little transformed by her new sense of orientation in the city?s landscape.
+
+% <explication>
+% The SN (Departure ? Trials ? Revelation ? Return) is played out in Lucie?s journey, challenges, and new understanding.  
+% The DE (Surprise ? Reflection ? Clarification) moves from surprise, through reflection, to a clarified direction.
+
+
+\paragraph{Text 21 ? Trust the visual markers (SN5$^c$, DE1)}
+
+% SN: Successful Trial-and-Error ? Attempt ? Error ? Correction ? Improvement  
+% DE: Joyful Serenity ? Serenity ? Observation ? Joy
+
+% <i>
+Mathis, a passerby, waits at a sunny intersection next to a parent with a stroller. It's noon, and the sun creates long shadows across the nearby bike lane. The scene is lively, filled with voices and city movement.
+
+% <a>
+Mathis considers following the painted lines, but something feels off. He notices a nearby pole?used as a visual marker by some, while others follow the faded paint.
+
+% <e>
+The parent says, ?Align yourself with the pole rather than the paint?that?s the correct reference.?
+
+% <c>
+Mathis chooses the pole, observing how his path feels more natural and others begin to follow suit.
+
+% <f>
+He crosses the street with a new sense of ease, enjoying the little success of solving a practical puzzle in the city.
+
+% <explication>
+% The SN (Attempt ? Error ? Correction ? Improvement) is shown in Mathis?s initial mistake, correction, and resulting improvement.  
+% The DE (Serenity ? Observation ? Joy) runs from calm, through attentive observation, to the joy of successful adaptation.
+
+
+\paragraph{Text 22 ? Watch for parking exits (SN11$^c$, DE6)}
+
+% SN: Error Anticipation ? Observation ? Anticipation ? Avoidance  
+% DE: Fear Resolved ? Fear ? Release ? Relief
+
+% <i>
+Sarah, a city dweller, stands near a busy metro entrance where the street is crowded with people heading to work. A businessman walks by, and a loose sign rattles in the breeze. The morning feels hurried, full of small, unpredictable movements.
+
+% <a>
+Sarah steps past a fence, glancing at the gaps between buildings. She suddenly worries about hidden parking exits as cars sometimes emerge unexpectedly.
+
+% <e>
+A man in a suit cautions, ?Always look at gaps in buildings or fences?parking exits can open unexpectedly.?
+
+% <c>
+Sarah adjusts her route, watching carefully at each opening. She becomes more alert, anticipating hidden dangers.
+
+% <f>
+As she passes safely, Sarah feels relief and gratitude for the timely warning, her tension giving way to calm.
+
+% <explication>
+% The SN (Observation ? Anticipation ? Avoidance) is seen in Sarah?s watchful approach and adaptation.  
+% The DE (Fear ? Release ? Relief) shows her initial fear, the act of letting go, and the relief of safe passage.
+
+
+\paragraph{Text 23 ? Mind the bikes and scooters (SN7$^c$, DE8)}
+
+% SN: Risk Evaluation ? Uncertainty ? Analysis ? Decision  
+% DE: Doubt Overcome ? Doubt ? Fear ? Serenity
+
+% <i>
+Axel, a young adult, walks with a fellow student along a busy school zone early in the morning. The area buzzes with activity, and Axel surveys the marked pedestrian stripes as bikes and scooters zip by. A sense of anticipation fills the air.
+
+% <a>
+Axel starts to step into the lane but hesitates, uncertain if it?s meant for pedestrians or wheels. The risk of a sudden collision feels real.
+
+% <e>
+His friend says, ?Stay within the marked stripes?outside them, you may be in an area meant for wheels, not pedestrians.?
+
+% <c>
+Axel corrects his course, making sure to walk only within the lines. The flow of bikes and scooters moves safely past him.
+
+% <f>
+He continues on to class, reassured by the sense of order and safety, his earlier doubt replaced by confidence.
+
+% <explication>
+% The SN (Uncertainty ? Analysis ? Decision) comes through Axel?s hesitation, risk analysis, and decision to adjust.  
+% The DE (Doubt ? Fear ? Serenity) follows his initial doubt, the fear of danger, and the serenity of walking safely.
+
+
+\paragraph{Text 24 ? Reading a misplaced sign (SN38, DE10)}
+
+% SN: Search for Reliable Information ? Trigger ? Multiple Sources ? Sorting and Analysis ? Informed Decision  
+% DE: Persistent Doubt ? Doubt ? Observation ? Doubt
+
+% <i>
+Anna, a pedestrian, pauses at the entrance of an apartment building late at night. A nearby athlete stretches, and the colors of the traffic lights reflect on the sidewalk. The street is quiet except for the hum of passing cars under the neon glow.
+
+% <a>
+Anna scans the area for directions but notices a sign placed awkwardly out of sight. It?s unclear whether to trust it, and she hesitates, unsure of the correct entrance.
+
+% <e>
+The athlete advises, ?That sign is misleading?use the railings to find the side entrance. It wasn?t updated after the construction.?
+
+% <c>
+Anna compares the sign with other clues, checking the railing and nearby lights, carefully analyzing her options.
+
+% <f>
+She chooses the side entrance, still a bit doubtful but confident in her decision-making process.
+
+% <explication>
+% The SN (Trigger ? Multiple Sources ? Sorting and Analysis ? Decision) unfolds as Anna encounters confusion, considers alternatives, and acts with caution.  
+% The DE (Doubt ? Observation ? Doubt) is present in her persistent uncertainty, even as she acts.
+
+
+\paragraph{Text 25 ? Let elders go first (SN8, DE1)}
+
+% SN: Indirect Transmission ? Model ? Observation ? Imitation ? Mastery  
+% DE: Joyful Serenity ? Serenity ? Observation ? Joy
+
+% <i>
+Louis, a pedestrian, walks through a calm neighborhood square just after 9 a.m. The morning light shimmers gently across the paving stones. An older person, carrying shopping bags, approaches the crosswalk ahead. The subtle undulation of light on the ground creates a peaceful atmosphere.
+
+% <a>
+Louis slows his steps, watching as the older person hesitates at the edge of the crossing. Around them, others gather, the city?s usual hurry replaced by a quiet moment of anticipation.
+
+% <e>
+He hears someone say, ?Let older people cross first?they may move more slowly, and it?s safer for everyone.? The advice echoes softly, drawing the group?s attention to the waiting elder.
+
+% <c>
+Louis waits, giving space. He observes how the group follows suit, their movements respectful and deliberate. The older person crosses with care, and Louis feels a gentle pride in this shared patience.
+
+% <f>
+Once the elder is safely across, Louis resumes his walk. The act leaves him with a warm sense of connection and joy, a reminder that small gestures matter.
+
+% <explication>
+% The SN (Model ? Observation ? Imitation ? Mastery) appears in the modeling of behavior, observation, imitation, and collective mastery.  
+% The DE (Serenity ? Observation ? Joy) unfolds from the calm wait, attentive observation, to the joy of a kind act.
+
+
+\paragraph{Text 26 ? Don?t litter (SN8, DE10)}
+
+% SN: Indirect Transmission ? Model ? Observation ? Imitation ? Mastery  
+% DE: Persistent Doubt ? Doubt ? Observation ? Doubt
+
+% <i>
+\'{e}lise, a passerby, strolls along the edge of a park at noon. She passes a street vendor selling sandwiches and sees the green grass dotted with sunlight. The rhythmic ticking of a pedestrian signal blends with the distant sound of birds.
+
+% <a>
+As \'{e}lise unwraps a snack, she notices others tossing wrappers on the ground. For a moment, she wonders if it really matters to hold onto her own waste.
+
+% <e>
+The vendor remarks, ?If you can?t find a bin, just keep your wrapper in your pocket?it helps keep public spaces pleasant.? The advice lingers in \'{e}lise?s mind as she looks around.
+
+% <c>
+She decides to tuck the wrapper into her bag, observing how others take note of her action. Still, she?s unsure if her small gesture will make any difference.
+
+% <f>
+Moving on, \'{e}lise remains slightly doubtful but feels a quiet satisfaction for choosing to care for her surroundings, however small the impact.
+
+% <explication>
+% The SN (Model ? Observation ? Imitation ? Mastery) is shown in the observation, imitation, and possible spread of good habits.  
+% The DE (Doubt ? Observation ? Doubt) unfolds as doubt persists, even with right action.
+
+
+\paragraph{Text 27 ? Turn around when you?re wrong (SN2, DE2)}
+
+% SN: Admitted Error ? Error ? Confrontation ? Change  
+% DE: Gratified Curiosity ? Curiosity ? Observation ? Joy
+
+% <i>
+Mila, a transit user, walks along a pedestrian-only street late on a Saturday morning. Steps echo from passersby, and a gentle rhythm of synchronized footsteps fills the air. She wonders if she?s missed her destination, glancing at street signs for reassurance.
+
+% <a>
+Noticing a pedestrian ahead who looks equally uncertain, Mila begins to doubt her chosen direction. The growing distance from familiar landmarks makes her uneasy.
+
+% <e>
+The other person says, ?Let?s turn back before we get too far off track.? The suggestion brings immediate relief and clarity to Mila?s mind.
+
+% <c>
+They pause, exchange a quick glance, and both reverse course. Mila feels a weight lift as she retraces her steps toward familiar ground.
+
+% <f>
+Finding the correct street at last, Mila smiles. Her initial curiosity is satisfied, and the detour turns into a small, joyful discovery.
+
+% <explication>
+% The SN (Error ? Confrontation ? Change) is shown in the recognition, facing, and correcting of a mistake.  
+% The DE (Curiosity ? Observation ? Joy) appears as curiosity and uncertainty yield to satisfaction.
+
+\paragraph{Text 28 ? Respect personal space (SN28, DE7)}
+
+% SN: Intergenerational Transmission ? Old Knowledge ? Young Learner ? Transmission ? Transformation  
+% DE: Fear Overcome ? Fear ? Confrontation ? Serenity
+
+% <i>
+Adam, a pedestrian, walks through a noisy delivery zone at 3 p.m. Children?s voices ring out, and the area buzzes with people and vehicles. Amid the chaos, Adam notices people stopping abruptly, sometimes leaving little room to pass.
+
+% <a>
+As Adam tries to keep his pace, he ends up too close to someone who suddenly halts in front of him. The unpredictable rhythm of the crowd makes him uneasy, and he feels a growing discomfort in the congestion.
+
+% <e>
+A voice behind him reminds, ?Give others space, even if you?re in a hurry?it helps everyone move around more easily.? The advice, simple and direct, makes Adam pause.
+
+% <c>
+He slows, stepping sideways to leave more room for those around him. As Adam adjusts, the group subtly rearranges, creating a smoother flow and making the sidewalk less tense.
+
+% <f>
+The pressure of the crowd eases, and Adam finds a more comfortable rhythm. With each careful step, he feels the relief and calm of moving with respect for others? space.
+
+% <explication>
+% The SN (Old Knowledge ? Young Learner ? Transmission ? Transformation) shows how a learned habit is shared and transforms group behavior.  
+% The DE (Fear ? Confrontation ? Serenity) tracks Adam?s discomfort, his decision to adjust, and the serenity that follows.
+
+
+\paragraph{Text 29 ? Stuck in a dense crowd (SN30, DE4)}
+
+% SN: Loss of Control ? Routine ? Disruptive Event ? Disorientation ? Return to Normality/Chaos  
+% DE: Eased Discomfort ? Discomfort/Shame ? Adjustment ? Serenity
+
+% <i>
+Nina, a city dweller, approaches the bustling edge of a market on a cool morning. Chains clink and vendors shout, while the crowd swells, tightening around her. The energy of the place is both exciting and overwhelming, as Nina tries to keep pace.
+
+% <a>
+Suddenly, the flow slows. Nina is trapped in the thick of the crowd, unable to move forward or back. She feels her discomfort rising, breath quickening as she?s pressed on all sides.
+
+% <e>
+A passerby suggests, ?If the crowd is too dense, moving to the side can help keep things flowing.? The idea gives Nina something concrete to do.
+
+% <c>
+Nina edges toward the curb, gently weaving between people. Others follow her lead, opening space for everyone and letting the tension ease.
+
+% <f>
+Freed from the tight crush, Nina finds her rhythm again. The return to open space brings calm, and the sense of control gradually returns.
+
+% <explication>
+% The SN (Routine ? Event ? Disorientation ? Return) is seen in Nina?s routine, sudden jam, confusion, and relief.  
+% The DE (Discomfort/Shame ? Adjustment ? Serenity) tracks her anxiety, adjustment, and calm restoration.
+
+
+\paragraph{Text 30 ? Remember a path to use again (SN3$^c$, DE2)}
+
+% SN: Automated Learning ? Repetition ? Fluidity ? Mastery  
+% DE: Gratified Curiosity ? Curiosity ? Observation ? Joy
+
+% <i>
+Th\'{e}o, a young adult, passes through the silent entryway of a public building just after 9 a.m. A municipal worker sweeps nearby, and the faint echo of footsteps bounces off the walls. Th\'{e}o recalls the route he took last time?left at the hall, right at the sign.
+
+% <a>
+He hesitates at a fork, wondering whether to try a shortcut or trust his memory. The decision weighs on him as he glances at the quiet corridors.
+
+% <e>
+The municipal worker says, ?You turned left last time, and it worked well then.? The simple advice reassures Th\'{e}o, bringing back a sense of orientation.
+
+% <c>
+Th\'{e}o repeats his previous steps, growing more confident with each familiar turn. The route becomes easier, and his pace quickens without conscious effort.
+
+% <f>
+Reaching his destination, Th\'{e}o smiles with satisfaction. The learned routine transforms into a small joy, making him eager to walk this way again.
+
+% <explication>
+% The SN (Repetition ? Fluidity ? Mastery) unfolds in the repeating and internalizing of the path.  
+% The DE (Curiosity ? Observation ? Joy) runs from curiosity, through discovery, to satisfaction.
+
+
+\paragraph{Text 31 ? Follow direction signs (SN5$^g$, DE2)}
+
+% SN: Shared Observation ? Observation ? Discussion ? Appropriation  
+% DE: Gratified Curiosity ? Curiosity ? Observation ? Joy
+
+% <i>
+Rapha\"{e}l, a citizen, walks down a lively alley at 11 a.m. with a discreet couple. Animated voices and the soft glow of shopfronts set a welcoming tone. The group approaches a fork where several signs compete for attention.
+
+% <a>
+Rapha\"{e}l hesitates, unsure which sign leads to their goal. He studies the directions, debating which way to go as other groups discuss their own routes.
+
+% <e>
+A companion says, ?Sometimes, the best places are hidden. That sign is the right one?just follow where it points.?
+
+% <c>
+Rapha\"{e}l considers the advice, exchanging quick words with his friends. They decide to follow the suggested path, trusting in the shared observation.
+
+% <f>
+The alley opens into a sunny square, and the sense of discovery brings a burst of joy to the group. Their curiosity is rewarded with a new favorite spot.
+
+% <explication>
+% The SN (Observation ? Discussion ? Appropriation) is seen in the shared questioning, discussion, and mutual decision.  
+% The DE (Curiosity ? Observation ? Joy) is fulfilled in the happiness of finding something new.
+
+
+\paragraph{Text 32 ? Ask the way when you?re lost (SN32, DE8)}
+
+% SN: Rupture and Reconstruction ? Established Relationship ? Crisis ? Separation ? Self-Reconstruction  
+% DE: Doubt Overcome ? Doubt ? Fear ? Serenity
+
+% <i>
+Ma\'{e}, a pedestrian, pauses in a tranquil street under midday sun. Nearby, a passerby speaks urgently on the phone, while construction sounds echo off the walls. The smell of fresh rain lingers in the air, and Ma\'{e} feels lost in the maze of temporary barriers.
+
+% <a>
+She realizes she?s missed a turn, uncertainty mounting as the detour takes her further from familiar streets. The anxiety of getting more lost grows with each step.
+
+% <e>
+A friendly passerby says, ?You missed a turn?go back, then take a left at the bakery.? The simple, clear advice soothes Ma\'{e}?s worry.
+
+% <c>
+Ma\'{e} retraces her steps, eyes scanning for the bakery and checking street signs along the way. As she finds her bearings, her heart rate slows.
+
+% <f>
+Turning at the right spot, Ma\'{e} feels her fear dissipate, replaced by a gentle relief. The act of asking and adjusting brings serenity and confidence.
+
+% <explication>
+% The SN (Relationship ? Crisis ? Separation ? Reconstruction) unfolds as Ma\'{e} loses direction, finds help, and regains her path.  
+% The DE (Doubt ? Fear ? Serenity) is the progression from doubt to calm through practical action.
+
+
+\paragraph{Text 33 ? Distracted by a shop window (SN33, DE1)}
+
+% SN: Awareness ? Ignorance ? Observation ? Worry ? Action/Inaction  
+% DE: Joyful Serenity ? Serenity ? Observation ? Joy
+
+% <i>
+Tim\'{e}o, a pedestrian, strolls through a covered arcade at noon. A child beside him looks around with wonder. The constant hum of city life blends with the bright, colorful displays in each window, creating a world of distractions.
+
+% <a>
+Tim\'{e}o?s gaze lingers on a striking shop window, while the child tugs his sleeve. The sounds and sights threaten to pull his attention from the path ahead.
+
+% <e>
+The child says, ?Bright displays can distract us from where we?re going.? The words make Tim\'{e}o smile and snap back to the present.
+
+% <c>
+He shifts his focus, carefully watching where they walk while enjoying the sights from a safe distance. The child mirrors his behavior, and they move with more attention.
+
+% <f>
+Their stroll becomes lighter, filled with shared discovery and laughter, free from worry. The city?s energy now feels playful rather than overwhelming.
+
+% <explication>
+% The SN (Ignorance ? Observation ? Worry ? Action/Inaction) is seen in Tim\'{e}o?s initial distraction, the realization, and mindful adjustment.  
+% The DE (Serenity ? Observation ? Joy) moves from peace, through awareness, to joyful connection.
+
+
+\paragraph{Text 34 ? Dazzled by the sun or wind (SN34, DE4)}
+
+% SN: Inner Exploration ? Existential Questioning ? Introspection ? Self-Discovery ? Transformation  
+% DE: Eased Discomfort ? Discomfort/Shame ? Adjustment ? Serenity
+
+% <i>
+Ludovic, an explorer by nature, crosses a pedestrian bridge at 8:30 a.m. Tourists photograph the rising sun, and muffled footsteps echo on the planks. Strong wind and blinding light make the world feel both exciting and disorienting.
+
+% <a>
+Ludovic shields his eyes, slowed by the glare and gusts. The discomfort grows as he tries to navigate the shifting brightness and the swirling air.
+
+% <e>
+A tourist beside him says, ?Staying close to the edge until the light softens will help you walk more comfortably.? The advice sparks a moment of reflection.
+
+% <c>
+Ludovic moves closer to the railing, where the shadows offer relief. Each step feels steadier, the noise and brightness less overwhelming.
+
+% <f>
+He reaches the other side of the bridge with a sense of transformation?no longer battling the elements, but moving in harmony with them.
+
+% <explication>
+% The SN (Existential Questioning ? Introspection ? Discovery ? Transformation) is Ludovic?s journey from discomfort to adaptation.  
+% The DE (Discomfort/Shame ? Adjustment ? Serenity) follows his discomfort, practical adjustment, and resulting calm.
+
+
+\paragraph{Text 35 ? Wonder at an unexpected scene (SN7, DE3)}
+
+% SN: Guided Curiosity ? Observation ? Discovery ? Appropriation  
+% DE: Surprise Clarified ? Surprise ? Reflection ? Clarification
+
+% <i>
+Maxime, a city walker, turns onto a busy pedestrian street at 4:30 p.m. The air is filled with the sound of music coming from a caf\'{e}, and sharp voices call out greetings between open shops. Suddenly, a flock of pigeons takes flight, and sunlight glimmers on a small fountain he?s never noticed before.
+
+% <a>
+Maxime stops in his tracks, surprised by the beauty and movement all around him. He hesitates, wondering whether to pause and enjoy the scene or keep going with his errands.
+
+% <e>
+A passerby next to him smiles and says, ?Some things can?t be found on a map?they?re meant to be discovered.? The comment makes Maxime rethink his hurry.
+
+% <c>
+He chooses to pause, taking a few moments to watch the swirling pigeons, the shimmering water, and the spontaneous energy of the street.
+
+% <f>
+Walking on, Maxime feels a fresh sense of curiosity?now aware that every walk in the city can reveal something new if he?s open to it.
+
+% <explication>
+% The SN (Observation ? Discovery ? Appropriation) shows Maxime?s curiosity, discovery, and the way he makes the scene his own.  
+% The DE (Surprise ? Reflection ? Clarification) moves from surprise, through reflection on the moment, to the clarity of simple wonder.
+
+
+\paragraph{Text 36 ? Realizing the right gestures (SN10, DE3)}
+
+% SN: Silent Reflection ? Observation ? Identification ? Adjustment  
+% DE: Surprise Clarified ? Surprise ? Reflection ? Clarification
+
+% <i>
+Jeanne, a transit user, pauses at the entrance of a green city square at 9 a.m. A focused pedestrian walks ahead, and the sound of slowed traffic and birdsong lingers in the air. Jeanne feels a subtle uncertainty?should she intervene or let things flow?
+
+% <a>
+She sees someone struggling to carry bags and wonders what gesture could help without being intrusive. Jeanne hesitates, caught between wanting to act and fearing she?ll overstep.
+
+% <e>
+A quiet inner voice reminds her, ?Offering a hand at the right moment can make a real difference.? The thought brings clarity and a sense of calm.
+
+% <c>
+Jeanne steps forward, offering help with a gentle smile. Her gesture is accepted, and the tension in the moment melts away.
+
+% <f>
+Walking on, Jeanne feels a renewed sense of connection, surprised by the impact of a simple action and ready to notice these moments more often.
+
+% <explication>
+% The SN (Observation ? Identification ? Adjustment) is shown in Jeanne?s quiet observation, choice to act, and positive outcome.  
+% The DE (Surprise ? Reflection ? Clarification) unfolds as her uncertainty is resolved through thoughtful action.
