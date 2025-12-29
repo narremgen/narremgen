@@ -53,6 +53,7 @@ from .export import build_merged_tex_from_csv
 from .analyzestats import build_global_stats_table
 from .segmenter import SimpleSegmenterApp
 import logging
+_logger = logging.getLogger("narremgen.gui")
 # logger = logging.getLogger(__name__)
 # logger_ = logger.info
 
@@ -263,9 +264,7 @@ class RunCancelled(RuntimeError):
 class ConfigManager:
     def __init__(self, filename=None):
         target = CONFIG_ROOT / "narremgen_ui.ini"
-        if filename is None:
-            filename = str(target)
-        self.filename = filename
+        self.filename = str(target if filename is None else filename)
         self.config = configparser.ConfigParser()
         self.defaults = {
             'UI': {
@@ -298,11 +297,12 @@ class ConfigManager:
         self.load()
 
     def load(self):
-        if not os.path.exists(self.filename): self._create_default()
+        if not os.path.exists(self.filename):
+            self._create_default()
         try:
             self.config.read(self.filename)
-        except (OSError, configparser.Error) as e:
-            self.log_queue.put("[CFG] read failed -> defaults")
+        except (OSError, configparser.Error):
+            _logger.warning("Config read failed; fallback to defaults.")
             self._create_default()
 
     def _create_default(self):
@@ -323,8 +323,9 @@ class ConfigManager:
             if self.config.has_option(section, key):
                 return self.config.get(section, key)
         except Exception:
-            self.log_queue.put("Unexpected error in ConfigManager.get")
+            _logger.warning("Unexpected error in ConfigManager.get", exc_info=True)
         return self.defaults.get(section, {}).get(key, fallback)
+
 
 CFG = ConfigManager()
 
@@ -808,10 +809,11 @@ class MergerModel:
                 with open(filename, "w", encoding="utf-8") as f:
                     for idx in self.selected_indices: f.write(f"{ref_df.iloc[idx]['Header']}\n")
                 return True
-            except (OSError, UnicodeError, KeyError, IndexError) as e:
-                self.log_queue.put("[MERGER] backup_selection failed")
+            except (OSError, UnicodeError, KeyError, IndexError):
+                _logger.warning("[MERGER] backup_selection failed", exc_info=True)
                 return False
         return False
+
 
     def import_selection(self, file_path):
         try:
@@ -840,13 +842,33 @@ class MergerModel:
         }
 
     def get_detailed_stats(self):
+        visible_set = set(self.filtered_indices or [])
+        selected_visible = [idx for idx in self.selected_indices if idx in visible_set]
+
         sel_sn = Counter()
         sel_de = Counter()
         for idx in self.selected_indices:
+            sn_codes = set()
+            de_codes = set()
             for df in self.data_slots:
                 if df is not None and idx < len(df):
-                    sel_sn.update(df.iloc[idx]['sn_codes'])
-                    sel_de.update(df.iloc[idx]['de_codes'])
+                    sn_codes.update(df.iloc[idx]['sn_codes'])
+                    de_codes.update(df.iloc[idx]['de_codes'])
+            sel_sn.update(sn_codes)
+            sel_de.update(de_codes)
+
+        sel_visible_sn = Counter()
+        sel_visible_de = Counter()
+        for idx in selected_visible:
+            sn_codes = set()
+            de_codes = set()
+            for df in self.data_slots:
+                if df is not None and idx < len(df):
+                    sn_codes.update(df.iloc[idx]['sn_codes'])
+                    de_codes.update(df.iloc[idx]['de_codes'])
+            sel_visible_sn.update(sn_codes)
+            sel_visible_de.update(de_codes)
+
         current_sn = set()
         current_de = set()
         if 0 <= self.current_absolute_index < self.max_index:
@@ -855,15 +877,24 @@ class MergerModel:
                     row = df.iloc[self.current_absolute_index]
                     current_sn.update(row['sn_codes'])
                     current_de.update(row['de_codes'])
+
         return {
             "count_selected": len(self.selected_indices),
+            "count_selected_visible": len(selected_visible),
             "count_filtered": len(self.filtered_indices),
             "total_texts": self.max_index,
-            "sel_sn": sel_sn, "sel_de": sel_de,
-            "total_sn": self.total_sn_counts, "total_de": self.total_de_counts,
-             "visible_sn": self.visible_sn_counts, "visible_de": self.visible_de_counts,
-            "filters_sn": self.active_sn_filters, "filters_de": self.active_de_filters,
-            "available_sn": self.available_sn, "available_de": self.available_de,
+            "sel_sn": sel_sn,
+            "sel_de": sel_de,
+            "sel_visible_sn": sel_visible_sn,
+            "sel_visible_de": sel_visible_de,
+            "total_sn": self.total_sn_counts,
+            "total_de": self.total_de_counts,
+            "visible_sn": self.visible_sn_counts,
+            "visible_de": self.visible_de_counts,
+            "filters_sn": self.active_sn_filters,
+            "filters_de": self.active_de_filters,
+            "available_sn": self.available_sn,
+            "available_de": self.available_de,
             "current_sn_codes": current_sn,
             "current_de_codes": current_de,
             "current_selected": (self.current_absolute_index in self.selected_indices)
@@ -1787,28 +1818,30 @@ class GeneratorTab(tk.Frame):
             self.log_queue.put("Unexpected error in GeneratorTab._set_diagnostics_alert")
         if not frame.winfo_ismapped():
             try:
-                pack_kwargs = {'fill': 'x', 'padx': 8, 'pady': (0, 4)}
-                log_frame = getattr(self, 'log_frame', None)
-                if log_frame and log_frame.winfo_manager():
-                    pack_kwargs['before'] = log_frame
-                frame.pack(**pack_kwargs)
+                frame.pack(fill='x', padx=8, pady=(0, 4), before=self._main_pane)
             except tk.TclError:
                 self.log_queue.put("Unexpected error in GeneratorTab._set_diagnostics_alert")
 
     def _update_log_visibility(self, *_args) -> None:
-        frame = getattr(self, 'log_frame', None)
-        if not frame:
+        pane = getattr(self, "_main_pane", None)
+        frame = getattr(self, "log_frame", None)
+        if not pane or not frame:
             return
-        if self._logs_visible.get():
-            if not frame.winfo_manager():
-                frame.pack(fill="both", expand=True, padx=8, pady=(4, 4))
-        else:
-            if frame.winfo_manager():
-                frame.pack_forget()
 
-    def _toggle_logs_shortcut(self, _event=None) -> None:
+        panes = set(pane.panes())
+        key = str(frame)
+
+        if self._logs_visible.get():
+            if key not in panes:
+                pane.add(frame, weight=1)
+        else:
+            if key in panes:
+                pane.forget(frame)
+
+    def _toggle_logs_shortcut(self, _event=None) -> str:
         self._logs_visible.set(not self._logs_visible.get())
         self._update_log_visibility()
+        return "break"
 
     def _set_diagnostics_attention(self, required: bool) -> None:
         self._diagnostics_attention_flag = bool(required)
@@ -1846,15 +1879,35 @@ class GeneratorTab(tk.Frame):
         return LLMConnect._scrub_secret(text)
 
     def _build_widgets(self):
-        notebook = ttk.Notebook(self, style="Narremgen.TNotebook")
-        notebook.pack(fill="both", expand=True, padx=8, pady=4)
+        outer = ttk.Frame(self)
+        outer.pack(fill="both", expand=True)
+        self._outer = outer
+
+        status_frame = ttk.Frame(outer)
+        status_frame.pack(side="bottom", fill="x", padx=8, pady=(0, 8))
+        self.status_var = tk.StringVar(value="Idle")
+        ttk.Label(status_frame, textvariable=self.status_var).pack(side="left")
+        log_toggle = ttk.Checkbutton(
+            status_frame,
+            text="Show logs (Ctrl+L)",
+            variable=self._logs_visible,
+            command=self._update_log_visibility,
+        )
+        log_toggle.pack(side="right")
+        self._disabled_widget_exclusions.add(log_toggle)
+
+        pane = ttk.Panedwindow(outer, orient="vertical")
+        pane.pack(side="top", fill="both", expand=True, padx=8, pady=4)
+        self._main_pane = pane
+
+        notebook = ttk.Notebook(pane, style="Narremgen.TNotebook")
+        pane.add(notebook, weight=4)
         self.generator_notebook = notebook
         self._notebook_tabs: dict[str, str] = {}
 
         run_frame = ttk.Frame(notebook)
         settings_frame = ttk.Frame(notebook)
         variants_frame = ttk.Frame(notebook)
-        
         diagnostics_frame = ttk.Frame(notebook)
 
         notebook.add(run_frame, text="Run")
@@ -1873,36 +1926,41 @@ class GeneratorTab(tk.Frame):
         self._build_variants_tab(variants_frame)
         self._build_diagnostics_tab(diagnostics_frame)
 
-        alert_frame = ttk.Frame(self, padding=(8, 4))
-        alert_label = ttk.Label(alert_frame, textvariable=self._diagnostics_alert_var, foreground="#92400e", wraplength=900, justify="left")
+        alert_frame = ttk.Frame(outer, padding=(8, 4))
+        alert_label = ttk.Label(
+            alert_frame,
+            textvariable=self._diagnostics_alert_var,
+            foreground="#92400e",
+            wraplength=900,
+            justify="left",
+        )
         alert_label.pack(side="left", fill="x", expand=True)
-        ttk.Button(alert_frame, text="Open diagnostics", command=self._focus_diagnostics_tab).pack(side="right", padx=(8, 0))
-        alert_frame.pack_forget()
+        ttk.Button(
+            alert_frame,
+            text="Open diagnostics",
+            command=self._focus_diagnostics_tab,
+        ).pack(side="right", padx=(8, 0))
         self.diagnostics_alert_frame = alert_frame
         self.diagnostics_alert_label = alert_label
-
-        log_frame = ttk.LabelFrame(self, text="Logs")
+        log_frame = ttk.LabelFrame(pane, text="Logs")
         self.log_frame = log_frame
         ttk.Label(log_frame, textvariable=self.active_workdir_var, anchor="w").pack(fill="x", padx=6, pady=(4, 2))
-        self.log_text = tk.Text(log_frame, wrap="word", height=15, bg="black", fg="#0f0")
-        self.log_text.pack(fill="both", expand=True)
+
+        log_container = ttk.Frame(log_frame)
+        log_container.pack(fill="both", expand=True, padx=6, pady=(0, 6))
+
+        self.log_text = tk.Text(log_container, wrap="word", height=15, bg="black", fg="#0f0")
+        log_scroll = ttk.Scrollbar(log_container, orient="vertical", command=self.log_text.yview)
+        self.log_text.configure(yscrollcommand=log_scroll.set)
+
+        self.log_text.pack(side="left", fill="both", expand=True)
+        log_scroll.pack(side="right", fill="y")
+
         self.log_text.configure(state="disabled")
         self._disabled_widget_exclusions.add(self.log_text)
-
-        status_frame = ttk.Frame(self)
-        status_frame.pack(fill="x", padx=8, pady=(0, 8))
-        self.status_var = tk.StringVar(value="Idle")
-        ttk.Label(status_frame, textvariable=self.status_var).pack(side="left")
-        log_toggle = ttk.Checkbutton(
-            status_frame,
-            text="Show logs (Ctrl+L)",
-            variable=self._logs_visible,
-            command=self._update_log_visibility,
-        )
-        log_toggle.pack(side="right")
-        self._disabled_widget_exclusions.add(log_toggle)
-
         self._refresh_env_snapshot()
+        self._update_log_visibility()
+
 
     def _build_run_tab(self, parent):
         top = ttk.Frame(parent)
@@ -2887,7 +2945,7 @@ class GeneratorTab(tk.Frame):
 
     def _trim_log_lines(self) -> None:
         try:
-            total_lines = int(float(self.log_text.index("end-1c")))
+            total_lines = int(str(self.log_text.index("end-1c")).split(".", 1)[0])
         except (ValueError, tk.TclError):
             return
         if total_lines <= self._log_line_limit:
@@ -3695,7 +3753,7 @@ class NavigationPanel(tk.Frame):
                 self.tree.selection_set(sel_id)
                 self.tree.see(sel_id)
             except Exception:
-                self.log_queue.put("Unexpected error in GeneratorTab._refresh")
+                _logger.warning("Unexpected error in NavigationPanel._refresh", exc_info=True)
         if display_texts:
             widest = max(self._tree_font.measure(t) for t in display_texts) + 40
             target = min(900, max(200, widest))
@@ -3719,16 +3777,17 @@ class NavigationPanel(tk.Frame):
         try:
             self.entry_search.configure(font=(self.font_fam, normalized))
         except tk.TclError:
-            self.log_queue.put("Unexpected error in GeneratorTab._apply_font_size")
+            _logger.warning("Unexpected error in NavigationPanel._apply_font_size", exc_info=True)
         self.tree.tag_configure('current', font=(self.font_fam, normalized, 'bold'))
         try:
             self._nav_style.configure("Nav.Treeview", font=(self.font_fam, normalized), rowheight=self.row_ht)
         except tk.TclError:
-            self.log_queue.put("Unexpected error in GeneratorTab._apply_font_size")
+            _logger.warning("Unexpected error in NavigationPanel._apply_font_size", exc_info=True)
         try:
             CFG.set('UI', 'ui_font_size_nav', normalized)
         except Exception:
-            self.log_queue.put("Unexpected error in GeneratorTab._apply_font_size")
+            _logger.warning("Unexpected error in NavigationPanel._apply_font_size", exc_info=True)
+
 
     def _strip_trailing_codes(self, header: str) -> str:
         if not header:
@@ -3744,7 +3803,7 @@ class NavigationPanel(tk.Frame):
             self.callbacks['nav_to'](int(self.tree.selection()[0]))
             self.tree.focus_set()
         except Exception:
-            self.log_queue.put("Unexpected error in GeneratorTab._on_select")
+            _logger.warning("Unexpected error in NavigationPanel._on_select", exc_info=True)
 
     def _on_space(self, _event):
         self.callbacks['toggle_sel']()
@@ -3826,8 +3885,8 @@ class StatsPanel(tk.Frame):
         super().__init__(master, **kwargs)
         self.callbacks = callbacks
         self.nb = ttk.Notebook(self); self.nb.pack(fill='both', expand=True)
-        self.f_list = tk.Frame(self.nb); self.nb.add(self.f_list, text="Filtres")
-        self.f_gauge = tk.Frame(self.nb); self.nb.add(self.f_gauge, text="Jauges")
+        self.f_list = tk.Frame(self.nb); self.nb.add(self.f_list, text="Filters")
+        self.f_gauge = tk.Frame(self.nb); self.nb.add(self.f_gauge, text="Plots")
         base_family = CFG.get('UI', 'font_family') or 'Consolas'
         base_size = int(CFG.get('UI', 'font_size_list'))
         self.list_font = tkfont.Font(family=base_family, size=base_size)
@@ -3871,12 +3930,50 @@ class StatsPanel(tk.Frame):
         self._tags(t); return t
 
     def _setup_gauge(self):
-        paned = tk.PanedWindow(self.f_gauge, orient=tk.VERTICAL); paned.pack(fill='both', expand=True)
-        f1 = tk.Frame(paned); paned.add(f1); self.g_sn = scrolledtext.ScrolledText(f1, font=self.list_font)
-        self.g_sn.pack(fill='both', expand=True)
-        f2 = tk.Frame(paned); paned.add(f2); self.g_de = scrolledtext.ScrolledText(f2, font=self.list_font)
-        self.g_de.pack(fill='both', expand=True)
-        self._tags(self.g_sn); self._tags(self.g_de); self.g_sn.bind('<Configure>', lambda e: self.update_stats(self.last_stats))
+        self._gauge_sash_init = False
+
+        paned = tk.PanedWindow(self.f_gauge, orient=tk.VERTICAL, sashwidth=8)
+        paned.pack(fill='both', expand=True)
+        self._gauge_paned = paned
+
+        sn_frame = tk.Frame(paned)
+        de_frame = tk.Frame(paned)
+
+        paned.add(sn_frame, stretch='always', minsize=160)
+        paned.add(de_frame, stretch='always', minsize=70)
+
+        tk.Label(sn_frame, text="SN (selected in current list)", font=('Arial', 8, 'bold')).pack(anchor='w', padx=4, pady=(4, 0))
+        self.g_sn = tk.Text(sn_frame, font=self.list_font, wrap="none", height=10)
+        sn_y = ttk.Scrollbar(sn_frame, orient="vertical", command=self.g_sn.yview)
+        sn_x = ttk.Scrollbar(sn_frame, orient="horizontal", command=self.g_sn.xview)
+        self.g_sn.configure(yscrollcommand=sn_y.set, xscrollcommand=sn_x.set)
+        self.g_sn.pack(fill='both', expand=True, padx=4, pady=4)
+        sn_y.pack(side="right", fill="y")
+        sn_x.pack(side="bottom", fill="x")
+
+        tk.Label(de_frame, text="DE (selected in current list)", font=('Arial', 8, 'bold')).pack(anchor='w', padx=4, pady=(4, 0))
+        self.g_de = tk.Text(de_frame, font=self.list_font, wrap="none", height=8)
+        de_y = ttk.Scrollbar(de_frame, orient="vertical", command=self.g_de.yview)
+        de_x = ttk.Scrollbar(de_frame, orient="horizontal", command=self.g_de.xview)
+        self.g_de.configure(yscrollcommand=de_y.set, xscrollcommand=de_x.set)
+        self.g_de.pack(fill='both', expand=True, padx=4, pady=4)
+        de_y.pack(side="right", fill="y")
+        de_x.pack(side="bottom", fill="x")
+
+        self._tags(self.g_sn)
+        self._tags(self.g_de)
+
+        def init_sash():
+            if self._gauge_sash_init:
+                return
+            h = paned.winfo_height()
+            if h > 20:
+                paned.sash_place(0, 0, int(h * 0.78))
+                self._gauge_sash_init = True
+
+        self.after_idle(init_sash)
+        self.g_sn.bind('<Configure>', lambda e: self.update_stats(self.last_stats))
+        self.g_de.bind('<Configure>', lambda e: self.update_stats(self.last_stats))
 
     def _apply_font_size(self):
         try:
@@ -3928,11 +4025,17 @@ class StatsPanel(tk.Frame):
         if not s: return
         self.last_stats = s
         current_selected = s.get('current_selected', False)
+
+        sel_sn = s.get('sel_visible_sn', Counter())
+        sel_de = s.get('sel_visible_de', Counter())
+        vis_sn = s.get('visible_sn', Counter())
+        vis_de = s.get('visible_de', Counter())
+
         self._draw_list(
             self.txt_sn,
             s['total_sn'],
-            s['sel_sn'],
-            s.get('visible_sn', Counter()),
+            sel_sn,
+            vis_sn,
             s['filters_sn'],
             s['available_sn'],
             s.get('current_sn_codes', set()),
@@ -3941,15 +4044,16 @@ class StatsPanel(tk.Frame):
         self._draw_list(
             self.txt_de,
             s['total_de'],
-            s['sel_de'],
-            s.get('visible_de', Counter()),
+            sel_de,
+            vis_de,
             s['filters_de'],
             s['available_de'],
             s.get('current_de_codes', set()),
             current_selected
         )
-        self._draw_gauge(self.g_sn, s['total_sn'], s['sel_sn'])
-        self._draw_gauge(self.g_de, s['total_de'], s['sel_de'])
+        self._draw_gauge(self.g_sn, vis_sn, sel_sn)
+        self._draw_gauge(self.g_de, vis_de, sel_de)
+
 
     def _draw_list(self, w, tot, sel, vis, act, avail, current_codes, highlight_selected):
         w.config(state=tk.NORMAL); w.delete('1.0', tk.END)
@@ -4000,30 +4104,42 @@ class StatsPanel(tk.Frame):
         if pad > 0:
             widget.insert(tk.END, " " * pad, tags)
 
-    def _draw_gauge(self, w, tot, sel):
-        w.config(state=tk.NORMAL); w.delete('1.0', tk.END)
-        if not tot:
+    def _draw_gauge(self, w, visible_counts, selected_counts):
+        w.config(state=tk.NORMAL)
+        w.delete('1.0', tk.END)
+
+        if not visible_counts:
             w.config(state=tk.DISABLED)
             return
+
         width_px = w.winfo_width()
         if width_px <= 1:
-            width_px = 400
-        approx_char_px = max(8, self.list_font.measure("W"))
-        bar_len = max(6, min(40, (width_px - 80) // approx_char_px))
+            width_px = 520
+
+        char_px = max(6, self.list_font.measure("0"))
         entries = []
-        for c in self._sorted_codes(tot.keys()):
-            total = tot[c]
-            ratio = sel[c] / total if total > 0 else 0
+        for c in self._sorted_codes(visible_counts.keys()):
+            denom = int(visible_counts.get(c, 0))
+            num = int(selected_counts.get(c, 0))
+            ratio = (num / denom) if denom > 0 else 0.0
+            entries.append((c, ratio, num, denom))
+
+        for code, ratio, num, denom in entries:
+            prefix = f"{code:<6} "
+            suffix = f" {num}/{denom} {ratio*100:5.1f}%"
+            reserve_px = self.list_font.measure(prefix + "[] " + suffix) + 16
+            bar_len = max(8, min(80, int((width_px - reserve_px) / char_px)))
             filled = int(round(ratio * bar_len))
-            empty = max(0, bar_len - filled)
-            entries.append((c, filled, empty))
-        col_width = 9 + bar_len
-        for i in range(0, len(entries), 2):
-            self._insert_gauge_block(w, entries[i], col_width, bar_len)
-            if i + 1 < len(entries):
-                w.insert(tk.END, "  ")
-                self._insert_gauge_block(w, entries[i + 1], col_width, bar_len)
-            w.insert(tk.END, "\n")
+            filled = max(0, min(bar_len, filled))
+            empty = bar_len - filled
+
+            w.insert(tk.END, prefix, "normal")
+            w.insert(tk.END, "[", "normal")
+            w.insert(tk.END, " " * filled, "fill")
+            w.insert(tk.END, " " * empty, "empty")
+            w.insert(tk.END, "]", "normal")
+            w.insert(tk.END, suffix + "\n", "normal")
+
         w.config(state=tk.DISABLED)
 
     def _insert_gauge_block(self, widget, entry, col_width, bar_len):
@@ -4141,9 +4257,92 @@ class MainView(tk.Tk):
             CFG.set('UI', 'ui_font_size_variants', normalized)
             CFG.set('UI', 'ui_font_size_main', normalized)
         except Exception:
-            self.log_queue.put("Unexpected error in GeneratorTab._on_variant_font_change")
+            _logger.warning("Unexpected error in MainView._on_variant_font_change", exc_info=True)
 
     def msg(self, t, m, err=False): (messagebox.showerror if err else messagebox.showinfo)(t, m)
+
+# class Controller:
+#     def __init__(self):
+#         self.m = MergerModel()
+#         self.v = None
+#         self._autosave_path = CONFIG_ROOT / "autosave_selection.json"
+
+#     def set_view(self, v): self.v = v; self.v.refresh(self.m); self.v.after(30000, self.autosave)
+
+#     def autosave(self):
+#         try:
+#             self._autosave_path.parent.mkdir(parents=True, exist_ok=True)
+#             with open(self._autosave_path, "w", encoding="utf-8") as f:
+#                 json.dump(list(self.m.selected_indices), f)
+#         except (OSError, TypeError):
+#             _logger.warning("[MERGER] autosave failed", exc_info=True)
+#         self.v.after(30000, self.autosave)
+
+
+# def load(self, i): 
+#     f = filedialog.askopenfilename()
+#     if not f:
+#         return
+#     ok, msg = self.m.load_file_into_slot(i, f)
+#     if ok:
+#         self.v.refresh(self.m)
+#     else:
+#         self.v.msg("Erreur", msg, True)
+#     def clear(self, i): self.m.clear_slot(i); self.v.refresh(self.m)
+#     def nav_abs(self, i): 
+#         if self.m.set_absolute_index(i): self.v.refresh(self.m)
+#     def navigate(self, d): 
+#         if self.m.move_index(d): self.v.refresh(self.m)
+#     def toggle(self): self.m.toggle_selection_current(); self.v.refresh(self.m)
+#     def search(self, q): self.m.set_search_query(q); self.v.refresh(self.m)
+#     def toggle_filter(self, t, c):
+#         (self.m.toggle_filter_sn if t=='SN' else self.m.toggle_filter_de)(c); self.v.refresh(self.m)
+#     def all_sn(self): self.m.select_all_sn(); self.v.refresh(self.m)
+#     def none_sn(self): self.m.select_none_sn(); self.v.refresh(self.m)
+#     def all_de(self): self.m.select_all_de(); self.v.refresh(self.m)
+#     def none_de(self): self.m.select_none_de(); self.v.refresh(self.m)
+    
+#     def copy1(self, i): 
+#         c, _ = self.m.get_text_content(i)
+#         if c: self.v.clipboard_clear(); self.v.clipboard_append(c); self.v.update()
+#     def save1(self, i):
+#         c, n = self.m.get_text_content(i)
+#         if not c: return
+#         f = filedialog.asksaveasfilename(initialfile=n, defaultextension=".txt")
+#         if f: 
+#             with open(f, "w", encoding="utf-8") as o: o.write(c)
+#     def copy_all(self):
+#         c = self.m.get_all_views_content()
+#         if c: self.v.clipboard_clear(); self.v.clipboard_append(c); self.v.update()
+    
+#     def import_sel(self):
+#         f = filedialog.askopenfilename()
+#         if f: 
+#             ok, m = self.m.import_selection(f)
+#             if ok: self.v.refresh(self.m); self.v.msg("Info", m)
+#             else: self.v.msg("Erreur", m, True)
+    
+#     def reset(self):
+#         if messagebox.askyesno("RAZ", "Tout désélectionner ->"):
+#             self.m.backup_selection(); self.m.reset_all_selections(); self.v.refresh(self.m)
+            
+#     def save_batch(self):
+#         d = self.m.get_batch_export_data()
+#         if not d: return self.v.msg("Erreur", "Rien de sélectionné", True)
+#         tgt = filedialog.askdirectory()
+#         if tgt:
+#             fp = os.path.join(tgt, "SELECTED_HEADERS_LIST.txt")
+#             if os.path.exists(fp): shutil.copy(fp, fp+".bak")
+#             with open(fp, "w", encoding="utf-8") as f: f.write("\n".join(d['headers']))
+#             for i, s in d['slots'].items():
+#                 with open(os.path.join(tgt, f"{os.path.splitext(s['filename'])[0]}_SELECTED.txt"), "w", encoding="utf-8") as f: f.write(s['content'])
+#             self.v.msg("Succès", "Sauvegardé.")
+
+# if __name__ == '__main__':
+#     c = Controller()
+#     app = MainView(c)
+#     c.set_view(app)
+#     app.mainloop()
 
 class Controller:
     def __init__(self):
@@ -4151,69 +4350,130 @@ class Controller:
         self.v = None
         self._autosave_path = CONFIG_ROOT / "autosave_selection.json"
 
-    def set_view(self, v): self.v = v; self.v.refresh(self.m); self.v.after(30000, self.autosave)
+    def set_view(self, v):
+        self.v = v
+        self.v.refresh(self.m)
+        self.v.after(30000, self.autosave)
 
     def autosave(self):
         try:
             self._autosave_path.parent.mkdir(parents=True, exist_ok=True)
             with open(self._autosave_path, "w", encoding="utf-8") as f:
                 json.dump(list(self.m.selected_indices), f)
-        except (OSError, TypeError) as e:
-            self.log_queue.put("[MERGER] autosave failed")
-        self.v.after(30000, self.autosave)
+        except (OSError, TypeError):
+            _logger.warning("[MERGER] autosave failed", exc_info=True)
+        if self.v is not None:
+            self.v.after(30000, self.autosave)
 
-    def load(self, i): 
+    def load(self, i):
         f = filedialog.askopenfilename()
-        if f and self.m.load_file_into_slot(i, f): self.v.refresh(self.m)
-    def clear(self, i): self.m.clear_slot(i); self.v.refresh(self.m)
-    def nav_abs(self, i): 
-        if self.m.set_absolute_index(i): self.v.refresh(self.m)
-    def navigate(self, d): 
-        if self.m.move_index(d): self.v.refresh(self.m)
-    def toggle(self): self.m.toggle_selection_current(); self.v.refresh(self.m)
-    def search(self, q): self.m.set_search_query(q); self.v.refresh(self.m)
+        if not f:
+            return
+        ok, msg = self.m.load_file_into_slot(i, f)
+        if ok:
+            self.v.refresh(self.m)
+        else:
+            self.v.msg("Erreur", msg, True)
+
+    def clear(self, i):
+        self.m.clear_slot(i)
+        self.v.refresh(self.m)
+
+    def nav_abs(self, i):
+        if self.m.set_absolute_index(i):
+            self.v.refresh(self.m)
+
+    def navigate(self, d):
+        if self.m.move_index(d):
+            self.v.refresh(self.m)
+
+    def toggle(self):
+        self.m.toggle_selection_current()
+        self.v.refresh(self.m)
+
+    def search(self, q):
+        self.m.set_search_query(q)
+        self.v.refresh(self.m)
+
     def toggle_filter(self, t, c):
-        (self.m.toggle_filter_sn if t=='SN' else self.m.toggle_filter_de)(c); self.v.refresh(self.m)
-    def all_sn(self): self.m.select_all_sn(); self.v.refresh(self.m)
-    def none_sn(self): self.m.select_none_sn(); self.v.refresh(self.m)
-    def all_de(self): self.m.select_all_de(); self.v.refresh(self.m)
-    def none_de(self): self.m.select_none_de(); self.v.refresh(self.m)
-    
-    def copy1(self, i): 
+        (self.m.toggle_filter_sn if t == 'SN' else self.m.toggle_filter_de)(c)
+        self.v.refresh(self.m)
+
+    def all_sn(self):
+        self.m.select_all_sn()
+        self.v.refresh(self.m)
+
+    def none_sn(self):
+        self.m.select_none_sn()
+        self.v.refresh(self.m)
+
+    def all_de(self):
+        self.m.select_all_de()
+        self.v.refresh(self.m)
+
+    def none_de(self):
+        self.m.select_none_de()
+        self.v.refresh(self.m)
+
+    def copy1(self, i):
         c, _ = self.m.get_text_content(i)
-        if c: self.v.clipboard_clear(); self.v.clipboard_append(c); self.v.update()
+        if c:
+            self.v.clipboard_clear()
+            self.v.clipboard_append(c)
+            self.v.update()
+
     def save1(self, i):
         c, n = self.m.get_text_content(i)
-        if not c: return
+        if not c:
+            return
         f = filedialog.asksaveasfilename(initialfile=n, defaultextension=".txt")
-        if f: 
-            with open(f, "w", encoding="utf-8") as o: o.write(c)
+        if f:
+            with open(f, "w", encoding="utf-8") as o:
+                o.write(c)
+
     def copy_all(self):
         c = self.m.get_all_views_content()
-        if c: self.v.clipboard_clear(); self.v.clipboard_append(c); self.v.update()
-    
+        if c:
+            self.v.clipboard_clear()
+            self.v.clipboard_append(c)
+            self.v.update()
+
     def import_sel(self):
         f = filedialog.askopenfilename()
-        if f: 
-            ok, m = self.m.import_selection(f)
-            if ok: self.v.refresh(self.m); self.v.msg("Info", m)
-            else: self.v.msg("Erreur", m, True)
-    
+        if not f:
+            return
+        ok, m = self.m.import_selection(f)
+        if ok:
+            self.v.refresh(self.m)
+            self.v.msg("Info", m)
+        else:
+            self.v.msg("Erreur", m, True)
+
     def reset(self):
         if messagebox.askyesno("RAZ", "Tout désélectionner ->"):
-            self.m.backup_selection(); self.m.reset_all_selections(); self.v.refresh(self.m)
-            
+            self.m.backup_selection()
+            self.m.reset_all_selections()
+            self.v.refresh(self.m)
+
     def save_batch(self):
         d = self.m.get_batch_export_data()
-        if not d: return self.v.msg("Erreur", "Rien de sélectionné", True)
+        if not d:
+            self.v.msg("Erreur", "Rien de sélectionné", True)
+            return
         tgt = filedialog.askdirectory()
-        if tgt:
-            fp = os.path.join(tgt, "SELECTED_HEADERS_LIST.txt")
-            if os.path.exists(fp): shutil.copy(fp, fp+".bak")
-            with open(fp, "w", encoding="utf-8") as f: f.write("\n".join(d['headers']))
-            for i, s in d['slots'].items():
-                with open(os.path.join(tgt, f"{os.path.splitext(s['filename'])[0]}_SELECTED.txt"), "w", encoding="utf-8") as f: f.write(s['content'])
-            self.v.msg("Succès", "Sauvegardé.")
+        if not tgt:
+            return
+        fp = os.path.join(tgt, "SELECTED_HEADERS_LIST.txt")
+        if os.path.exists(fp):
+            shutil.copy2(fp, fp + ".bak")
+        with open(fp, "w", encoding="utf-8") as f:
+            f.write("\n".join(d['headers']))
+        for i, s in d['slots'].items():
+            out_path = os.path.join(tgt, f"{os.path.splitext(s['filename'])[0]}_SELECTED.txt")
+            with open(out_path, "w", encoding="utf-8") as f:
+                f.write(s['content'])
+        self.v.msg("Succès", "Sauvegardé.")
+
 
 if __name__ == '__main__':
     c = Controller()

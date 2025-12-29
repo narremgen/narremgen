@@ -771,6 +771,7 @@ def run_one_variant_pipeline(
     overwrite_existing: bool =False,
     do_stats:bool =False,
     use_emo:bool =False,
+    do_plots:bool =False,    
     verbose: bool = False,
     ) -> tuple[Path | None, Path | None, 
            Path | None, Path | None]:
@@ -924,7 +925,8 @@ def run_one_variant_pipeline(
             neutral_stats_df  = analyze_text_outputs(corpus_df,
                                                     text_col="Text", label="neutral", 
                                                     use_emotions=use_emo, verbose=verbose,
-                                                    per_text_out=neutral_per_text_csv,)
+                                                    per_text_out=neutral_per_text_csv,
+                                                    do_plots=do_plots)
             variant_csv = variant_data["variant_path"] / f"VariantsGenerated_{vt}.csv"
             df_variant = pd.read_csv(variant_csv,sep=";")
             if df_variant is None or df_variant.empty:
@@ -933,7 +935,8 @@ def run_one_variant_pipeline(
                 )
             variant_stats_df = analyze_text_outputs(df_variant, text_col="Generated_Text", 
                                                     label=vt,use_emotions=use_emo,verbose=verbose,
-                                                    per_text_out=variant_per_text_csv,)
+                                                    per_text_out=variant_per_text_csv,
+                                                    do_plots=do_plots)
             
             summary_stats_df = pd.concat([neutral_stats_df, variant_stats_df],ignore_index=True)
             summary_stats_csv = workdir / "variants" / f"{vt}" / f"stats_neutral_vs_{vt}.csv"

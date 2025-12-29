@@ -509,16 +509,24 @@ def analyze_text_outputs(
     numeric_cols = df_metrics.select_dtypes(include=[np.number]).columns
 
     for col in numeric_cols:
-        vals = df_metrics[col].astype(float)
-        summary[f"{col}_mean"] = float(vals.mean())
-        summary[f"{col}_median"] = float(vals.median())
-        summary[f"{col}_std"] = float(vals.std(ddof=1))
+        vals = (
+            pd.to_numeric(df_metrics[col], errors="coerce")
+            .replace([np.inf, -np.inf], np.nan)
+            .dropna()
+        )
+        summary[f"{col}_mean"] = float(vals.mean()) if len(vals) else np.nan
+        summary[f"{col}_median"] = float(vals.median()) if len(vals) else np.nan
+        summary[f"{col}_std"] = float(vals.std(ddof=1)) if len(vals) > 1 else np.nan
 
     for col in ("len_tokens", "len_chars", "word_count", "len_sentences"):
         if col in df_metrics.columns:
-            vals = df_metrics[col].astype(float)
-            summary[f"{col}_min"] = float(vals.min())
-            summary[f"{col}_max"] = float(vals.max())
+            vals = (
+                pd.to_numeric(df_metrics[col], errors="coerce")
+                .replace([np.inf, -np.inf], np.nan)
+                .dropna()
+            )
+            summary[f"{col}_min"] = float(vals.min()) if len(vals) else np.nan
+            summary[f"{col}_max"] = float(vals.max()) if len(vals) else np.nan
 
     if label is not None:
         summary["corpus"] = str(label)

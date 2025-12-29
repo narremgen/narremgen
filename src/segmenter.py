@@ -47,7 +47,7 @@ class SimpleSegmenterApp:
 
         self.root = root
         if isinstance(root, (tk.Tk, tk.Toplevel)):
-            root.title("Segmenter")
+            root.title("Text segmenter")
 
         self._themes = {
             "light": {"bg": "#f6f7f9", "text_bg": "#ffffff", "text_fg": "#111827", "cursor": "#111827",
@@ -94,15 +94,15 @@ class SimpleSegmenterApp:
         self.text.bind("<KeyRelease>", lambda e: self._highlight_markers())
 
         for label, cmd in [
-            ("Annuler", self.text.edit_undo),
-            ("Charger le texte", self.load_text),
-            ("Auto marquer", self.auto_mark),
-            ("Insérer Marqueur", self._insert_marker),
-            ("Supprimer Marqueur", self._delete_marker),
-            ("Ajouter Ligne", self.insert_newline),
-            ("Sauvegarder CSV", self.save_csv),
-            ("Sauvegarder texte marqué", self.save_marked_text),
-            ("Désélectionner", lambda: self.text.tag_remove(tk.SEL, "1.0", tk.END)),
+            ("Undo", self.text.edit_undo),
+            ("Load text", self.load_text),
+            ("Auto-mark", self.auto_mark),
+            ("Insert marker", self._insert_marker),
+            ("Delete marker", self._delete_marker),
+            ("Insert line break", self.insert_newline),
+            ("Save CSV", self.save_csv),
+            ("Save marked text", self.save_marked_text),
+            ("Deselect", lambda: self.text.tag_remove(tk.SEL, "1.0", tk.END)),
         ]:
             b = tk.Button(
                 btn_frame, text=label, command=cmd,
@@ -224,23 +224,22 @@ class SimpleSegmenterApp:
         - Only plain UTF-8 text files are supported.
         - The markers '>||<' are highlighted automatically after loading.
         """
-
-        path = filedialog.askopenfilename(filetypes=[("Text Files","*.txt"),("All Files","*.*")])
-        if not path: return
-        content = open(path, encoding='utf-8').read()
-        self.text.delete('1.0', tk.END)
+        path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt"), ("All files", "*.*")])
+        if not path:
+            return
+        content = open(path, encoding="utf-8").read()
+        self.source_path = path
+        self.source_basename = os.path.splitext(os.path.basename(path))[0]
+        self.text.delete("1.0", tk.END)
         self.text.insert(tk.END, content)
         self._highlight_markers()
 
     def auto_mark(self):
         """
-        Automatically insert segmentation markers into a diary-style text.
+        Insert general segmentation markers by chunking text into roughly regular blocks.
 
-        This feature analyzes the loaded text heuristically and inserts the marker
-        token ('>||<') at probable narrative boundaries. The heuristic currently:
-        1. Detects lines that begin with a date or a day name (e.g., "12 June", "Monday").
-        2. Splits long paragraphs every ~5 sentences to improve readability.
-        3. Rebuilds the text with inserted markers, then refreshes highlighting.
+        The marker token is the literal string '>||<'.
+        This function does not try to infer semantic boundaries.
 
         Parameters
         ----------
@@ -255,32 +254,46 @@ class SimpleSegmenterApp:
         Notes
         -----
         - The algorithm uses simple regex and sentence heuristics rather than NLP parsing.
-        - Existing markers are preserved; duplicates are avoided.
+        - Existing markers are preserved as boundaries.
         - After auto-marking, the user can adjust markers manually before exporting.
         """
-        content = self.text.get('1.0', tk.END)
-        date_pattern = re.compile(r'^(\d{1,2} (?:janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\b)', re.MULTILINE)
-        content = date_pattern.sub(r'>||< \1', content)
-        parts = content.split('>||<')
-        rec = ''
-        for part in parts:
-            seg = part.strip()
-            if not seg: continue
-            lines = seg.split('\n',1)
-            head, body = ('', seg)
-            if re.match(r'^\d{1,2} (?:mai|juin|juillet|août)\b', lines[0]):
-                head = lines[0] + '\n'
-                body = lines[1] if len(lines)>1 else ''
-            sentences = re.split(r'(?<=[\.\!?])\s+', body)
-            new_body = ''
-            for i, s in enumerate(sentences,1):
-                if not s.strip(): continue
-                new_body += s.strip() + ' '
-                if i % 5 == 0:
-                    new_body += '>||< '
-            rec += '>||< ' + head + new_body.strip() + '\n'
-        self.text.delete('1.0', tk.END)
-        self.text.insert(tk.END, rec)
+        marker = ">||<"
+        raw = self.text.get("1.0", tk.END)
+        if not raw.strip():
+            return
+
+        max_sentences = 7
+        content = raw.replace("\r\n", "\n").replace("\r", "\n")
+
+        chunks_in = [p.strip() for p in content.split(marker) if p.strip()]
+        sentence_re = re.compile(r"(?<=[.!?])\s+(?=[A-ZÀ-ÖØ-Þ0-9])")
+
+        out = []
+
+        for block in chunks_in:
+            paragraphs = re.split(r"\n\s*\n", block)
+            for par in paragraphs:
+                par = par.strip()
+                if not par:
+                    continue
+
+                sentences = sentence_re.split(par)
+                sentences = [s.strip() for s in sentences if s.strip()]
+                if not sentences:
+                    continue
+
+                buf = []
+                for s in sentences:
+                    buf.append(s)
+                    if len(buf) >= max_sentences:
+                        out.append(" ".join(buf))
+                        buf = []
+                if buf:
+                    out.append(" ".join(buf))
+
+        final = f"\n{marker}\n".join(out).strip()
+        self.text.delete("1.0", tk.END)
+        self.text.insert(tk.END, final + "\n")
         self._highlight_markers()
 
     def _insert_marker(self):
@@ -374,8 +387,8 @@ class SimpleSegmenterApp:
         if after:
             dist_after = abs(int(self.text.count(pos, after)[0]))
 
-        if dist_before == big and dist_after == big:
-            messagebox.showinfo("Pas de marqueur", "Aucun marqueur trouvé à proximité.")
+        if dist_before == big and dist_after == big:            
+            messagebox.showinfo("No marker", "No marker found nearby.")
             return
 
         if dist_before <= dist_after and before:
@@ -453,7 +466,7 @@ class SimpleSegmenterApp:
         raw = self.text.get('1.0', tk.END)
         segments = [seg.strip() for seg in raw.split('>||<') if seg.strip()]
         if not segments:
-            messagebox.showwarning("Aucun segment", "Aucun marqueur trouvé.")
+            messagebox.showwarning("No segment", "No marker found.")
             return
         base_dir = os.path.dirname(getattr(self, 'source_path', '')) or os.getcwd()
         base_name = getattr(self, 'source_basename', 'file')
@@ -474,11 +487,11 @@ class SimpleSegmenterApp:
                 txt_name = f"extrait_{base_name}_{i}.txt"
                 txt_path = os.path.join(dir_sgmts, txt_name)
                 if os.path.exists(txt_path):
-                    messagebox.showerror("Erreur", f"Le fichier '{txt_name}' existe déjà. Annulation.")
+                    messagebox.showerror("Error", f"The file '{txt_name}' already exists. Cancelling.")
                     return
                 with open(txt_path, 'w', encoding='utf-8') as tf:
                     tf.write(seg)
-        messagebox.showinfo("Sauvegarde CSV",f"{len(segments)} segments enregistrés.\nCSV: {csv_path}\nExtraits: {dir_sgmts}")
+        messagebox.showinfo("Save  CSV",f"{len(segments)} segments saved.\nCSV: {csv_path}\nExcerpts: {dir_sgmts}")
 
     def save_marked_text(self):
         """
@@ -506,14 +519,15 @@ class SimpleSegmenterApp:
         - The operation does not alter the text currently displayed in the editor.
         """
 
-        path = filedialog.asksaveasfilename(defaultextension=".txt",filetypes=[("Text","*.txt")])
-        if not path: return
+        path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text files", "*.txt")])
+        if not path:
+            return
         if os.path.exists(path):
-            messagebox.showerror("Erreur","Fichier existe déjà !")
+            messagebox.showerror("Error", "The file already exists.")
             return
         with open(path,'w',encoding='utf-8') as f:
             f.write(self.text.get('1.0',tk.END))
-        messagebox.showinfo("Texte enregistré",path)
+        messagebox.showinfo("Saved Text ",path)
 
     def _highlight_markers(self):
         """
