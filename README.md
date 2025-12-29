@@ -26,6 +26,7 @@
 - LLM-driven theme extraction and assignment, plus chapter construction for organizing texts into coherent sections (classes of texts).
 - Plain-text and TeX export of neutral and variant corpora (merged narrative files and full chaptered books for text reading/selection).
 - Integrated corpus analysis: lexical richness, length, emotion profiles, and SN/DE distributions, including neutral vs. variant comparison.
+- Textual statistics and emotion statistics of specialized language models from the literature for evaluation of generated texts or corpus.
 - Ready-to-use structure for reproducible experiments in text generation with emotions for character and educational content synthesis.
 - Graphical user interface for generation with api key checkings, creation of variants, and reading/selection of aligned textes for a topic.
 - Available connection to OpenAI, OpenRouter, Google-GenAI, Mistral, etc for text generation (see python code and interface for dry-run).
