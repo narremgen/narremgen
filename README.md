@@ -17,10 +17,7 @@
 - `interface`: Optional Tkinter GUI for the generation from a visual interface with readings. (NEW v2)
 - `main`: Optional command-line terminal module for the generation with input arguments. (NEW v2)
 
-
-<img src="https://github.com/rpriam/narremgen-code/blob/main/package/documen/SNi_DEi_Ki.png"
-     style="max-width: 250px; width: 40%;">
-     
+    
 ## Key features
 
 - Multi-batch narrative pipeline using a configurable LLM router (`llmcore`) across several providers (OpenAI, OpenRouter, Mistral, etc.).
