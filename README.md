@@ -120,6 +120,7 @@ Each directory contains:
 ```
 topic, advice, and mapping tables in csv format and generated texts
 and two subdirectories containing generated batched texts + csv files
+plus directories for variants with statistics + chaptered tex files
 ```
 
 ## Warning
