@@ -30,7 +30,7 @@
 - Ready-to-use structure for reproducible experiments in text generation with emotions for character and educational content synthesis.
 - Graphical user interface for generation with api key checkings, creation of variants, and reading/selection of aligned textes for a topic.
 - Available connection to OpenAI, OpenRouter, Google-GenAI, Mistral, etc for text generation (see python code and interface for dry-run).
-- No limited length for topic sto, available command for adding file/str long text as context for advice or generation stages in pipeline.
+- No limited length for topic str, available command for adding file/str long text as context for advice or generation stages in pipeline.
 
 Note: This package is provided *“as is”* for the research and educational purposes.  <br>
       The code was written/debogged in iterative way with help of gpt5 openai + vs code. <br>
