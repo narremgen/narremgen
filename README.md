@@ -3,7 +3,7 @@
 # **<u>A Package For Topic/Query To Books of Advice/Answers</u>**<br>
 <br>
 
-## Main modules
+## Main modules (narremgen, also called here query2book or narragen, 2025)
 
 - `pipeline`: Entry point for batch generation, variants, stats, and exports per topic run.
 - `llmcore`: Unified LLM router (role→model mapping, retries, multi-provider support).
