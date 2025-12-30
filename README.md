@@ -13,14 +13,13 @@
 - `export`: Plain-text and LaTeX exporters (merged `.txt` and `book_*.tex` from neutral and variants).
 - `analyzestats`: Length, lexical, emotion and SN/DE distribution analysis, with CSV summaries and plots.
 - `utils`: Shared helpers for workdirs, filenames, CSV repair, backups, and neutral corpus construction.
-- `segmenter`: Optional Tkinter GUI for manual segmentation and tagging (not used in batch generation).
-- `interface`: Optional Tkinter GUI for the generation from a visual interface with readings. (NEW v2)
-- `main`: Optional command-line terminal module for the generation with input arguments. (NEW v2)
+- `gui`: Optional Tkinter GUI for generation, or readings aligned/selected texts, or segmentation.
+- `main`: Optional command-line terminal module for the generation with input arguments.
 
     
 ## Key features
 
-- Multi-batch narrative pipeline using a configurable LLM router (`llmcore`) across several providers (OpenAI, OpenRouter, Mistral, etc.).
+- Multi-batch narrative pipeline using a configurable LLM router (`llmcore`) across several providers with a command-line interface.
 - Automatic topic and advice mapping, SN/DE-structured neutral generation, and aligned variant rewriting (direct, formal, other styles).
 - Robust CSV workflow: filtering, renumbering, safe merging of advice/sentence/context/mapping, consistent filenames, variant workdirs.
 - LLM-driven theme extraction and assignment, plus chapter construction for organizing texts into coherent sections (classes of texts).
