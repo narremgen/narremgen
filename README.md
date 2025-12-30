@@ -1,7 +1,8 @@
 # <br>
 # **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>
-# **<u>A Package For Making Books of Advice/Answers From A Topic </u>**<br>
-   
+# **<u>A Package For Topic/Query To Books of Advice/Answers</u>**<br>
+<br>
+
 ## Main modules
 
 - `pipeline`: Entry point for batch generation, variants, stats, and exports per topic run.
