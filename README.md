@@ -1,6 +1,7 @@
 # <br>
 # **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>
 # **<u>A Package For Topic/Query To Books of Advice/Answers</u>**<br>
+# **<u>Implementing the SN/DE/K method for Controlled Stories</u>**<br>
 <br>
 
 ## Main modules of narremgen (a "query2book", 2025)
