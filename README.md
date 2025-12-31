@@ -22,6 +22,7 @@
     
 ## Key features
 
+- Generation of a <u>Corpus</u> of <u>Stories</u> (of varying and controlled structures) and <u>Formal Texts</u> for advice from a topic (full sentence).
 - Multi-batch narrative pipeline using a configurable LLM router (`llmcore`) across several providers with a command-line interface.
 - Automatic topic and advice mapping, SN/DE-structured neutral generation, and aligned variant rewriting (direct, formal, other styles).
 - Robust CSV workflow: filtering, renumbering, safe merging of advice/sentence/context/mapping, consistent filenames, variant workdirs.
