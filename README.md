@@ -1,7 +1,7 @@
 # <br>
 # **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>
-# **<u>A Package For Topic/Query To Books of Advice/Answers</u>**<br>
-# **<u>Implements The SN/DE/K Method For Controlled Generation</u>**<br>
+**<u>(Implementing Partially The SN/DE/K Method For a Controlled Generation)</u>**<br>
+**<u>(i.e. Generating Full Booklets of Advice or Answers from a Topic or a Question)</u>**<br>
 <br>
 
 ## Main modules of narremgen
