@@ -4,7 +4,7 @@
 # **<u>Implements The SN/DE/K Method For Controlled Generation</u>**<br>
 <br>
 
-## Main modules of narremgen (a "query2book", 2025)
+## Main modules of narremgen
 
 - `pipeline`: Entry point for batch generation, variants, stats, and exports per topic run.
 - `llmcore`: Unified LLM router (role→model mapping, retries, multi-provider support).
