@@ -99,7 +99,7 @@ With command lines in the terminal: GUI <br>
 
 ```python
 # Interface generation+reading+saving
-python -m narremgen.interface
+python -m narremgen.gui
 ```
 
 ## Examples of output datasets
