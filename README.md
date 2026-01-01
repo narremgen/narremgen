@@ -139,5 +139,5 @@ In future automatic checkings may be implemented for end user.
 
 ---
 
-© 2025 - NarrEmGen Project.
+© NarrEmGen Project, 2025-2026.
      
