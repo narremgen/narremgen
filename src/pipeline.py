@@ -314,7 +314,7 @@ def generate_all_csv_batches(topic: str,
     failed_batches = []
 
     for i in range(n_batches):
-        subtopic = f"b{i+1:03d}__{topic}"
+        subtopic = f"b{i+1:06d}__{topic}"
         if verbose:
             logger_(f"\n=== Generation of batch {i+1}/{n_batches} ===")
 
