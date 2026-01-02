@@ -1142,9 +1142,10 @@ def main() -> int:
                 if global_stats is not None:
                     out_csv = workdir / "stats_all_variants_table.csv"
                     global_stats.to_csv(out_csv, sep=";", index=True)
-                    out_tex = workdir / "stats_all_variants_table.tex"
-                    out_tex.write_text(global_stats.to_latex(index=True, escape=False), encoding="utf-8")
-                    log.info("Global stats saved: %s ; %s", out_csv, out_tex)
+                    #out_tex = workdir / "stats_all_variants_table.tex"
+                    #out_tex.write_text(global_stats.to_latex(index=True, escape=False), encoding="utf-8")
+                    #log.info("Global stats saved: %s ; %s", out_csv, out_tex)
+                    log.info("Global stats saved: %s", out_csv)
 
         if args.export_book_tex:
             workdir_p = Path(workdir)

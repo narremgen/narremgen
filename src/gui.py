@@ -3542,7 +3542,7 @@ class GeneratorTab(tk.Frame):
 
                         document_title = str(run_ctx.topic) if run_ctx.topic else run_ctx.workdir.name
                         build_merged_tex_from_csv(
-                            workdir=str(workdir),
+                            workdir=str(run_ctx.workdir),
                             document_title=document_title,
                             variant_name="neutral",
                             output_tex=None,
@@ -3552,6 +3552,19 @@ class GeneratorTab(tk.Frame):
                             show_snde=True,
                             show_chapter_numbers=False,
                         )
+                        vn = str(variant_data.get("name", "")).strip().lower()
+                        if vn and vn != "neutral":
+                            build_merged_tex_from_csv(
+                                workdir=str(run_ctx.workdir),
+                                document_title=document_title,
+                                variant_name=vn, #variant_data["name"].lower(),
+                                output_tex=None,
+                                chapters_json=str(chapters_json),
+                                themes_json=str(themes_json) if themes_json.is_file() else None,
+                                show_entry_numbers=False,
+                                show_snde=True,
+                                show_chapter_numbers=False,
+                            )                        
                         self.log_queue.put("[TEX] Success.")
                     else:
                         self.log_queue.put("[CHAPTERS] Skipped (no themes assignments json).")
@@ -3591,11 +3604,10 @@ class GeneratorTab(tk.Frame):
                         out_csv = run_ctx.workdir / "stats_all_variants_table.csv"
                         global_stats.to_csv(out_csv, sep=";", index=True)
                         self.log_queue.put(f"[STATS] Saved CSV -> {out_csv}")
-
-                        out_tex = run_ctx.workdir / "stats_all_variants_table.tex"
-                        tex_code = global_stats.to_latex(index=True, escape=False)
-                        out_tex.write_text(tex_code, encoding="utf-8")
-                        self.log_queue.put(f"[STATS] Saved TEX -> {out_tex}")
+                        #out_tex = run_ctx.workdir / "stats_all_variants_table.tex"
+                        #tex_code = global_stats.to_latex(index=True, escape=False)
+                        #out_tex.write_text(tex_code, encoding="utf-8")
+                        #self.log_queue.put(f"[STATS] Saved TEX -> {out_tex}")
                     else:
                         self.log_queue.put("[WARN] Global stats not built — nothing to save.")
 
