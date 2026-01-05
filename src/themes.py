@@ -9,6 +9,10 @@ assign each advice item to a theme in batched LLM calls, with robust JSON
 parsing, on-disk raw dumps, and idempotent file-driven pipeline logic.
 """
 
+THEMES_JSON_NAME            = "advice_groups_llm.json"
+THEMES_ASSIGNMENT_JSON_NAME = "advice2groups_llm.json"
+CHAPTERS_JSON_NAME          = "chapters_llm.json"
+
 import re, json
 import pandas as pd
 from pathlib import Path

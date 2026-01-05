@@ -52,6 +52,10 @@ from .chapters import create_chapters_from_theme_assignments
 from .export import build_merged_tex_from_csv
 from .analyzestats import build_global_stats_table
 from .segmenter import SimpleSegmenterApp
+from .themes import THEMES_ASSIGNMENT_JSON_NAME
+from .themes import THEMES_JSON_NAME
+from .themes import CHAPTERS_JSON_NAME
+
 import logging
 _logger = logging.getLogger("narremgen.gui")
 # logger = logging.getLogger(__name__)
@@ -186,7 +190,7 @@ def _required_env_for_provider(provider: str) -> list[list[str]]:
         return [["GEMINI_API_KEY", "GOOGLE_API_KEY"]]
     if p == "anthropic":
         return [["ANTHROPIC_API_KEY"]]
-    if p == "ollama":                  #use for Phi3, etc
+    if p == "ollama":                  #use for Phi3, etc (local llms)
         return []  # local
     return []
 
@@ -3488,8 +3492,6 @@ class GeneratorTab(tk.Frame):
 
                 self._raise_if_cancelled(cancel_event)
                 self.log_queue.put("[STEP] Themes classification…")
-                THEMES_JSON_NAME = "advice_groups_llm.json"
-                THEMES_ASSIGNMENT_JSON_NAME = "advice2groups_llm.json"
                 themes_group_path = run_ctx.workdir / "themes" / THEMES_JSON_NAME
                 themes_assign_path = run_ctx.workdir / "themes" / THEMES_ASSIGNMENT_JSON_NAME
 
@@ -3524,9 +3526,9 @@ class GeneratorTab(tk.Frame):
 
                 try:
                     themes_dir = run_ctx.workdir / "themes"
-                    assignments_json = themes_dir / "advice2groups_llm.json"
-                    chapters_json = themes_dir / "chapters_llm.json"
-                    themes_json = themes_dir / "advice_groups_llm.json"
+                    assignments_json = themes_dir / THEMES_ASSIGNMENT_JSON_NAME
+                    chapters_json = themes_dir / CHAPTERS_JSON_NAME
+                    themes_json = themes_dir / THEMES_JSON_NAME
 
                     if assignments_json.is_file():
                         self.log_queue.put("[STEP] Chapters (from themes)…")
@@ -3536,12 +3538,12 @@ class GeneratorTab(tk.Frame):
                             merge_small_chapters=0,
                             small_chapters_title="Other",
                         )
-                        self.log_queue.put("[CHAPTERS] Success.")
+                        self.log_queue.put(f"[CHAPTERS] Success: {chapters_json}")
 
                         self.log_queue.put("[STEP] TeX export (chapters)…")
 
                         document_title = str(run_ctx.topic) if run_ctx.topic else run_ctx.workdir.name
-                        build_merged_tex_from_csv(
+                        out_neutral = build_merged_tex_from_csv(
                             workdir=str(run_ctx.workdir),
                             document_title=document_title,
                             variant_name="neutral",
@@ -3549,28 +3551,35 @@ class GeneratorTab(tk.Frame):
                             chapters_json=str(chapters_json),
                             themes_json=str(themes_json) if themes_json.is_file() else None,
                             show_entry_numbers=False,
-                            show_snde=True,
+                            show_snde=False,
                             show_chapter_numbers=False,
                         )
-                        vn = str(variant_data.get("name", "")).strip().lower()
-                        if vn and vn != "neutral":
-                            build_merged_tex_from_csv(
+                        self.log_queue.put(f"[TEX] Neutral OK: {out_neutral}")
+
+                        # variant_names = {vd.get("name", "").strip().lower() for vd in (getattr(run_ctx, "list_variant_data", None) or [])}
+                        # vn = str(getattr(run_ctx, "selected_variant", "") or "").strip().lower()
+                        variant_names = {vd.get("name", "").strip().lower() for vd in (run_ctx.list_variant_data or [])}
+                        vn = str(run_ctx.selected_variant or "").strip().lower()
+                        if vn and vn != "neutral" and vn in variant_names:
+                            out_variant = build_merged_tex_from_csv(
                                 workdir=str(run_ctx.workdir),
                                 document_title=document_title,
-                                variant_name=vn, #variant_data["name"].lower(),
+                                variant_name=vn,
                                 output_tex=None,
                                 chapters_json=str(chapters_json),
                                 themes_json=str(themes_json) if themes_json.is_file() else None,
                                 show_entry_numbers=False,
-                                show_snde=True,
+                                show_snde=False,
                                 show_chapter_numbers=False,
-                            )                        
+                            )
+                            self.log_queue.put(f"[TEX] Variant OK: {out_variant}")
+
                         self.log_queue.put("[TEX] Success.")
                     else:
                         self.log_queue.put("[CHAPTERS] Skipped (no themes assignments json).")
                 except Exception as e:
-                    self.log_queue.put(f"[TEX] Failed")
-
+                    self.log_queue.put(f"[TEX] Failed: {e}")
+                    self.log_queue.put(traceback.format_exc())
 
                 self.log_queue.put("[STEP] Global stats across variants…")
                 stats_files = {}
@@ -4272,89 +4281,6 @@ class MainView(tk.Tk):
             _logger.warning("Unexpected error in MainView._on_variant_font_change", exc_info=True)
 
     def msg(self, t, m, err=False): (messagebox.showerror if err else messagebox.showinfo)(t, m)
-
-# class Controller:
-#     def __init__(self):
-#         self.m = MergerModel()
-#         self.v = None
-#         self._autosave_path = CONFIG_ROOT / "autosave_selection.json"
-
-#     def set_view(self, v): self.v = v; self.v.refresh(self.m); self.v.after(30000, self.autosave)
-
-#     def autosave(self):
-#         try:
-#             self._autosave_path.parent.mkdir(parents=True, exist_ok=True)
-#             with open(self._autosave_path, "w", encoding="utf-8") as f:
-#                 json.dump(list(self.m.selected_indices), f)
-#         except (OSError, TypeError):
-#             _logger.warning("[MERGER] autosave failed", exc_info=True)
-#         self.v.after(30000, self.autosave)
-
-
-# def load(self, i): 
-#     f = filedialog.askopenfilename()
-#     if not f:
-#         return
-#     ok, msg = self.m.load_file_into_slot(i, f)
-#     if ok:
-#         self.v.refresh(self.m)
-#     else:
-#         self.v.msg("Erreur", msg, True)
-#     def clear(self, i): self.m.clear_slot(i); self.v.refresh(self.m)
-#     def nav_abs(self, i): 
-#         if self.m.set_absolute_index(i): self.v.refresh(self.m)
-#     def navigate(self, d): 
-#         if self.m.move_index(d): self.v.refresh(self.m)
-#     def toggle(self): self.m.toggle_selection_current(); self.v.refresh(self.m)
-#     def search(self, q): self.m.set_search_query(q); self.v.refresh(self.m)
-#     def toggle_filter(self, t, c):
-#         (self.m.toggle_filter_sn if t=='SN' else self.m.toggle_filter_de)(c); self.v.refresh(self.m)
-#     def all_sn(self): self.m.select_all_sn(); self.v.refresh(self.m)
-#     def none_sn(self): self.m.select_none_sn(); self.v.refresh(self.m)
-#     def all_de(self): self.m.select_all_de(); self.v.refresh(self.m)
-#     def none_de(self): self.m.select_none_de(); self.v.refresh(self.m)
-    
-#     def copy1(self, i): 
-#         c, _ = self.m.get_text_content(i)
-#         if c: self.v.clipboard_clear(); self.v.clipboard_append(c); self.v.update()
-#     def save1(self, i):
-#         c, n = self.m.get_text_content(i)
-#         if not c: return
-#         f = filedialog.asksaveasfilename(initialfile=n, defaultextension=".txt")
-#         if f: 
-#             with open(f, "w", encoding="utf-8") as o: o.write(c)
-#     def copy_all(self):
-#         c = self.m.get_all_views_content()
-#         if c: self.v.clipboard_clear(); self.v.clipboard_append(c); self.v.update()
-    
-#     def import_sel(self):
-#         f = filedialog.askopenfilename()
-#         if f: 
-#             ok, m = self.m.import_selection(f)
-#             if ok: self.v.refresh(self.m); self.v.msg("Info", m)
-#             else: self.v.msg("Erreur", m, True)
-    
-#     def reset(self):
-#         if messagebox.askyesno("RAZ", "Tout désélectionner ->"):
-#             self.m.backup_selection(); self.m.reset_all_selections(); self.v.refresh(self.m)
-            
-#     def save_batch(self):
-#         d = self.m.get_batch_export_data()
-#         if not d: return self.v.msg("Erreur", "Rien de sélectionné", True)
-#         tgt = filedialog.askdirectory()
-#         if tgt:
-#             fp = os.path.join(tgt, "SELECTED_HEADERS_LIST.txt")
-#             if os.path.exists(fp): shutil.copy(fp, fp+".bak")
-#             with open(fp, "w", encoding="utf-8") as f: f.write("\n".join(d['headers']))
-#             for i, s in d['slots'].items():
-#                 with open(os.path.join(tgt, f"{os.path.splitext(s['filename'])[0]}_SELECTED.txt"), "w", encoding="utf-8") as f: f.write(s['content'])
-#             self.v.msg("Succès", "Sauvegardé.")
-
-# if __name__ == '__main__':
-#     c = Controller()
-#     app = MainView(c)
-#     c.set_view(app)
-#     app.mainloop()
 
 class Controller:
     def __init__(self):

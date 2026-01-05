@@ -574,6 +574,11 @@ def build_merged_tex_from_csv(
         de_code = str(row.get("Code_DE", "") or "").strip()
 
         title = advice or topic or f"Text {num}"
+        title = str(title).strip()
+        title = re.sub(rf"^\s*Text\s*{num}\s*[-–—:]?\s*", "", title, flags=re.IGNORECASE)
+        title = re.sub(r"^\s*\d+\s*[.)-]\s*", "", title)
+        title = title.strip(" \t-–—.:")
+        
         suffix_parts = []
         if show_snde:
             if sn_code:
@@ -582,9 +587,9 @@ def build_merged_tex_from_csv(
                 suffix_parts.append(de_code)
         if suffix_parts:
             title = f"{title} - " + " - ".join(suffix_parts)
-
         safe_title = latex_escape(title)
         heading = f"{num}. {safe_title}" if show_entry_numbers else f"{safe_title}"
+
         lines.append(r"\section*{" + heading + r"}")
         lines.append(r"\addcontentsline{toc}{section}{" + heading + r"}")
 

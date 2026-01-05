@@ -50,6 +50,10 @@ from .chapters import create_chapters_from_theme_assignments
 from .export import build_merged_tex_from_csv
 from .utils import load_neutral_data
 
+from .themes import THEMES_ASSIGNMENT_JSON_NAME
+from .themes import THEMES_JSON_NAME
+from .themes import CHAPTERS_JSON_NAME
+
 DEFAULT_NEUTRAL_BATCHES = 2
 DEFAULT_NEUTRAL_PER_BATCH = 20
 DEFAULT_VARIANT_BATCH_SIZE = 20
@@ -57,8 +61,6 @@ DEFAULT_VARIANT_MAX_TOKENS = 3000
 DEFAULT_THEMES_MIN = 7
 DEFAULT_THEMES_MAX = 12
 DEFAULT_THEMES_BATCH_SIZE = 20
-THEMES_JSON_NAME = "advice_groups_llm.json"
-THEMES_ASSIGNMENT_JSON_NAME = "advice2groups_llm.json"
 DEFAULT_OUTPUT_ROOT = Path.home() / ".narremgen" / "outputs"
 DEFAULT_LLM_MODELS = {
     "ADVICE": "openai\\gpt-4o-mini",
@@ -738,6 +740,8 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--output-format", default="txt", choices=["txt", "tex"], help="Neutral: output format")
     p.add_argument("--advice-context", default="", help="Neutral: epistemic context injected only into advice generation (string)")
     p.add_argument("--advice-context-path", default=None, help="Path to a text file whose content is appended to advice context")
+    p.add_argument("--context-context", default="", help="Neutral: epistemic context injected only into context generation (string)")
+    p.add_argument("--context-context-path", default=None, help="Path to a text file whose content is appended to context context")
     p.add_argument("--extra-instructions", default=" ", help="Neutral: extra instructions appended to prompts (string)")
     p.add_argument("--extra-instructions-path",default=None,help="Path to a text file whose content is appended to prompts")
     p.add_argument("--variant-batch-size", type=int, default=DEFAULT_VARIANT_BATCH_SIZE, help="Variants: batch size")
@@ -987,6 +991,18 @@ def main() -> int:
                 if not advice_context:
                     advice_context = None
 
+                context_context = (args.context_context or "").strip()
+                if args.context_context_path:
+                    p = Path(args.context_context_path)
+                    if not p.exists():
+                        raise FileNotFoundError(f"Context context file not found: {p}")
+                    context_context = (
+                        context_context + "\n\n" +
+                        p.read_text(encoding="utf-8").strip()
+                    ).strip()
+                if not context_context:
+                    context_context = None
+
                 extra_instructions = args.extra_instructions or ""
                 if args.extra_instructions_path:
                     p = Path(args.extra_instructions_path)
@@ -1005,6 +1021,7 @@ def main() -> int:
                     n_batches=int(args.batches),
                     n_per_batch=int(args.per_batch),
                     advice_context=advice_context,
+                    context_context=context_context,
                     output_format=str(args.output_format),
                     extra_instructions=extra_instructions,
                     dialogue_mode=str(args.dialogue_mode),
@@ -1093,7 +1110,7 @@ def main() -> int:
                     log.info("Themes step success.")
 
                     assignments_path = workdir / "themes" / THEMES_ASSIGNMENT_JSON_NAME
-                    chapters_path = workdir / "themes" / "chapters_llm.json"
+                    chapters_path = workdir / "themes" / CHAPTERS_JSON_NAME
                     assignments_path = workdir / "themes" / THEMES_ASSIGNMENT_JSON_NAME
                     if assignments_path.is_file():
                         create_chapters_from_theme_assignments(
@@ -1162,7 +1179,7 @@ def main() -> int:
                     log.error("[TEX] chapters_json not found: %s", chapters_json)
                     return 2
             else:
-                cand = workdir_p / "themes" / "chapters_llm.json"
+                cand = workdir_p / "themes" / CHAPTERS_JSON_NAME
                 if cand.is_file():
                     chapters_json = cand
 
