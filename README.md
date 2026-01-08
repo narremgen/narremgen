@@ -103,8 +103,7 @@ python -m narremgen.gui
 ```
 
 Each generated corpus is stored under `outputs/` in CSV and TXT format.  
-The naming convention is: `outputs/<corpus_name>_1/` for its directory<br>
-<br>
+The naming convention is: `outputs/<corpus_name>_1/` for its directory.<br>
 Each directory contains:
 ```
 topic, advice, and mapping tables in csv format and generated texts
