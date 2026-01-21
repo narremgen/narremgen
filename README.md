@@ -5,7 +5,6 @@
 <br>
 
 [![PyPI version](https://img.shields.io/pypi/v/narremgen.svg)](https://pypi.org/project/narremgen/)
-[![Python versions](https://img.shields.io/pypi/pyversions/narremgen.svg)](https://pypi.org/project/narremgen/)
 [![Downloads](https://img.shields.io/pypi/dm/narremgen.svg)](https://pypi.org/project/narremgen/)
 
 <br>
