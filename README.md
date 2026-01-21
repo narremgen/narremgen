@@ -143,7 +143,7 @@ In future automatic checkings may be implemented for end user.
 
 ## References
 
-- Priam, Rodolphe (2025). *Narrative and Emotional Structures For Generation Of Short Texts For Advice*, [hal-05135171](https://inria.hal.science/hal-05135171), 2025.
+- Rodolphe Priam (2025). *Narrative and Emotional Structures For Generation Of Short Texts For Advice*, [hal-05135171](https://inria.hal.science/hal-05135171), 2025.
 
 ---
 
