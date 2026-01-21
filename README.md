@@ -3,9 +3,9 @@
 **<u>(Implementing Partially The SN/DE/K Method For a Controlled Generation)</u>**<br>
 **<u>(i.e. Generating Full Booklets of Advice or Answers from a Topic or a Question)</u>**<br>
 <br>
-[![PyPI version](https://img.shields.io/pypi/v/narremgen.svg?color=3775A9)](https://pypi.org/project/narremgen/)
+<img src="divers/image_SN_DE_K.jpg" width="350" height="320" alt="Logo">
 <br>
-## Main modules of narremgen
+## Main modules of narremgen [![PyPI version](https://img.shields.io/pypi/v/narremgen.svg?color=3775A9)](https://pypi.org/project/narremgen/)
 
 - `pipeline`: Entry point for batch generation, variants, stats, and exports per topic run.
 - `llmcore`: Unified LLM router (role→model mapping, retries, multi-provider support).
