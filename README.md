@@ -1,7 +1,7 @@
 # <br>
 # **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>
 **<u>(Implementing Partially The SN/DE/K Method For a Controlled Generation)</u>**<br>
-**<u>(i.e. Generating Full Booklets of Advice or Answers from a Topic or a Question)</u>**<br>
+**<u>(i.e. Generating Full Booklets of Advice or Answers from a Topic or Question)</u>**<br>
 <br>
 <img src="divers/image_SN_DE_K.jpg" width="350" height="320" alt="Logo">
 <br>
