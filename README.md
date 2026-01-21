@@ -115,7 +115,7 @@ and two subdirectories containing generated batched texts + csv files
 plus directories for variants with statistics + chaptered tex files
 ```
 
-## Other example of call (check exact model names, and documentation for texts)
+## Other example of call (check model names in documentations)
 
 OpenAI everywhere as simple default + export TeX booklet  
 `narremgen --topic "Small habits, big effects" --output-dir "./out" --default-model "openai\gpt-4o-mini" --export-book-tex`
