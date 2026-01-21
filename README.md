@@ -3,9 +3,6 @@
 **<u>(Implementing Partially The SN/DE/K Method For a Controlled Generation)</u>**<br>
 **<u>(i.e. Generating Full Booklets of Advice or Answers from a Topic or a Question)</u>**<br>
 <br>
-
-[![Downloads](https://img.shields.io/pypi/dm/narremgen.svg)](https://pypi.org/project/narremgen/)
-
 <br>
 ## Main modules of narremgen
 
