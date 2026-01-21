@@ -9,8 +9,6 @@
 <img src="divers/image_SN_DE_K.jpg" width="350" height="320" alt="Logo">
 <br>
 ## Main modules of narremgen <br>
-[![PyPI version](https://img.shields.io/pypi/v/narremgen.svg?color=3775A9)](https://pypi.org/project/narremgen/)
-
 - `pipeline`: Entry point for batch generation, variants, stats, and exports per topic run.
 - `llmcore`: Unified LLM router (role→model mapping, retries, multi-provider support).
 - `data`: Input preparation and CSV handling for topic–advice–prompt-based generation.
