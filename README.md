@@ -4,6 +4,11 @@
 **<u>(i.e. Generating Full Booklets of Advice or Answers from a Topic or a Question)</u>**<br>
 <br>
 
+[![PyPI version](https://img.shields.io/pypi/v/narremgen.svg)](https://pypi.org/project/narremgen/)
+[![Python versions](https://img.shields.io/pypi/pyversions/narremgen.svg)](https://pypi.org/project/narremgen/)
+[![Downloads](https://img.shields.io/pypi/dm/narremgen.svg)](https://pypi.org/project/narremgen/)
+
+<br>
 ## Main modules of narremgen
 
 - `pipeline`: Entry point for batch generation, variants, stats, and exports per topic run.
