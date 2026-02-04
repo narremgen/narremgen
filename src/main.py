@@ -1027,6 +1027,11 @@ def main() -> int:
                     dialogue_mode=str(args.dialogue_mode),
                     verbose=bool(args.verbose),
                 )
+                if not out_file:
+                    log.error("Neutral pipeline failed (run_pipeline returned %r).", out_file)
+                    if not args.quiet:
+                        print("[FATAL] Neutral pipeline failed (see logfile).")
+                    return 1
                 log.info("Neutral pipeline done. final=%s", out_file)
             except Exception:
                 log.error("Neutral pipeline failed:\n%s", traceback.format_exc())

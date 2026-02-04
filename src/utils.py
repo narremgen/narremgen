@@ -356,7 +356,45 @@ def postprocess_csv_text_basic(text: str, expected_fields: int,
     remain structurally aligned for subsequent filtering and merging.
     """
 
-    lines = [l.strip() for l in text.strip().splitlines() if l.strip()]
+    # lines = [l.strip() for l in text.strip().splitlines() if l.strip()]
+    # fixed, bad_lines = [], []
+
+    # for i, line in enumerate(lines, 1):
+    #     parts = line.split(";")
+    #     if len(parts) != expected_fields:
+    #         bad_lines.append((i, line))
+    #         num_val = parts[0].strip() if parts else "MISSING"
+    #         new_parts = [num_val] + [f"BAD_field{n}" for n in range(2, expected_fields + 1)]
+    #         parts = new_parts
+    #     fixed.append(";".join(parts))
+
+    # if log_path and bad_lines:
+    #     with open(log_path, "w", encoding="utf-8") as f:
+    #         for idx, raw in bad_lines:
+    #             f.write(f"{idx}\t{raw}\n")
+    #     if verbose:
+    #         logger_(f"!! {len(bad_lines)} rows not valid logged in {log_path}")
+
+    # return "\n".join(fixed)
+    lines_raw = [l.strip() for l in text.replace("\r\n", "\n").split("\n") if l.strip()]
+    lines_raw = [l for l in lines_raw if not l.startswith("```")]
+
+    if expected_fields > 1 and not any(";" in l for l in lines_raw) and any("," in l for l in lines_raw):
+        converted = []
+        for l in lines_raw:
+            if ";" not in l and l.count(",") == expected_fields - 1:
+                converted.append(";".join(p.strip() for p in l.split(",")))
+            else:
+                converted.append(l)
+        lines_raw = converted
+
+    def keep(line: str) -> bool:
+        if ";" not in line:
+            return False
+        first = line.split(";", 1)[0].strip()
+        return first.isdigit() or first == "Num"
+
+    lines = [l for l in lines_raw if keep(l)]
     fixed, bad_lines = [], []
 
     for i, line in enumerate(lines, 1):
@@ -364,8 +402,7 @@ def postprocess_csv_text_basic(text: str, expected_fields: int,
         if len(parts) != expected_fields:
             bad_lines.append((i, line))
             num_val = parts[0].strip() if parts else "MISSING"
-            new_parts = [num_val] + [f"BAD_field{n}" for n in range(2, expected_fields + 1)]
-            parts = new_parts
+            parts = [num_val] + [f"BAD_field{n}" for n in range(2, expected_fields + 1)]
         fixed.append(";".join(parts))
 
     if log_path and bad_lines:
@@ -376,7 +413,6 @@ def postprocess_csv_text_basic(text: str, expected_fields: int,
             logger_(f"!! {len(bad_lines)} rows not valid logged in {log_path}")
 
     return "\n".join(fixed)
-
 
 def merge_and_filter(output_dir: str = "outputs",
                      topic: str = "DefaultTopic",
@@ -630,7 +666,23 @@ def validate_mapping(mapping_file: str, SN_file: str, DE_file: str,
     - The updated mapping file overwrites the original to simplify downstream use.
     """
 
-    mapping = pd.read_csv(mapping_file, sep=";", encoding="utf-8")
+    # mapping = pd.read_csv(mapping_file, sep=";", encoding="utf-8")
+    mapping = pd.read_csv(mapping_file, sep=";", encoding="utf-8", dtype=str)
+    mapping.columns = [
+        re.sub(r"\s+", "_", c.strip().lstrip("\ufeff"))
+        for c in mapping.columns
+    ]
+    required = {"Code_SN", "Code_DE"}
+    if not required.issubset(set(mapping.columns)):
+        raise ValueError(f"Mapping CSV missing columns {sorted(required)}; got {mapping.columns.tolist()}")
+
+    sn_ref = pd.read_csv(SN_file, sep=";", encoding="utf-8")["Code"].tolist()
+    de_ref = pd.read_csv(DE_file, sep=";", encoding="utf-8")["Code"].tolist()
+
+    invalid_sn = ~mapping["Code_SN"].isin(sn_ref)
+    invalid_de = ~mapping["Code_DE"].isin(de_ref)
+    #----------
+    #     
     sn_ref = pd.read_csv(SN_file, sep=";", encoding="utf-8")["Code"].tolist()
     de_ref = pd.read_csv(DE_file, sep=";", encoding="utf-8")["Code"].tolist()
 

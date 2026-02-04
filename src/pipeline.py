@@ -31,6 +31,7 @@ def run_pipeline(topic: str,
                  n_batches: int = 3,
                  n_per_batch: int = 20,  #>=20
                  advice_context: str | None = None,
+                 context_context: str | None = None,
                  output_format: str = "txt",
                  extra_instructions:str = " ",
                  dialogue_mode: str = "single",
@@ -68,6 +69,8 @@ def run_pipeline(topic: str,
         Number of rows per batch. Default is 20.
     advice_context : str or None, optional
         Optional free-form background injected only into the advice generation prompt.
+    context_context : str or None, optional
+        Optional free-form background injected only into the context generation prompt.
     output_format : str, optional
         Output format for final narratives (e.g. "docx", "txt"). Default is "docx".
     extra_instructions: str
@@ -177,6 +180,7 @@ def run_pipeline(topic: str,
                 topic=topic, assets_dir=assets_dir,
                 n_batches=n_batches, n_per_batch=n_per_batch,
                 advice_context=advice_context,
+                context_context=context_context,
                 output_dir=output_dir, verbose=verbose
             )
 
@@ -257,6 +261,7 @@ def generate_all_csv_batches(topic: str,
                              n_batches: int = 5,
                              n_per_batch: int = 20,
                              advice_context: str | None = None,
+                             context_context: str | None = None,
                              output_dir: str = "outputs",
                              verbose: bool = False):
     """
@@ -284,6 +289,8 @@ def generate_all_csv_batches(topic: str,
         Number of rows per batch. Default is 20.
     advice_context : str or None, optional
         Optional free-form background injected only into the advice generation prompt.
+    context_context : str or None, optional
+        Optional free-form background injected only into the context generation prompt.
     output_dir : str, optional
         Root output directory for storing intermediate and merged CSVs.
         Default is "outputs".
@@ -324,7 +331,7 @@ def generate_all_csv_batches(topic: str,
                 generate_advice, "Advice", subtopic,
                 expected_rows=n_per_batch, 
                 n_advice=n_per_batch,
-                advice_context=advice_context,
+                advice_context=advice_context,                
                 output_dir=batch_dir, verbose=verbose
             )
         except RuntimeError:
@@ -341,8 +348,9 @@ def generate_all_csv_batches(topic: str,
         context_file = None
         try:
             context_file = safe_generate(
-                generate_context, "Context", advice_file,
+                generate_context, "Context", advice_file,                
                 expected_rows=n_per_batch,
+                context_context=context_context,
                 output_dir=batch_dir, verbose=verbose
             )
         except RuntimeError:
@@ -377,11 +385,14 @@ def generate_all_csv_batches(topic: str,
                 if verbose:
                     logger_(f"!! Mapping failed (try number {attempt}) - re-launch Mapping...")
                 continue
-
-            n_invalid_sn, n_invalid_de = validate_mapping(
-                mapping_file, SN_file, DE_file, verbose=verbose
-            )
-
+            try:
+                n_invalid_sn, n_invalid_de = validate_mapping(
+                    mapping_file, SN_file, DE_file, verbose=verbose
+                )
+            except Exception as e:
+                if verbose:
+                    logger_(f"!! Mapping validate error (batch {i+1}, try {attempt})")
+                continue
             if n_invalid_sn == 0 and n_invalid_de == 0:
                 success = True
                 mapping_paths.append(mapping_file)
@@ -457,6 +468,7 @@ def generate_merge_dedup_tables(
     n_batches=5,
     n_per_batch=20,
     advice_context: str | None = None,
+    context_context: str | None = None,
     output_dir="outputs",
     verbose=False
 ):
@@ -485,6 +497,10 @@ def generate_merge_dedup_tables(
         Number of batches to generate (default 5).
     n_per_batch : int, optional
         Number of rows per batch (default 20).
+    advice_context : str or None, optional
+        Optional free-form background injected only into the advice generation prompt.
+    context_context : str or None, optional
+        Optional free-form background injected only into the context generation prompt.
     output_dir : str, optional
         Main output directory where all generated and filtered CSVs will be stored.
     model_advice : str, optional
@@ -523,6 +539,7 @@ def generate_merge_dedup_tables(
         n_batches=n_batches,
         n_per_batch=n_per_batch,
         advice_context=advice_context,
+        context_context=context_context,
         output_dir=output_dir,
         verbose=verbose
     )
