@@ -61,7 +61,7 @@ OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead o
 Ollama local (offline) + TeX output + skip theme analysis  
 `narremgen --topic "Home organisation and walking" --output-dir "./out" --default-model "ollama\gemma3:4b" --batches 3 --per-batch 30 --output-format tex --export-book-tex`
 
-OpenRouter mix: DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
+OpenRouter (OPENROUTER_API_KEY) mix: DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
 `narremgen --topic "Walk habits in the city" --output-dir "./out" --api-key-file "./llmkeys.txt" --model-advice "openrouter\openai/gpt-4o-mini" --model-mapping "openrouter\deepseek/deepseek-reasoner" --model-context "openrouter\openai/gpt-4o-mini" --model-narrative "openrouter\meta-llama/llama-3.1-70b-instruct" --model-variants-generation "openrouter\openai/gpt-4o-mini"`
 
 Mistral direct (OpenAI-compatible, use also sys env key MISTRAL_API_KEY) + themes enabled with custom range and batch size  
