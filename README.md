@@ -1,5 +1,5 @@
 # <br>
-# **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>*
+# **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>
 - **<u>Implementing Partially The SN/DE/K Method For a Controlled Generation</u>**<br>
 - **<u>Artificial structured advice micro-texts from narrative, emotional, context</u>**<br>
 - **<u>Writing in file Full Booklets of Advice or Answers from a Topic or Question</u>**<br>
@@ -161,7 +161,8 @@ plus directories for variants with statistics + chaptered tex files
 
 Only informed users or trainers should use this system in practice. <br>
 Some advice may be missing or mistaken du to ia/programming. <br>
-In future automatic checkings may be implemented for end user.
+In future automatic checkings may be implemented for end user. <br>
+Always do a dry-run before launching to check models in use. <br>
 
 ## References
 
