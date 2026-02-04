@@ -58,23 +58,37 @@ pip install narremgen
 ## Usage from cli, examples of command lines
 
 OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead of txt file) + export TeX booklet  
-`narremgen --topic "Small habits, big effects" --output-dir "./out" --default-model "openai\gpt-4o-mini" --export-book-tex`
-`narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "ollama\\phi3-chat:latest" --model-variants-generation "ollama\\phi3-chat:latest"`
+```
+narremgen --topic "Small habits, big effects" --output-dir "./out" --default-model "openai\gpt-4o-mini" --export-book-tex
+```
+```
+narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "ollama\\phi3-chat:latest" --model-variants-generation "ollama\\phi3-chat:latest"
+```
 
 Ollama local (offline, no key required) + TeX output + skip theme analysis  
-`narremgen --topic "Home organisation and walking" --output-dir "./out" --default-model "ollama\gemma3:4b" --batches 3 --per-batch 30 --output-format tex --export-book-tex`
+```
+narremgen --topic "Home organisation and walking" --output-dir "./out" --default-model "ollama\gemma3:4b" --batches 3 --per-batch 30 --output-format tex --export-book-tex
+```
 
 OpenRouter (OPENROUTER_API_KEY) mix: DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
-`narremgen --topic "Walk habits in the city" --output-dir "./out" --api-key-file "./llmkeys.txt" --model-advice "openrouter\openai/gpt-4o-mini" --model-mapping "openrouter\deepseek/deepseek-reasoner" --model-context "openrouter\openai/gpt-4o-mini" --model-narrative "openrouter\meta-llama/llama-3.1-70b-instruct" --model-variants-generation "openrouter\openai/gpt-4o-mini"`
+```
+narremgen --topic "Walk habits in the city" --output-dir "./out" --api-key-file "./llmkeys.txt" --model-advice "openrouter\openai/gpt-4o-mini" --model-mapping "openrouter\deepseek/deepseek-reasoner" --model-context "openrouter\openai/gpt-4o-mini" --model-narrative "openrouter\meta-llama/llama-3.1-70b-instruct" --model-variants-generation "openrouter\openai/gpt-4o-mini"
+```
 
 Mistral direct (OpenAI-compatible, use also sys env key MISTRAL_API_KEY) + themes enabled with custom range and batch size  
-`narremgen --topic "Healthy routines for a walk everyday" --output-dir "./out" --api-key-file "./llmkeys.txt" --default-model "mistral\mistral-large-latest" --themes-min 7 --themes-max 12 --themes-batch-size 30`
+```
+narremgen --topic "Healthy routines for a walk everyday" --output-dir "./out" --api-key-file "./llmkeys.txt" --default-model "mistral\mistral-large-latest" --themes-min 7 --themes-max 12 --themes-batch-size 30
+```
 
 Grok default (use also sys env key GROK_API_KEY) + bypass variants generation to local Phi-4 (Ollama) with larger token budget  
-`narremgen --topic "Walking around in a small town" --output-dir "./out" --api-key-file "./llmkeys.txt" --default-model "grok\grok-2-latest" --model-variants-generation "ollama\phi4:14b" --variant-batch-size 40 --variant-max-tokens 2500`
+```
+narremgen --topic "Walking around in a small town" --output-dir "./out" --api-key-file "./llmkeys.txt" --default-model "grok\grok-2-latest" --model-variants-generation "ollama\phi4:14b" --variant-batch-size 40 --variant-max-tokens 2500
+```
 
 Quick connectivity check (no files generated): diagnostic dry-run with longer timeout  
-`narremgen --diagnostic-dry-run --model-advice "openrouter\deepseek/deepseek-chat" --request-timeout 90`
+```
+narremgen --diagnostic-dry-run --model-advice "openrouter\deepseek/deepseek-chat" --request-timeout 90
+```
 
 ## Custom calls with python programming
 
