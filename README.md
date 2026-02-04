@@ -1,5 +1,6 @@
 # <br>
-# **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>
+# **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>*
+- **<u>Allow to present many answers to one unique question in different formats</u>**<br>
 - **<u>Implementing Partially The SN/DE/K Method For a Controlled Generation</u>**<br>
 - **<u>Artificial structured advice micro-texts from narrative, emotional, context</u>**<br>
 - **<u>Writing in file Full Booklets of Advice or Answers from a Topic or Question</u>**<br>
