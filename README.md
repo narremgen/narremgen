@@ -63,16 +63,10 @@ OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead o
 narremgen --topic "Small habits, big effects" --output-dir "./out" (--default-model "openai\gpt-4o-mini") --export-book-tex
 `
 
-Ollama as the default model to all the llm calls (dry test allow to check which models are in used in pipeline) 
+Ollama local (offline, no key required) as the default model to all the llm calls (dry test allows check which models in used) 
 
 `
 narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "ollama\\phi3-chat:latest" --model-variants-generation "ollama\\phi3-chat:latest"
-`
-
-Ollama local (offline, no key required) + TeX output + skip theme analysis  
-
-`
-narremgen --topic "Home organisation and walking" --output-dir "./out" --default-model "ollama\gemma3:4b" --batches 3 --per-batch 30 --output-format tex --export-book-tex
 `
 
 OpenRouter (OPENROUTER_API_KEY) mix: DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
