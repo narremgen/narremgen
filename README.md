@@ -89,7 +89,7 @@ narremgen --topic "Walking around in a small town" --output-dir "./out" --api-ke
 
 Quick connectivity check (no files generated): diagnostic dry-run with longer timeout  
 `
-narremgen --diagnostic-dry-run --model-advice "openrouter\deepseek/deepseek-chat" --model-mapping "gemini\gemini-2.0-flash" --request-timeout 90
+narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "gemini\\gemini-2.0-flash"
 `
 
 ## Custom calls with python programming
