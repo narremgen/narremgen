@@ -5,9 +5,9 @@
 - **<u>Suitable for education & learning, or comparing and training the llm output</u>**<br>
 - **<u>Writing in file Full Booklets of Advice or Answers from a Topic or Question</u>**<br>
 
-<br>
-<img src="divers/image_SN_DE_K.jpg" width="350" height="320" alt="Logo">
-<br>
+<br><img src="divers/image_SN_DE_K.jpg" width="350" height="320" alt="Logo"><br>
+<br><img src="tutorials/memo_narremgen_v0.9.5.png" width="350" height="320" alt="Logo"><br>
+<br><img src="tutorials/gui_overview_v0.9.5.png" width="350" height="320" alt="Logo"><br>
 
 ## Main modules of narremgen <br>
 
