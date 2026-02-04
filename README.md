@@ -60,7 +60,7 @@ pip install narremgen
 OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead of txt file) + export TeX booklet  
 `narremgen --topic "Small habits, big effects" --output-dir "./out" --default-model "openai\gpt-4o-mini" --export-book-tex`
 
-Ollama local (offline) + TeX output + skip theme analysis  
+Ollama local (offline, no key required) + TeX output + skip theme analysis  
 `narremgen --topic "Home organisation and walking" --output-dir "./out" --default-model "ollama\gemma3:4b" --batches 3 --per-batch 30 --output-format tex --export-book-tex`
 
 OpenRouter (OPENROUTER_API_KEY) mix: DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
