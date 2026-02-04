@@ -60,8 +60,10 @@ pip install narremgen
 OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead of txt file) + export TeX booklet
 
 `
-narremgen --topic "Small habits, big effects" --output-dir "./out" --default-model "openai\gpt-4o-mini" --export-book-tex
+narremgen --topic "Small habits, big effects" --output-dir "./out" (--default-model "openai\gpt-4o-mini") --export-book-tex
 `
+
+Ollama as the default model to all the llm calls (dry test allow to check which models are in used in pipeline) 
 
 `
 narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "ollama\\phi3-chat:latest" --model-variants-generation "ollama\\phi3-chat:latest"
