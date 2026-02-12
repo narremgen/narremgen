@@ -8,7 +8,6 @@
 - **<u>Available: command lines, graphical user interface, or python programming</u>**<br>
 
 <br><img src="divers/image_SN_DE_K.jpg" width="350" height="320" alt="Logo"><br>
-<br><img src="tutorials/memo_narremgen.png" width="350" height="320" alt="Logo"><br>
 
 ## Main modules of narremgen <br>
 
@@ -25,7 +24,8 @@
 - `gui`: Optional Tkinter GUI for generation, or readings aligned/selected texts, or segmentation.
 - `main`: Optional command-line terminal module for the generation with input arguments.
 
-    
+<br><img src="tutorials/memo_narremgen.png" width="350" height="320" alt="Logo"><br>
+
 ## Key features
 
 - Generation of a <u>Corpus</u> of <u>Stories</u> (of varying and controlled structures) and <u>Formal Texts</u> for advice from a topic (full sentence).
