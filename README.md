@@ -42,11 +42,6 @@
 - Available connection to OpenAI, OpenRouter, Google-GenAI, Mistral, etc for text generation (see python code and interface for dry-run).
 - No limited length for topic str, available command for adding file/str long text as context for advice or generation stages in pipeline.
 
-Note: This package is provided *“as is”* for the research and educational purposes.  <br>
-      The code was written/debogged in iterative way with help of gpt5 openai + vs code. <br>
-      All texts generated are synthetic and intended for future experimentations only. <br>
-      Last version in directory package for pypi. 
-
 Output: Each generated corpus is stored under `outputs/` in CSV and TXT format. <br> 
 The naming convention is: `outputs/<corpus_name>_1/` for its directory.<br>
 Each directory contains:
@@ -55,6 +50,11 @@ topic, advice, and mapping tables in csv format and generated texts
 and two subdirectories containing generated batched texts + csv files
 plus directories for variants with statistics + chaptered tex files
 ```
+
+Note: This package is provided *“as is”* for the research and educational purposes.  <br>
+      The code was written/debogged in iterative way with help of gpt5 openai + vs code. <br>
+      All texts generated are synthetic and intended for future experimentations only. <br>
+      Last version in directory package for pypi. 
 
 To do: improve genericity, generality and robutness, add parallelism, classes re-factor.
 
