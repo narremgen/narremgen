@@ -160,10 +160,10 @@ python -m narremgen.gui
 
 ## Warning
 
-Only informed users or trainers should use this system in practice. <br>
-Some advice may be missing or mistaken du to ia/programming. <br>
-In future automatic checkings may be implemented for end user. <br>
-Always do a dry-run before launching to check models in use. <br>
+- Only informed users or trainers should use this system in practice. 
+- Some advice may be missing or mistaken du to ia/programming. 
+- In future automatic checkings may be implemented for end user. 
+- Always do a dry-run before launching to check models in use. 
 
 ## References
 
