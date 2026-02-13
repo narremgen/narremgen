@@ -94,7 +94,7 @@ Grok default (use also sys env key GROK_API_KEY) + bypass variants generation to
 `
 narremgen --topic "Walking around in a small town" --output-dir "./out" --api-key-file "./llmkeys.txt" --default-model "grok\grok-2-latest" --model-variants-generation "ollama\phi4:14b" --variant-batch-size 40 --variant-max-tokens 2500
 `
-With command lines in the terminal (use narremgen or python -m narremgen.main) <br>
+## With command lines in the terminal (use narremgen or python -m narremgen.main) <br>
 
 ```python
 # Pipeline + variants (default, not user ones)
