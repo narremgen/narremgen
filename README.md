@@ -132,6 +132,15 @@ python -m narremgen.main \
   --verbose
 ```
 
+## Launch call for GUI <br>
+
+```python
+# Interface generation+reading+saving
+python -m narremgen.gui
+```
+
+<br><img src="tutorials/gui_overview_v0.9.5.png" width="350" height="320" alt="Logo"><br>
+
 ## Custom calls with python programming
 
 ```python
@@ -148,15 +157,6 @@ run_pipeline(
     verbose=False
 )
 ```
-
-## Launch call for GUI <br>
-
-```python
-# Interface generation+reading+saving
-python -m narremgen.gui
-```
-
-<br><img src="tutorials/gui_overview_v0.9.5.png" width="350" height="320" alt="Logo"><br>
 
 ## Warning
 
