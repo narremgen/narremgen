@@ -62,14 +62,6 @@ DEFAULT_THEMES_MIN = 7
 DEFAULT_THEMES_MAX = 12
 DEFAULT_THEMES_BATCH_SIZE = 20
 DEFAULT_OUTPUT_ROOT = Path.home() / ".narremgen" / "outputs"
-DEFAULT_LLM_MODELS = {
-    "ADVICE": "openai\\gpt-4o-mini",
-    "MAPPING": "openai\\gpt-4.1",
-    "CONTEXT": "openai\\gpt-4o-mini",
-    "NARRATIVE": "openai\\gpt-4o-mini",
-    "THEME_ANALYSIS": "openai\\gpt-4.1-mini",
-    "VARIANTS_GENERATION": "openai\\gpt-4o-mini",
-}
 MODEL_ENV_PREFIX = "NARREMGEN_MODEL_"
 MODEL_ARG_BINDINGS: Dict[str, tuple[str, str, str]] = {
     "ADVICE": ("model_advice", "--model-advice", f"{MODEL_ENV_PREFIX}ADVICE"),
@@ -190,8 +182,6 @@ def _format_models_map(d: dict) -> str:
 def _init_llm(llm_models: Dict[str, str], default_model: str, max_tokens: int,
               temperature: float, request_timeout: int, verbose: bool,
               diagnostic_dry_run: bool= False) -> dict[str, str] | None:
-    if llm_models is None: 
-        llm_models=DEFAULT_LLM_MODELS
     LLMConnect.init_global(
         llmodels=llm_models,
         default_model=default_model,
@@ -333,8 +323,18 @@ def _strip_or_none(value: Optional[str]) -> Optional[str]:
 
 
 def _resolve_llm_models(args: argparse.Namespace, cli_flags: Set[str]) -> tuple[Dict[str, str], str, Dict[str, str]]:
-    models = DEFAULT_LLM_MODELS.copy()
     env_overrides: Dict[str, str] = {}
+
+    env_default = _strip_or_none(os.getenv(DEFAULT_MODEL_ENV_VAR))
+    arg_default = _strip_or_none(getattr(args, "default_model", None))
+
+    if env_default and DEFAULT_MODEL_FLAG not in cli_flags:
+        default_model = env_default
+        env_overrides[DEFAULT_MODEL_ENV_VAR] = env_default
+    else:
+        default_model = arg_default
+
+    models: Dict[str, str] = {}
 
     for role, (attr_name, flag_name, env_name) in MODEL_ARG_BINDINGS.items():
         env_value = _strip_or_none(os.getenv(env_name))
@@ -343,17 +343,15 @@ def _resolve_llm_models(args: argparse.Namespace, cli_flags: Set[str]) -> tuple[
             env_overrides[env_name] = env_value
             continue
 
-        arg_value = _strip_or_none(getattr(args, attr_name, None))
-        models[role] = arg_value or DEFAULT_LLM_MODELS[role]
+        if flag_name in cli_flags:
+            arg_value = _strip_or_none(getattr(args, attr_name, None))
+            if arg_value:
+                models[role] = arg_value
 
-    default_model = models.get("NARRATIVE", DEFAULT_LLM_MODELS["NARRATIVE"])
-    env_default = _strip_or_none(os.getenv(DEFAULT_MODEL_ENV_VAR))
-    if env_default and DEFAULT_MODEL_FLAG not in cli_flags:
-        default_model = env_default
-        env_overrides[DEFAULT_MODEL_ENV_VAR] = env_default
-    else:
-        arg_default = _strip_or_none(getattr(args, "default_model", None))
-        default_model = arg_default or default_model
+    models = {k: v for k, v in models.items() if v}
+
+    if not default_model and not models:
+        raise SystemExit("No model configured (use --default-model, role flags, or env vars).")
 
     return models, default_model, env_overrides
 
@@ -734,6 +732,7 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--bypass-advice-csv", default=None, help="Bypass pre-gen: path to Advice_FilteredRenumeroted CSV")
     p.add_argument("--bypass-mapping-csv", default=None, help="Bypass pre-gen: path to Mapping_FilteredRenumeroted CSV")
     p.add_argument("--bypass-context-csv", default=None, help="Bypass pre-gen: path to Context_FilteredRenumeroted CSV")
+    p.add_argument("--advice-only-csv", default=None, help="Neutral: path to a CSV containing an 'Advice' column (titles). If valid, it replaces AdvicePlan_Dedup automatic generation.")
     p.add_argument("--batches", type=int, default=DEFAULT_NEUTRAL_BATCHES, help="Neutral: number of batches")
     p.add_argument("--per-batch", type=int, default=DEFAULT_NEUTRAL_PER_BATCH, help="Neutral: items per batch")
     p.add_argument("--dialogue-mode", default="single", choices=["none", "single", "short"], help="Neutral: dialogue mode")
@@ -758,13 +757,13 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--themes-retries", type=int, default=5, help="Themes: max retries")
     p.add_argument("--temperature", type=float, default=0.7, help="LLM temperature")
     p.add_argument("--request-timeout", type=int, default=600, help="LLM request timeout (seconds)")
-    p.add_argument("--default-model", default=DEFAULT_LLM_MODELS["NARRATIVE"], help=f"LLM: fallback model (env: {DEFAULT_MODEL_ENV_VAR})")
-    p.add_argument("--model-advice", default=DEFAULT_LLM_MODELS["ADVICE"], help=f"LLM: model for ADVICE (env: {MODEL_ARG_BINDINGS['ADVICE'][2]})")
-    p.add_argument("--model-mapping", default=DEFAULT_LLM_MODELS["MAPPING"], help=f"LLM: model for MAPPING (env: {MODEL_ARG_BINDINGS['MAPPING'][2]})")
-    p.add_argument("--model-context", default=DEFAULT_LLM_MODELS["CONTEXT"], help=f"LLM: model for CONTEXT (env: {MODEL_ARG_BINDINGS['CONTEXT'][2]})")
-    p.add_argument("--model-narrative", default=DEFAULT_LLM_MODELS["NARRATIVE"], help=f"LLM: model for NARRATIVE (env: {MODEL_ARG_BINDINGS['NARRATIVE'][2]})")
-    p.add_argument("--model-theme-analysis", default=DEFAULT_LLM_MODELS["THEME_ANALYSIS"], help=f"LLM: model for THEME_ANALYSIS (env: {MODEL_ARG_BINDINGS['THEME_ANALYSIS'][2]})")
-    p.add_argument("--model-variants-generation", default=DEFAULT_LLM_MODELS["VARIANTS_GENERATION"], help=f"LLM: model for VARIANTS_GENERATION (env: {MODEL_ARG_BINDINGS['VARIANTS_GENERATION'][2]})")
+    p.add_argument("--default-model", default=None, help=f"LLM: fallback model (env: {DEFAULT_MODEL_ENV_VAR})")
+    p.add_argument("--model-advice", default=None, help=f"LLM: model for ADVICE (env: {MODEL_ARG_BINDINGS['ADVICE'][2]})")
+    p.add_argument("--model-mapping", default=None, help=f"LLM: model for MAPPING (env: {MODEL_ARG_BINDINGS['MAPPING'][2]})")
+    p.add_argument("--model-context", default=None, help=f"LLM: model for CONTEXT (env: {MODEL_ARG_BINDINGS['CONTEXT'][2]})")
+    p.add_argument("--model-narrative", default=None, help=f"LLM: model for NARRATIVE (env: {MODEL_ARG_BINDINGS['NARRATIVE'][2]})")
+    p.add_argument("--model-theme-analysis", default=None, help=f"LLM: model for THEME_ANALYSIS (env: {MODEL_ARG_BINDINGS['THEME_ANALYSIS'][2]})")
+    p.add_argument("--model-variants-generation", default=None, help=f"LLM: model for VARIANTS_GENERATION (env: {MODEL_ARG_BINDINGS['VARIANTS_GENERATION'][2]})")
 
     p.add_argument("--do-stats", action="store_true",
                 help="Compute text statistics (neutral + variants).")
@@ -978,6 +977,8 @@ def main() -> int:
                         "mapping_path": str(args.bypass_mapping_csv),
                         "context_path": str(args.bypass_context_csv),
                     }
+                elif args.advice_only_csv:
+                    csv_for_bypass_pre_gen = {"advice_only_path": str(args.advice_only_csv)}
 
                 advice_context = (args.advice_context or "").strip()
                 if args.advice_context_path:
@@ -1164,9 +1165,6 @@ def main() -> int:
                 if global_stats is not None:
                     out_csv = workdir / "stats_all_variants_table.csv"
                     global_stats.to_csv(out_csv, sep=";", index=True)
-                    #out_tex = workdir / "stats_all_variants_table.tex"
-                    #out_tex.write_text(global_stats.to_latex(index=True, escape=False), encoding="utf-8")
-                    #log.info("Global stats saved: %s ; %s", out_csv, out_tex)
                     log.info("Global stats saved: %s", out_csv)
 
         if args.export_book_tex:

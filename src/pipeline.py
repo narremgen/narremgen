@@ -11,6 +11,7 @@ given topic, using the shared LLMConnect configuration and utilities.
 import pandas as pd
 import os, shutil
 from .data import generate_advice, generate_mapping, generate_context
+from .data import generate_advice_titles_plan
 from .utils import safe_generate, validate_mapping, merge_and_filter
 from .utils import renumerote_filtered, audit_filtered, build_csv_name
 from .utils import quick_check_filtered
@@ -42,7 +43,17 @@ def run_pipeline(topic: str,
     Generates Advice, Mapping and Context tables and filtering 
     (or bypasses pre-gen with provided CSVs with checked input),
     then writes narrative batches, and basic analysis.
-
+    
+    Bypass modes (``csv_for_bypass_pre_gen``):
+    - Full bypass: provide keys ``advice_path``, ``mapping_path``, ``context_path``.
+    The three CSVs must be *FilteredRenumeroted* with strict headers and a contiguous
+    ``Num`` column aligned across files (1..N). They are copied into ``workdir`` under
+    the standard expected filenames.
+    - Advice-plan only: provide one of the keys ``advice_only_path`` / ``advice_titles_path`` /
+    ``advice_only`` pointing to a CSV containing a column ``Advice``. If valid and long enough
+    (>= ``n_batches * n_per_batch`` rows), it replaces AdvicePlan_Dedup generation. Mapping and
+    Context are still generated normally.
+    
     This function performs the full end-to-end workflow for one topic. It:
     1. Creates a versioned subdirectory for the topic under ``output_dir``.
     2. Generates Advice, Context, and Mapping CSVs through multi-batch processing.
@@ -60,9 +71,8 @@ def run_pipeline(topic: str,
     assets_dir : str or None, optional
         Directory containing the SN/DE reference CSVs and optional prompt
         assets (``style.txt``, ``examples.txt``). If None, defaults are used.
-    csv_for_bypass_pre_gen: Optional dict with keys {"advice_path","mapping_path","context_path"}.
-            If provided, the three CSVs must already be FilteredRenumeroted (strict Num 1..N aligned).
-            They are copied into the newly created workdir under the standard expected filenames.
+    csv_for_bypass_pre_gen : dict or None, optional
+        Optional bypass configuration (see "Bypass modes" above).
     n_batches : int, optional
         Number of Advice/Context/Mapping batches to generate. Default is 3.
     n_per_batch : int, optional
@@ -126,7 +136,18 @@ def run_pipeline(topic: str,
             nums = [int(x) for x in s.tolist()]
             return nums
 
+        bypass_full = bool(csv_for_bypass_pre_gen) and all(
+            k in (csv_for_bypass_pre_gen or {}) for k in ("advice_path", "mapping_path", "context_path")
+        )
+        advice_only_path = None
         if csv_for_bypass_pre_gen:
+            advice_only_path = (
+                csv_for_bypass_pre_gen.get("advice_only_path")
+                or csv_for_bypass_pre_gen.get("advice_titles_path")
+                or csv_for_bypass_pre_gen.get("advice_only")
+            )
+
+        if bypass_full:
             try:
                 advice_src = Path(csv_for_bypass_pre_gen["advice_path"]).expanduser().resolve()
                 mapping_src = Path(csv_for_bypass_pre_gen["mapping_path"]).expanduser().resolve()
@@ -175,13 +196,16 @@ def run_pipeline(topic: str,
                 )
 
         else:
-            advice_file, mapping_file, context_file = \
-            generate_merge_dedup_tables(
-                topic=topic, assets_dir=assets_dir,
-                n_batches=n_batches, n_per_batch=n_per_batch,
+            advice_file, mapping_file, context_file = generate_merge_dedup_tables(
+                topic=topic,
+                assets_dir=assets_dir,
+                n_batches=n_batches,
+                n_per_batch=n_per_batch,
                 advice_context=advice_context,
                 context_context=context_context,
-                output_dir=output_dir, verbose=verbose
+                output_dir=output_dir,
+                verbose=verbose,
+                advice_plan_csv_path=str(advice_only_path) if advice_only_path else None,
             )
 
         if not mapping_file or not os.path.exists(mapping_file):
@@ -262,6 +286,7 @@ def generate_all_csv_batches(topic: str,
                              n_per_batch: int = 20,
                              advice_context: str | None = None,
                              context_context: str | None = None,
+                             advice_plan_csv_path: str | None = None,
                              output_dir: str = "outputs",
                              verbose: bool = False):
     """
@@ -291,6 +316,9 @@ def generate_all_csv_batches(topic: str,
         Optional free-form background injected only into the advice generation prompt.
     context_context : str or None, optional
         Optional free-form background injected only into the context generation prompt.
+    advice_plan_csv_path : str or None, optional
+        Optional CSV path containing a column ``Advice``. If valid and long enough, it is used
+        as the advice-title plan (replacing AdvicePlan_Dedup generation).
     output_dir : str, optional
         Root output directory for storing intermediate and merged CSVs.
         Default is "outputs".
@@ -320,6 +348,63 @@ def generate_all_csv_batches(topic: str,
     advice_paths, mapping_paths, context_paths = [], [], []
     failed_batches = []
 
+    use_advice_plan = True
+    advice_plan: list[str] = []
+    total = n_batches * n_per_batch
+
+    def _clean_titles(items: list[str]) -> list[str]:
+        out: list[str] = []
+        for raw in items:
+            t = " ".join((raw or "").replace(";", " ").split())
+            if t:
+                out.append(t)
+        return out
+
+    def _save_plan(path: str, titles: list[str]) -> None:
+        pd.DataFrame({
+            "GlobalIdx": range(1, total + 1),
+            "Batch": [((i - 1) // n_per_batch) + 1 for i in range(1, total + 1)],
+            "Advice": titles[:total],
+        }).to_csv(path, sep=";", index=False)
+
+    if advice_plan_csv_path:
+        try:
+            p = Path(advice_plan_csv_path).expanduser().resolve()
+            if not p.exists():
+                raise FileNotFoundError(str(p))
+            dfp = pd.read_csv(str(p), sep=";")
+            if "Advice" not in dfp.columns:
+                raise ValueError("Missing column 'Advice'")
+            advice_plan = _clean_titles([str(x) for x in dfp["Advice"].tolist()])
+            if len(advice_plan) < total:
+                raise ValueError(f"Not enough rows ({len(advice_plan)}/{total})")
+            advice_plan = advice_plan[:total]
+            plan_path = os.path.join(batch_dir, f"AdvicePlan_User_{slugify_topic(topic)}.csv")
+            _save_plan(plan_path, advice_plan)
+            if verbose:
+                logger_(f"[ADVICE_PLAN] user plan loaded: {plan_path}")
+        except Exception as exc:
+            advice_plan = []
+            if verbose:
+                logger_(f"[ADVICE_PLAN] invalid user plan ({exc}), fallback to LLM plan")
+
+    if use_advice_plan and not advice_plan:
+        advice_plan = generate_advice_titles_plan(
+            topic=topic,
+            n_total=total,
+            advice_context=advice_context,
+            verbose=verbose,
+        )
+        if len(advice_plan) < total:
+            use_advice_plan = False
+            if verbose:
+                logger_(f"[ADVICE_PLAN] incomplete ({len(advice_plan)}/{total}), fallback to legacy Advice")
+        else:
+            plan_path = os.path.join(batch_dir, f"AdvicePlan_Dedup_{slugify_topic(topic)}.csv")
+            _save_plan(plan_path, advice_plan)
+            if verbose:
+                logger_(f"[ADVICE_PLAN] saved: {plan_path}")
+
     for i in range(n_batches):
         subtopic = f"b{i+1:06d}__{topic}"
         if verbose:
@@ -327,13 +412,26 @@ def generate_all_csv_batches(topic: str,
 
         advice_file = None
         try:
-            advice_file = safe_generate(
-                generate_advice, "Advice", subtopic,
-                expected_rows=n_per_batch, 
-                n_advice=n_per_batch,
-                advice_context=advice_context,                
-                output_dir=batch_dir, verbose=verbose
-            )
+            batch_titles = advice_plan[i * n_per_batch:(i + 1) * n_per_batch] if use_advice_plan else None
+
+            if use_advice_plan and batch_titles:
+                advice_file = safe_generate(
+                    generate_advice, "Advice", topic,
+                    expected_rows=len(batch_titles),
+                    n_advice=len(batch_titles),
+                    advice_titles=batch_titles,
+                    advice_context=advice_context,
+                    file_tag=subtopic,
+                    output_dir=batch_dir, verbose=verbose
+                )
+            else:
+                advice_file = safe_generate(
+                    generate_advice, "Advice", subtopic,
+                    expected_rows=n_per_batch, 
+                    n_advice=n_per_batch,
+                    advice_context=advice_context,                
+                    output_dir=batch_dir, verbose=verbose
+                )
         except RuntimeError:
             if verbose: logger_(f"!!! Batch {i+1} abandoned (Advice failed after internal retries).")
             failed_batches.append((i+1, "Advice"))
@@ -436,8 +534,12 @@ def generate_all_csv_batches(topic: str,
         logger_(f"\n Batch filed found : "
             f"{len(adv_files)} advices, {len(map_files)} mappings, {len(ctx_files)} contexts")
 
-    if not adv_files or not map_files or not ctx_files:
-        raise RuntimeError(f"No batch file found in {batch_dir}")
+    if not adv_files:
+        raise RuntimeError(f"No Advice batch file found in {batch_dir}")
+    if not ctx_files:
+        raise RuntimeError(f"No Context batch file found in {batch_dir}")
+    if not map_files:
+        raise RuntimeError(f"No Mapping batch file found in {batch_dir} (batches likely abandoned before mapping)")
 
     all_adv = pd.concat([pd.read_csv(f, sep=";") for f in adv_files], ignore_index=True)
     all_map = pd.concat([pd.read_csv(f, sep=";") for f in map_files], ignore_index=True)
@@ -469,6 +571,7 @@ def generate_merge_dedup_tables(
     n_per_batch=20,
     advice_context: str | None = None,
     context_context: str | None = None,
+    advice_plan_csv_path: str | None = None,
     output_dir="outputs",
     verbose=False
 ):
@@ -503,12 +606,8 @@ def generate_merge_dedup_tables(
         Optional free-form background injected only into the context generation prompt.
     output_dir : str, optional
         Main output directory where all generated and filtered CSVs will be stored.
-    model_advice : str, optional
-        Model used for generating Advice (default 'gpt-4o-mini').
-    model_mapping : str, optional
-        Model used for Mapping (default 'o3').
-    model_context : str, optional
-        Model used for Context (default 'gpt-4o-mini').
+    advice_plan_csv_path : str | None, optional
+        Optional CSV path containing a column ``Advice`` used as the advice-title plan.
     verbose : bool, optional
         If True, prints progress messages and summary reports.
 
@@ -540,6 +639,7 @@ def generate_merge_dedup_tables(
         n_per_batch=n_per_batch,
         advice_context=advice_context,
         context_context=context_context,
+        advice_plan_csv_path=advice_plan_csv_path,
         output_dir=output_dir,
         verbose=verbose
     )

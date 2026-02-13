@@ -148,6 +148,9 @@ def clean_generated_body(text: str) -> str:
 
     t = t.strip(' \n"“”«»')
 
+    t = re.sub(r"(?ms)^\s*\[(?P<tag>[A-Z][A-Z0-9_]{2,})\]\s*$.*?^\s*\[?/(?P=tag)\]?\s*$\n?", "", t).strip()
+    t = re.sub(r"(?m)^\s*(?:\[(?:/[A-Z][A-Z0-9_]{2,}|[A-Z][A-Z0-9_]{2,})\]|/[A-Z][A-Z0-9_]{2,})\s*$\n?", "", t).strip()
+
     lines = [ln.rstrip() for ln in t.splitlines()]
 
     while lines and not lines[0].strip():

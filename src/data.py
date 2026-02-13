@@ -8,9 +8,10 @@ semicolon-separated datasets with stable naming conventions, forming the
 entry point of the Narremgen pipeline.
 """
 
-import os
+import os, re, unicodedata
 import pandas as pd
 from pathlib import Path
+from difflib import SequenceMatcher
 from .llmcore import LLMConnect
 from .utils import save_output
 from .utils import slugify_topic
@@ -20,11 +21,113 @@ import logging
 logger = logging.getLogger(__name__)
 logger_ = logger.info
 
+def generate_advice_titles_plan(topic: str,
+                               n_total: int,
+                               advice_context: str | None = None,
+                               verbose: bool = False,
+                               sim_ratio_threshold: float = 0.90,
+                               max_rounds: int = 40) -> list[str]:
+    """Generate a deduplicated list of advice titles ahead of CSV generation."""
+
+    def _ascii_norm(s: str) -> str:
+        t = unicodedata.normalize("NFKD", s or "")
+        t = t.encode("ascii", "ignore").decode("ascii", errors="ignore")
+        t = t.casefold()
+        t = re.sub(r"[^a-z0-9\s]+", " ", t)
+        return re.sub(r"\s+", " ", t).strip()
+
+    def _dedup_titles(titles: list[str]) -> list[str]:
+        kept: list[str] = []
+        kept_norm: list[str] = []
+        for raw in titles:
+            t = " ".join((raw or "").strip().split())
+            if not t:
+                continue
+            n = _ascii_norm(t)
+            if not n:
+                continue
+            dup = False
+            for kn in kept_norm:
+                if n == kn or SequenceMatcher(None, n, kn).ratio() >= sim_ratio_threshold:
+                    dup = True
+                    break
+            if dup:
+                continue
+            kept.append(t.replace(";", " ").strip())
+            kept_norm.append(n)
+        return kept
+
+    def _extract_seed(ctx: str | None) -> list[str]:
+        if not ctx:
+            return []
+        m = re.search(r"<ADVICE_PLAN>(.*?)</ADVICE_PLAN>", ctx, flags=re.IGNORECASE | re.DOTALL)
+        if not m:
+            return []
+        out: list[str] = []
+        for ln in m.group(1).splitlines():
+            t = re.sub(r"^\s*(?:[-*]|\d+[.)-])\s*", "", ln).strip()
+            t = " ".join(t.split())
+            if t:
+                out.append(t)
+        return out
+
+    titles = _dedup_titles(_extract_seed(advice_context))
+
+    llm = LLMConnect.get_global()
+    model = LLMConnect.get_model("ADVICE")
+    ctx = (advice_context or "").strip()
+    ctx_block = f"<ADVICE_CONTEXT>\n{ctx}\n</ADVICE_CONTEXT>\n\n" if ctx else ""
+
+    rounds = 0
+    while len(titles) < n_total and rounds < max_rounds:
+        rounds += 1
+        remaining = n_total - len(titles)
+        n_request = min(120, max(20, remaining + 10))
+        avoid = "\n".join(f"- {t}" for t in titles[-80:])
+
+        prompt = f"""
+Generate {n_request} distinct advice TITLES for the topic:
+{topic}
+
+{ctx_block}Do not repeat or paraphrase any title below:
+{avoid}
+
+Rules:
+- One title per line
+- No numbering, no bullets, no markdown, no extra text
+- Do not use ';' inside titles
+""".strip()
+
+        text = llm.safe_chat_completion(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=1500,
+        ) or ""
+
+        new_titles: list[str] = []
+        for ln in text.splitlines():
+            t = re.sub(r"^\s*(?:[-*]|\d+[.)-])\s*", "", ln).strip()
+            t = " ".join(t.split()).replace(";", " ").strip()
+            if t:
+                new_titles.append(t)
+
+        prev = len(titles)
+        titles = _dedup_titles(titles + new_titles)
+
+        if verbose:
+            logger_(f"[ADVICE_PLAN] {len(titles)}/{n_total}")
+
+        if len(titles) == prev:
+            break
+
+    return titles[:n_total]
 
 def generate_advice(topic: str, n_advice: int = 20,
                     output_dir: str = "outputs",
                     verbose: bool = False,
-                    advice_context: str | None = None):
+                    advice_context: str | None = None,
+                    advice_titles: list[str] | None = None,
+                    file_tag: str | None = None):
     """
     Generate a CSV table of short advices for a given topic.
 
@@ -51,6 +154,8 @@ def generate_advice(topic: str, n_advice: int = 20,
         Number of advice rows requested from the model. Default is 20.
     output_dir : str, optional
         Directory where the CSV output is saved. Default is "outputs".
+    advice_context : str or None, optional
+        Optional free-form background injected only into the advice generation prompt.
     verbose : bool, optional
         If True, prints additional progress information.
 
@@ -62,6 +167,156 @@ def generate_advice(topic: str, n_advice: int = 20,
         is the number of valid advice rows after post-processing.
     """
 
+    if advice_titles is not None:
+        titles = [
+            " ".join((t or "").strip().split())
+            .replace(";", " ")
+            .replace("\r", " ")
+            .replace("\n", " ")
+            .strip()
+            for t in advice_titles
+        ]
+        titles = [t for t in titles if t]
+        if not titles:
+            if verbose:
+                logger_("!!! Empty advice_titles - skipping step.")
+            return None, 0
+
+        n = len(titles)
+        width = max(3, len(str(n)))
+        ids = [f"A{i:0{width}d}" for i in range(1, n + 1)]
+
+        advice_context_text = (advice_context or "").strip()
+        advice_context_block = ""
+        if advice_context_text:
+            advice_context_block = f"<ADVICE_CONTEXT>\n{advice_context_text}\n</ADVICE_CONTEXT>\n\n"
+
+        def _strip_wrappers(s: str) -> str:
+            s = (s or "").strip()
+            s = re.sub(r"^```[a-zA-Z0-9]*\s*", "", s)
+            s = re.sub(r"\s*```$", "", s)
+            return s.strip()
+
+        def _parse_id_sentence(text_: str) -> dict[str, str]:
+            t = _strip_wrappers(text_)
+            lines = [ln.strip() for ln in t.splitlines() if ln.strip()]
+            if lines and lines[0].casefold().startswith("id;"):
+                lines = lines[1:]
+            out: dict[str, str] = {}
+            for ln in lines:
+                ln = re.sub(r"^\s*(?:[-*]|\d+[.)-])\s*", "", ln).strip()
+                parts = [p.strip() for p in ln.split(";")]
+                if len(parts) < 2:
+                    continue
+                k = parts[0].split()[0].strip()
+                sent = " ".join(" ".join(parts[1:]).replace(";", ",").split())
+                sent = sent.replace("\r", " ").replace("\n", " ").strip()
+                if k and sent and k not in out:
+                    out[k] = sent
+            return out
+
+        def _prompt(items: list[tuple[str, str]]) -> str:
+            table_in = "\n".join(f"{i};{t}" for i, t in items)
+            return f"""{advice_context_block}
+
+Treat ADVICE_CONTEXT as the epistemic anchor: it defines the world model, constraints, hypotheses,
+and assumptions that guide which perspectives you select before writing advice items.            
+
+Topic: 
+You are given general topic as defined as follows: [{topic}]
+
+Task:
+For each row of the input TABLE below, write ONE sentence that is 
+1/2) specifically about the given Topic above as theme to keep in mind.
+2/2) specifically about the given Advice title in the same row number.
+
+Hard constraints:
+- The sentence must mention at least one concrete action element related to the topic (an action verb + a concrete object/context).
+- The sentence must be read as a clear and simple sentence which is said by another character to the main one living the scene
+- The sentence must reuse at least one non-trivial word from the Advice title (copy it as-is).
+- Output ONLY CSV with delimiter ';'
+- First line must be: ID;Sentence as the header of the table before the data
+- Exactly {len(items)} rows after the header ID;Sentence (written at first row)
+- No extra text, no blank lines
+- Never use ';' inside sentences
+
+<Format of output table>
+Output must be ONLY a valid CSV, without line without header and without line after the valid CSV contents.
+⚠️ Output must be ONLY a valid CSV.
+⚠️ Output must be WITHOUT EMPTY LINES.
+⚠️ Output must use standard UTF-8 characters (no special symbols or emojis).
+⚠️ Output must be WITHOUT ANY LIST MARKERS.
+⚠️ Output must be WITHOUT ANY QUOTES.
+⚠️ Output must be WITHOUT ANY BACKTICKS.
+⚠️ Output must be WITHOUT ANY MARKDOWN.
+⚠️ Output must be WITHOUT ANY INTRODUCTION OR COMMENTARY.
+⚠️ Output must be WITHOUT ANY EXTRA TEXT.
+⚠️ Output must be WITHOUT ANY PREAMBLE.
+⚠️ Output must be ONLY a valid CSV.
+⚠️ Inside cells of the csv after header: Never insert any semicolons which are used as csv separators
+⚠️ Inside cells of the csv after header: Use only plain text separated by spaces or between parenthesis.
+⚠️ The CSV must start immediately with this header:
+The CSV header is the first line of the generated output as followed, before the line for the values:
+Num;Sentence
+</Format of output table>
+
+Input TABLE:
+ID;Advice
+        {table_in}
+        """.strip()
+
+        llm = LLMConnect.get_global()
+        model = LLMConnect.get_model("ADVICE")
+
+        items_all = list(zip(ids, titles))
+        rows: dict[str, str] = {}
+
+        text1 = llm.safe_chat_completion(
+            model=model,
+            messages=[{"role": "user", "content": _prompt(items_all)}],
+            max_tokens=2000,
+        ) or ""
+        rows.update(_parse_id_sentence(text1))
+
+        missing = [i for i in ids if i not in rows]
+        text2 = ""
+        if missing:
+            items_missing = [(i, titles[ids.index(i)]) for i in missing]
+            text2 = llm.safe_chat_completion(
+                model=model,
+                messages=[{"role": "user", "content": _prompt(items_missing)}],
+                max_tokens=1200,
+            ) or ""
+            rows.update(_parse_id_sentence(text2))
+
+        missing = [i for i in ids if i not in rows or not rows[i].strip()]
+        if missing:
+            topic_slug = slugify_topic(file_tag or topic)
+            os.makedirs(output_dir, exist_ok=True)
+            log_path = os.path.join(output_dir, f"bad_rows_{topic_slug}_advice_id.log")
+            with open(log_path, "a", encoding="utf-8", newline="") as f:
+                f.write("MISSING_IDS\n")
+                for m in missing:
+                    f.write(m + "\n")
+                f.write("\nRAW1\n" + _strip_wrappers(text1) + "\n")
+                f.write("\nRAW2\n" + _strip_wrappers(text2) + "\n\n")
+            return None, 0
+
+        df = pd.DataFrame({
+            "Num": list(range(1, n + 1)),
+            "Topic": [topic] * n,
+            "Advice": titles,
+            "Sentence": [rows[i].replace(";", ",").strip() for i in ids],
+        })
+
+        topic_slug = slugify_topic(file_tag or topic)
+        os.makedirs(output_dir, exist_ok=True)
+        path_csv = os.path.join(output_dir, f"Advice_{topic_slug}.csv")
+        with open(path_csv, "w", encoding="utf-8", newline="") as f:
+            df.to_csv(f, sep=";", index=False, lineterminator="\n")
+        return path_csv, len(df)
+
+    # -----------------------------------------------------------------
     advice_context_text = (advice_context or "").strip()
     advice_context_block = ""
     if advice_context_text:
@@ -283,7 +538,8 @@ def generate_mapping(advice_file: str,
 
 def generate_context(advice_file: str,
                      output_dir: str = "outputs",
-                     verbose: bool = False):
+                     verbose: bool = False,
+                     context_context: str | None = None):
     """
     Generate a CSV file with narrative context for each advice row.
 
@@ -310,6 +566,8 @@ def generate_context(advice_file: str,
         Model name passed to ``llm.safe_chat_completion``. Default is "gpt-4o-mini".
     output_dir : str, optional
         Directory where the context CSV and logs are written. Default is "outputs".
+    context_context : str or None, optional
+        Optional free-form background injected only into the context generation prompt.
     verbose : bool, optional
         If True, prints basic progress information.
 
@@ -321,8 +579,25 @@ def generate_context(advice_file: str,
         ``num_rows`` is the number of valid rows after post-processing.
     """
 
+    context_context_text = (context_context or "").strip()
+    context_context_block = ""
+    if context_context_text:
+        context_context_block = f"""
+
+    <CONTEXT_EXTRA_PROMPT>
+    {context_context_text}
+    </CONTEXT_EXTRA_PROMPT>
+
+    Treat CONTEXT_EXTRA_PROMPT as the epistemic anchor: it defines the world model, constraints, 
+    hypotheses, and assumptions that guide which perspectives you select before writing advice items.
+    """
+
     adv = pd.read_csv(advice_file, sep=";")
     prompt = f"""
+    You are going to generate a CSV table of contextual information for textual generation of advice.
+    Before the definiong of the precise required mandatory format and contents of the table, memorize this.
+    {context_context_block}
+
     For each advice in the table with columns (CSV), generate narrative context details:
     <Contents>
     - Character (age, role, gender) mais SANS PRENOM (aka First_Name), pour ne pas risquer d'incohérence avec colonne ci-après
@@ -340,7 +615,7 @@ def generate_context(advice_file: str,
     - Moment (mood ambiance in one word like among [clear,sunny,cloudy,bright,calm,cool,warm,windy,quiet,noisy,soft,vivid,lively,nighty,peaceful,saturared] )
     - First_Name (plausible)
     </Contents>
-
+    
     <Format>
     Output must be ONLY a valid CSV, without line without header and without line after the valid CSV contents.
     ⚠️ The CSV must contain exactly 8 columns (for column names= Num;Character;Presence;Location;Sensation;Time;Moment;First_Name), no more no less.

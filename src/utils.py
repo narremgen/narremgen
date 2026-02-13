@@ -238,12 +238,12 @@ def save_output(text: str, filename: str, output_dir: str = "outputs",
         df = pd.read_csv(StringIO(text), sep=";")
         df.columns = df.columns.str.strip() 
         with open(path_csv, "w", encoding="utf-8") as f:
-            df.to_csv(f, sep=";", index=False)
+            df.to_csv(f, sep=";", index=False, lineterminator="\n")
         return path_csv, len(df)
     except Exception as e:
         path_txt = os.path.join(output_dir, f"{filename}_raw.txt")
         with open(path_txt, "w", encoding="utf-8") as f:
-            f.write(text)
+            f.write((text or "").replace("\r\n", "\n").replace("\r", "\n"))
         if verbose: logger_(f"!! Error CSV, stored brut in {path_txt}")
         return path_txt, 0
 
@@ -355,27 +355,7 @@ def postprocess_csv_text_basic(text: str, expected_fields: int,
     - Bad lines are replaced in-place with placeholder tokens so that all datasets
     remain structurally aligned for subsequent filtering and merging.
     """
-
-    # lines = [l.strip() for l in text.strip().splitlines() if l.strip()]
-    # fixed, bad_lines = [], []
-
-    # for i, line in enumerate(lines, 1):
-    #     parts = line.split(";")
-    #     if len(parts) != expected_fields:
-    #         bad_lines.append((i, line))
-    #         num_val = parts[0].strip() if parts else "MISSING"
-    #         new_parts = [num_val] + [f"BAD_field{n}" for n in range(2, expected_fields + 1)]
-    #         parts = new_parts
-    #     fixed.append(";".join(parts))
-
-    # if log_path and bad_lines:
-    #     with open(log_path, "w", encoding="utf-8") as f:
-    #         for idx, raw in bad_lines:
-    #             f.write(f"{idx}\t{raw}\n")
-    #     if verbose:
-    #         logger_(f"!! {len(bad_lines)} rows not valid logged in {log_path}")
-
-    # return "\n".join(fixed)
+    
     lines_raw = [l.strip() for l in text.replace("\r\n", "\n").split("\n") if l.strip()]
     lines_raw = [l for l in lines_raw if not l.startswith("```")]
 
@@ -666,7 +646,6 @@ def validate_mapping(mapping_file: str, SN_file: str, DE_file: str,
     - The updated mapping file overwrites the original to simplify downstream use.
     """
 
-    # mapping = pd.read_csv(mapping_file, sep=";", encoding="utf-8")
     mapping = pd.read_csv(mapping_file, sep=";", encoding="utf-8", dtype=str)
     mapping.columns = [
         re.sub(r"\s+", "_", c.strip().lstrip("\ufeff"))

@@ -1458,80 +1458,88 @@ class GeneratorTab(tk.Frame):
         if ts <= 0:
             return False
         return (time.time() - ts) <= ttl_seconds
-
+    
     def _start_diagnostics_test(self, scope: str, provider_models: Optional[list[str]] = None, auto: bool = False) -> None:
         if self._diagnostics_worker_running:
-            self.log_queue.put('[LLM] Diagnostics already running.')
+            self.log_queue.put("[LLM] Diagnostics already running.")
             return
+
         self._refresh_env_snapshot()
         if self._diagnostics_missing_rows:
-            self._set_diagnostics_banner('Missing env vars. Update keys first.', 'warn')
+            self._set_diagnostics_banner("Missing env vars. Update keys first.", "warn")
             return
-        #models = list(provider_models or [])
+
         try:
             for k, var in getattr(self, "llm_vars", {}).items():
-                v = (var.get() or "").strip()
-                if v:
-                    self.llm_models[k] = v
+                self.llm_models[k] = (var.get() or "").strip()
         except Exception:
             pass
-        models = list(provider_models or [])
+
+        llmodels_snapshot = {k: (v or "").strip() for k, v in (self.llm_models or {}).items()}
+        models = [(m or "").strip() for m in (provider_models or []) if (m or "").strip()]
 
         if not models:
-            if scope == 'all':
-                models = list(dict.fromkeys(filter(None, (self.llm_models or {}).values())))
+            configured = [m for m in llmodels_snapshot.values() if m]
+            configured = list(dict.fromkeys(configured))
+            if scope == "all":
+                models = configured
             else:
-                fallback = next(iter((self.llm_models or {}).values()), 'openai\\gpt-4o-mini')
-                models = [self.llm_models.get('NARRATIVE', fallback)]
-        models = [m for m in models if m]
+                narrative = (llmodels_snapshot.get("NARRATIVE") or "").strip()
+                models = [narrative] if narrative else ([configured[0]] if configured else [])
+
+        models = list(dict.fromkeys([m for m in models if m]))
         if not models:
-            self._set_diagnostics_banner('No LLM models configured. Update Settings > LLM models.', 'warn')
+            self._set_diagnostics_banner("No LLM models configured. Update Settings > LLM models.", "warn")
             return
+
         fingerprint = self._llm_env_fingerprint()
         self._diagnostics_worker_running = True
         self._diagnostics_last_scope = scope
         if not auto:
-            self._set_diagnostics_banner('Running LLM dry-test...', 'info')
+            self._set_diagnostics_banner("Running LLM dry-test...", "info")
         self.log_queue.put(f"[LLM] Running diagnostics ({scope}, {len(models)} model(s)).")
+
         worker = threading.Thread(
             target=self._llm_diagnostics_worker,
-            args=(models, fingerprint, scope),
+            args=(models, llmodels_snapshot, fingerprint, scope),
             daemon=True,
-            name='llm-diagnostics',
+            name="llm-diagnostics",
         )
         worker.start()
-
-    def _llm_diagnostics_worker(self, provider_models: list[str], fingerprint: str, scope: str) -> None:
-        payload: dict[str, Any] = {'state': 'error', 'message': 'Unknown diagnostics error.', 'scope': scope}
+  
+    def _llm_diagnostics_worker(self, provider_models: list[str], llmodels_snapshot: dict[str, str], fingerprint: str, scope: str) -> None:
+        payload: dict[str, Any] = {"state": "error", "message": "Unknown diagnostics error.", "scope": scope}
         try:
-            default_model = self.llm_models.get('NARRATIVE', 'openai\\gpt-4o-mini')
+            models_clean = list(dict.fromkeys([(m or "").strip() for m in (provider_models or []) if (m or "").strip()]))
+            llmodels_clean = {k: (v or "").strip() for k, v in (llmodels_snapshot or {}).items() if (v or "").strip()}
+
+            default_model = (llmodels_clean.get("NARRATIVE") or "").strip()
+            if not default_model:
+                default_model = next(iter(llmodels_clean.values()), "")
+
+            if not default_model:
+                raise RuntimeError("No default model configured for diagnostics")
+
             LLMConnect.init_global(
-                llmodels=self.llm_models,
+                llmodels=llmodels_clean,
                 default_model=default_model,
-                temperature=float(getattr(self, 'temperature', 0.7)),
-                max_tokens=int(getattr(self, 'max_tokens', 1024)),
-                request_timeout=int(getattr(self, 'request_timeout', 600)),
+                temperature=float(getattr(self, "temperature", 0.7)),
+                #max_tokens=int(getattr(self, "max_tokens", 1024)),
+                max_tokens=int(max(getattr(self, "simple_max_tokens", 3000), 3000)),
+                request_timeout=int(getattr(self, "request_timeout", 600)),
             )
             self.llm = LLMConnect.get_global()
-            dry_results = self.llm.dry_test_models(provider_models, verbose=True)
+            dry_results = self.llm.dry_test_models(models_clean, verbose=True)
             results_dicts = [asdict(res) for res in dry_results]
-            #overall_ok = all(res.ok for res in dry_results)
-            overall_ok = all(
-                                (res.ok is True) or str(res.message).startswith("SKIPPED")
-                                for res in dry_results
-                            )
+            overall_ok = all((res.ok is True) or str(res.message).startswith("SKIPPED") for res in dry_results)
             payload = {
-                'state': 'ok' if overall_ok else 'failed',
-                'results': results_dicts,
-                'fingerprint': fingerprint if overall_ok else None,
-                'scope': scope,
+                "state": "ok" if overall_ok else "failed",
+                "results": results_dicts,
+                "fingerprint": fingerprint if overall_ok else None,
+                "scope": scope,
             }
         except Exception as exc:
-            payload = {
-                'state': 'error',
-                'message': self._scrub_secret(str(exc)),
-                'scope': scope,
-            }
+            payload = {"state": "error", "message": self._scrub_secret(str(exc)), "scope": scope}
         finally:
             self._diagnostics_queue.put(payload)
 
@@ -1907,7 +1915,7 @@ class GeneratorTab(tk.Frame):
         notebook = ttk.Notebook(pane, style="Narremgen.TNotebook")
         pane.add(notebook, weight=4)
         self.generator_notebook = notebook
-        self._notebook_tabs: dict[str, str] = {}
+        self._notebook_tabs = {}
 
         run_frame = ttk.Frame(notebook)
         settings_frame = ttk.Frame(notebook)
@@ -3276,7 +3284,7 @@ class GeneratorTab(tk.Frame):
                     selected_variant=run_ctx.selected_variant,
                 )
                 self._raise_if_cancelled(cancel_event)
-                run_pipeline(
+                out_neutral = run_pipeline(
                     topic=run_ctx.topic,
                     workdir=run_ctx.workdir,
                     assets_dir=self._effective_assets_dir(),
@@ -3286,6 +3294,8 @@ class GeneratorTab(tk.Frame):
                     dialogue_mode="single",
                     verbose=True,
                 )
+                if not out_neutral:
+                    raise RuntimeError("[NEUTRAL] run_pipeline failed (no output). Check pipeline.log/error_log.txt")
                 self._raise_if_cancelled(cancel_event)
                 self.log_queue.put("[INFO] Neutral pipeline done.")
 
@@ -3441,8 +3451,18 @@ class GeneratorTab(tk.Frame):
             self.log_queue.put(f"[INFO] WORKDIR = {run_ctx.workdir}")
             try:
                 self._raise_if_cancelled(cancel_event)
+                llmodels_clean = {k: (v or "").strip() for k, v in (self.llm_models or {}).items() if (v or "").strip()}
+                default_model = (llmodels_clean.get("NARRATIVE") or "").strip() or next(iter(llmodels_clean.values()), "openai\\gpt-4o-mini")
+                LLMConnect.init_global(
+                    llmodels=llmodels_clean,
+                    default_model=default_model,
+                    temperature=float(getattr(self, "temperature", 0.7)),
+                    max_tokens=int(max(getattr(self, "simple_max_tokens", 3000), 3000)),
+                    request_timeout=int(getattr(self, "request_timeout", 600)),
+                )
+                self.llm = LLMConnect.get_global()
                 self.log_queue.put("[STEP] Neutral generation…")
-                run_pipeline(
+                out_neutral = run_pipeline(
                     topic=run_ctx.topic,
                     workdir=run_ctx.workdir,
                     assets_dir=self._effective_assets_dir(),
@@ -3452,7 +3472,8 @@ class GeneratorTab(tk.Frame):
                     dialogue_mode="single",
                     verbose=True,
                 )
-
+                if not out_neutral:
+                    raise RuntimeError("[NEUTRAL] run_pipeline failed (no output). Check pipeline.log/error_log.txt")                
                 self._raise_if_cancelled(cancel_event)
                 self.log_queue.put("[STEP] Variants generation…")
                 algebra_path = self._make_algebra_path(run_ctx.workdir)

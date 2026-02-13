@@ -77,7 +77,7 @@ class LLMConnect:
     def __init__(
         self,
         llmodels: Optional[Dict[str, str]] = None,
-        default_model: str = "openai\\gpt-4o-mini",
+        default_model: str = None,
         temperature: float = 0.7,
         max_tokens: int = 1024,
         request_timeout: int = 60,
@@ -91,8 +91,23 @@ class LLMConnect:
         if self.backoff_factor<0.0: self.backoff_factor=0.5
         if self.backoff_factor>3.0: self.backoff_factor=3.0
 
-        self.llmodels: Dict[str, str] = dict(llmodels) if llmodels is not None else {}
-
+        #self.llmodels: Dict[str, str] = dict(llmodels) if llmodels is not None else {}
+        if default_model is not None:
+            self.llmodels = {
+                "ADVICE": default_model,
+                "MAPPING": default_model,
+                "CONTEXT": default_model,
+                "NARRATIVE": default_model,
+                "THEME_ANALYSIS": default_model,
+                "VARIANTS_GENERATION": default_model,
+            }
+            if llmodels:
+                self.llmodels.update(llmodels)
+        elif llmodels is not None:
+            self.llmodels = dict(llmodels)
+        else:
+            self.llmodels = {}
+        
         self._openai_client = self._build_openai_client()
         self._openrouter_client = self._build_openrouter_client() #use for gemini for instance
         self._grok_client = self._build_grok_client()
@@ -335,14 +350,53 @@ class LLMConnect:
         ValueError
             If the input does not contain a backslash.
         """
-        if "\\" not in provider_model:
-            raise ValueError(
-                f"Expected 'provider\\\\model', got {provider_model!r}"
-            )
-        provider, model = provider_model.split("\\", 1)
-        provider = provider.strip().lower()
-        model = model.strip().lstrip("\\/")  # removes accidental leading "\" or "/"
+        s = (provider_model or "").strip()
+        if not s:
+            raise ValueError("Expected 'provider\\\\model' (or 'provider/model'), got empty string")
+
+        known_providers = {
+            "openai",
+            "gemini",
+            "openrouter",
+            "mistral",
+            "ollama",
+            "local",
+            "grok",
+            "xai",
+            "huggingface",
+        }
+        aliases = {
+            "google": "gemini",
+            "genai": "gemini",
+            "google-genai": "gemini",
+            "google_genai": "gemini",
+            "xai": "grok",
+            "hf": "huggingface",
+            "mistralai": "mistral",
+            "open_router": "openrouter",
+            "open-router": "openrouter",
+        }
+
+        if "\\" in s:
+            provider, model = s.split("\\", 1)
+        elif "/" in s:
+            head = s.split("/", 1)[0].strip().lower()
+            head = aliases.get(head, head)
+            if head in known_providers:
+                provider, model = s.split("/", 1)
+            else:
+                raise ValueError(f"Expected 'provider\\\\model' (or 'provider/model'), got {provider_model!r}")
+        else:
+            raise ValueError(f"Expected 'provider\\\\model' (or 'provider/model'), got {provider_model!r}")
+
+        provider = aliases.get(provider.strip().lower(), provider.strip().lower())
+        model = (model or "").strip().lstrip("\\/")
+
+        if not provider or not model:
+            raise ValueError(f"Expected 'provider\\\\model' (or 'provider/model'), got {provider_model!r}")
+
         return provider, model
+
 
     @staticmethod
     def _guess_provider_from_model(model: str) -> str:
@@ -655,32 +709,8 @@ class LLMConnect:
         if txt:
             return txt
 
-        try:
-            fallback_pm = self.default_model
-            if "\\" not in fallback_pm:
-                fallback_pm = f"openai\\{fallback_pm}"
-            fb_provider, fb_model = self._split_provider_model(fallback_pm)
-
-            if fb_provider == "gemini":
-                fb_provider, fb_model = "openai", "gpt-4o-mini"
-
-            drop = {"thinking_level", "thinking_budget"}
-            clean_kwargs = {k: v for k, v in kwargs.items() if k not in drop}
-
-            if fb_provider == "openai":
-                return self._chat_openai(fb_model, messages, **clean_kwargs)
-            if fb_provider == "openrouter":
-                return self._chat_openrouter(fb_model, messages, **clean_kwargs)
-            if fb_provider == "mistral":
-                return self._chat_mistral(fb_model, messages, **clean_kwargs)
-            if fb_provider in ("grok", "xai"):
-                return self._chat_grok(fb_model, messages, **clean_kwargs)
-
-            logger_("[LLMConnect] Gemini fallback provider unsupported")
-            return ""
-        except Exception as e:
-            logger_("[LLMConnect] Gemini fallback OpenAI failed")
-            return ""
+        logger_("[LLMConnect] Gemini fallback OpenAI failed")
+        return ""
 
     def _chat_mistral(
         self,
@@ -1081,7 +1111,7 @@ class LLMConnect:
         if provider == "gemini":
             return ((self._gemini_client is not None)
                     or (getattr(self, "_gemini_openai_client", None) is not None)
-                    or (self._openai_client is not None) 
+                    # or (self._openai_client is not None) 
                    )
         if provider == "openrouter":
             return self._openrouter_client is not None
@@ -1098,9 +1128,12 @@ class LLMConnect:
         Backward-compatible wrapper returning legacy status strings.
         """
         if models is None:
-            provider_models = list(self.llmodels.values())
+            items = [m for m in self.llmodels.values() if m]
+            if self.default_model:
+                items.append(self.default_model)
+            provider_models = list(dict.fromkeys(items))
         else:
-            provider_models = list(models)
+            provider_models = list(dict.fromkeys([m for m in models if m]))
 
         dry_results = self.dry_test_models(provider_models, verbose=verbose)
         legacy: dict[str, str] = {}
@@ -1108,12 +1141,11 @@ class LLMConnect:
             legacy[res.provider_model] = "OK" if res.ok else res.message
         return legacy
 
-
     @classmethod
     def init_global(
         cls,
         llmodels: Optional[Dict[str, str]] = None,
-        default_model: str = "openai\\gpt-4o-mini",
+        default_model: str = None,
         temperature: float = 0.7,
         max_tokens: int = 1024,
         request_timeout: int = 60,
@@ -1127,7 +1159,7 @@ class LLMConnect:
         llmodels : dict, optional
             Mapping from logical roles (e.g. "ADVICE", "NARRATIVE") to
             provider\\model strings.
-        default_model : str, default "openai\\gpt-4o-mini"
+        default_model : str, default None
             Fallback model used when no mapping exists for a role.
         temperature : float, default 0.7
             Default sampling temperature for all calls.
@@ -1171,9 +1203,12 @@ class LLMConnect:
             model if no mapping exists.
         """
         inst = cls.get_global()
-        if getattr(inst, "llmodels", None):
-            return inst.llmodels.get(key, inst.default_model)
-        return inst.default_model
+        pm = (getattr(inst, "llmodels", {}) or {}).get(key)
+        if pm:
+            return pm
+        if inst.default_model:
+            return inst.default_model
+        raise KeyError(f"No model configured for role {key!r}")
 
     @classmethod
     def get_role_models(cls) -> Dict[str, str]:
