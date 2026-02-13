@@ -94,6 +94,12 @@ Grok default (use also sys env key GROK_API_KEY) + bypass variants generation to
 `
 narremgen --topic "Walking around in a small town" --output-dir "./out" --api-key-file "./llmkeys.txt" --default-model "grok\grok-2-latest" --model-variants-generation "ollama\phi4:14b" --variant-batch-size 40 --variant-max-tokens 2500
 `
+
+Quick connectivity check (no files generated): diagnostic dry-run with longer timeout  
+`
+narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "gemini\\gemini-2.0-flash"
+`
+
 ## With command lines in the terminal (use narremgen or python -m narremgen.main) <br>
 
 ```python
@@ -125,11 +131,6 @@ python -m narremgen.main \
   --diagnostic-dry-run \
   --verbose
 ```
-
-Quick connectivity check (no files generated): diagnostic dry-run with longer timeout  
-`
-narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "gemini\\gemini-2.0-flash"
-`
 
 ## Custom calls with python programming
 
