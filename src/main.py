@@ -676,11 +676,41 @@ def _parse_args() -> argparse.Namespace:
     argparse.Namespace
         Parsed command-line arguments with all defaults applied.
     """
+    # p = argparse.ArgumentParser(
+    #     prog="narremgen",
+    #     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    # )
+
+    EXAMPLES = """Examples (copy/paste):
+    pip install narremgen
+
+    Examples (copy/paste):
+    pip install narremgen
+
+    narremgen --diagnostic-dry-run --default-model "<provider>/<model>"
+
+    narremgen --topic "walk in the city" --batches 1 --per-batch 15 --default-model "<provider>/<model>"
+    narremgen --topic "..." --batches 2 --per-batch 10 --temperature 0.25 --default-model "<provider>/<model>"
+
+    narremgen --topic "..." --batches 1 --per-batch 10 --skip-stats --skip-variants --default-model "<provider>/<model>"
+
+    narremgen --topic "..." --batches 1 --per-batch 10 --skip-stats --skip-themes --default-model "<provider>/<model>"
+
+    narremgen --topic "..." --batches 1 --per-batch 20 --assets-dir .\my_settings --default-model "<provider>/<model>"
+
+    narremgen --topic "..." --advice-only-csv plan.csv --batches 2 --per-batch 10 --default-model "<provider>/<model>"
+
+    narremgen --topic "..." --batches 2 --per-batch 10 --output-dir .\outputs --default-model "<provider>/<model>"
+
+    """
+
     p = argparse.ArgumentParser(
         prog="narremgen",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        description="Narremgen: generate advice/mapping/context and merged narratives.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=EXAMPLES,
     )
-   
+
     p.add_argument(
         "--version",
         action="version",
@@ -732,7 +762,7 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument("--bypass-advice-csv", default=None, help="Bypass pre-gen: path to Advice_FilteredRenumeroted CSV")
     p.add_argument("--bypass-mapping-csv", default=None, help="Bypass pre-gen: path to Mapping_FilteredRenumeroted CSV")
     p.add_argument("--bypass-context-csv", default=None, help="Bypass pre-gen: path to Context_FilteredRenumeroted CSV")
-    p.add_argument("--advice-only-csv", default=None, help="Neutral: path to a CSV containing an 'Advice' column (titles). If valid, it replaces AdvicePlan_Dedup automatic generation.")
+    p.add_argument("--advice-only-csv", default=None, help="Advice list from user: path to a CSV containing just one column with name 'Advice' column (titles). If valid, it replaces AdvicePlan_Dedup automatic generation.")
     p.add_argument("--batches", type=int, default=DEFAULT_NEUTRAL_BATCHES, help="Neutral: number of batches")
     p.add_argument("--per-batch", type=int, default=DEFAULT_NEUTRAL_PER_BATCH, help="Neutral: items per batch")
     p.add_argument("--dialogue-mode", default="single", choices=["none", "single", "short"], help="Neutral: dialogue mode")

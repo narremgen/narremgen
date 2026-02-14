@@ -131,8 +131,9 @@ Global safety constraints (apply to ALL rewrites):
     if plain_text:
         style_text += (
             f"\n\nIMPORTANT: Utilise le balisage pour guider la création du contenu, "
-            "mais NE PAS afficher les balises, commentaires, ni explications. "
-            "Produit uniquement le texte brut, sous forme d’un paragraphe unique par récit "
+            "mais NE PAS afficher de balisage SAUF l’en-tête LaTeX \\subsubsection*{...} en première ligne de chaque récit. "
+            "Ne pas afficher de commentaires, ni explications. "
+            "Produit ensuite uniquement le texte brut, sous forme d’un paragraphe unique par récit "
             f"({target_words-50}-{target_words+50} mots)."
         )
     else:

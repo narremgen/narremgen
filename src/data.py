@@ -217,48 +217,39 @@ def generate_advice(topic: str, n_advice: int = 20,
 
         def _prompt(items: list[tuple[str, str]]) -> str:
             table_in = "\n".join(f"{i};{t}" for i, t in items)
-            return f"""{advice_context_block}
-
-Treat ADVICE_CONTEXT as the epistemic anchor: it defines the world model, constraints, hypotheses,
-and assumptions that guide which perspectives you select before writing advice items.            
+            return f"""
 
 Topic: 
-You are given general topic as defined as follows: [{topic}]
+You are given general topic as defined as follows: 
+[{topic}]
+
+Topic context:
+Treat ADVICE_CONTEXT as the epistemic anchor: it defines the world model, constraints, hypotheses,
+and assumptions that guide which perspectives you select before writing advice items.            
+[{advice_context_block}]
 
 Task:
-For each row of the input TABLE below, write ONE sentence that is 
-1/2) specifically about the given Topic above as theme to keep in mind.
-2/2) specifically about the given Advice title in the same row number.
+For each row of the input TABLE below, write ONE sentence that is respect (1+2) where, 
+- 1) specifically about the given Topic above as theme to keep in mind.
+- 2) specifically about the given Advice title in the same row number.
 
 Hard constraints:
 - The sentence must mention at least one concrete action element related to the topic (an action verb + a concrete object/context).
 - The sentence must be read as a clear and simple sentence which is said by another character to the main one living the scene
 - The sentence must reuse at least one non-trivial word from the Advice title (copy it as-is).
-- Output ONLY CSV with delimiter ';'
-- First line must be: ID;Sentence as the header of the table before the data
-- Exactly {len(items)} rows after the header ID;Sentence (written at first row)
-- No extra text, no blank lines
-- Never use ';' inside sentences
-
-<Format of output table>
-Output must be ONLY a valid CSV, without line without header and without line after the valid CSV contents.
-⚠️ Output must be ONLY a valid CSV.
-⚠️ Output must be WITHOUT EMPTY LINES.
-⚠️ Output must use standard UTF-8 characters (no special symbols or emojis).
-⚠️ Output must be WITHOUT ANY LIST MARKERS.
-⚠️ Output must be WITHOUT ANY QUOTES.
-⚠️ Output must be WITHOUT ANY BACKTICKS.
-⚠️ Output must be WITHOUT ANY MARKDOWN.
-⚠️ Output must be WITHOUT ANY INTRODUCTION OR COMMENTARY.
-⚠️ Output must be WITHOUT ANY EXTRA TEXT.
-⚠️ Output must be WITHOUT ANY PREAMBLE.
-⚠️ Output must be ONLY a valid CSV.
-⚠️ Inside cells of the csv after header: Never insert any semicolons which are used as csv separators
-⚠️ Inside cells of the csv after header: Use only plain text separated by spaces or between parenthesis.
-⚠️ The CSV must start immediately with this header:
-The CSV header is the first line of the generated output as followed, before the line for the values:
-Num;Sentence
-</Format of output table>
+- Output ONLY CSV with delimiter ';' between columns but never use ';' inside sentences.
+- First line must be: ID;Sentence as the header of the table before the data. 
+- Never use quotation marks (") in any field/column/header of the table. 
+- Exactly {len(items)} rows after the header ID;Sentence (written at first row). 
+- Output must be ONLY a valid CSV, with a well structured header followed by the contents.
+** ⚠️ Output must be WITHOUT EMPTY/BLANK LINES.
+** ⚠️ Output must be WITHOUT ANY LIST MARKERS, QUOTES, BACKTICKS, MARKDOWN. 
+** ⚠️ Output must be WITHOUT ANY EXTRA TEXT, PREAMBLE, INTRODUCTION, COMMENTARY.
+** ⚠️ Output must use standard UTF-8 characters (no special symbols or emojis).
+** ⚠️ Inside cells of the csv after header: Never insert any semicolons which are used as csv separators
+** ⚠️ Inside cells of the csv after header: Use only plain text separated by spaces or between parenthesis.
+** ⚠️ The CSV must start immediately with this header:
+ID;Sentence
 
 Input TABLE:
 ID;Advice
