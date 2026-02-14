@@ -69,7 +69,7 @@ pip install narremgen
 OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead of txt file) + export TeX booklet
 
 `
-narremgen --topic "Small habits, big effects" --output-dir "./out" (--default-model "openai\gpt-4o-mini") --export-book-tex
+narremgen --topic "Small habits, big effects" --output-dir "./out" --default-model "openai\gpt-4o-mini" --export-book-tex
 `
 
 Ollama local (offline, no key required) as the default model to all the llm calls (dry test allows to check which models are in used) 
