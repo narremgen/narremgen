@@ -40,6 +40,7 @@
 - Graphical user interface for generation with api key checkings, creation of variants, and reading/selection of aligned textes for a topic.
 - Available connection to OpenAI, OpenRouter, Google-GenAI, Mistral, etc for text generation (see python code and interface for dry-run).
 - No limited length for topic str, available command for adding file/str long text as context for advice or generation stages in pipeline.
+- Input in the pipeline a list of pre-written advice with a csv table path with col name Advice, or prefer a dedup automatically generated.
 
 Output: Each generated corpus is stored under `outputs/` in CSV and TXT format. <br> 
 The naming convention is: `outputs/<corpus_name>_1/` for its directory.<br>
