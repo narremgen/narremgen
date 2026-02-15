@@ -156,15 +156,14 @@ run_pipeline(
 
 ## Custom calls with python programming for llmcore
 
-| Provider | Required env var(s) or key file | Model example (`provider\\model`) | Notes |
-|---|---|---|---|
-| OpenAI | `OPENAI_API_KEY` | `openai\\gpt-4o-mini` |  |
-| OpenRouter | `OPENROUTER_API_KEY` | `openrouter\\anthropic/claude-3.5-sonnet` | Model names depend on OpenRouter catalog |
-| Gemini | `GEMINI_API_KEY` or `GOOGLE_API_KEY` | `gemini\\gemini-2.0-flash` | Either env var works |
-| Mistral | `MISTRAL_API_KEY` | `mistral\\mistral-small-latest` | See provider documention |
-| xAI / Grok | `XAI_API_KEY` or `GROK_API_KEY` | `xai\\grok-2-mini` | Env var name depends on your setup |
-| HuggingFace | `HF_API_KEY` or `HUGGINGFACE_API_KEY` | `huggingface\\meta-llama/Llama-3.1-8B-Instruct` | Requires hosted inference / endpoint support |
-| Ollama (local) | `OLLAMA_HOST` (optional) | `ollama\\llama3.2:3b` | Default host: `http://localhost:11434` |
+| Provider | Required env var(s) or key file | Model example (`provider\\model`) |
+|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | `openai\\gpt-4o-mini` |
+| OpenRouter | `OPENROUTER_API_KEY` | `openrouter\\anthropic/claude-3.5-sonnet` | 
+| Gemini | `GEMINI_API_KEY` or `GOOGLE_API_KEY` | `gemini\\gemini-2.0-flash` | 
+| Mistral | `MISTRAL_API_KEY` | `mistral\\mistral-small-latest` | 
+| xAI / Grok | `XAI_API_KEY` or `GROK_API_KEY` | `xai\\grok-2-mini` | 
+| Ollama (local) | `OLLAMA_HOST` (optional) | `ollama\\llama3.2:3b` | 
 
 
 ```python
