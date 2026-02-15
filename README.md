@@ -64,6 +64,12 @@ To do: improve genericity, generality and robutness, add parallelism, classes re
 pip install narremgen
 ```
 
+## Ask for help and first examples in the cli
+
+```
+narremgen --help
+```
+
 ## Usage from cli, examples of command lines
 
 OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead of txt file) + export TeX booklet
