@@ -1,4 +1,5 @@
-# <br>
+Narremgen is a Python package for structured narrative text generation, combining narrative schemas (SN) and emotional dynamics (DE) to produce coherent short texts assembled into full booklets of advice or answers from a topic or a question with optional chapters. It provides a reproducible multi-batch pipeline for controlled text generation using LLM models with narrative+emotional structures with:
+
 # **<u>NarrEmGen: Narrative Generation Pipeline (CLI & GUI)</u>**<br>
 - **<u>Implementing Partially The SN/DE/K Method For a Controlled Generation</u>**<br>
 - **<u>Artificial structured advice micro-texts from narrative, emotional, context</u>**<br>
