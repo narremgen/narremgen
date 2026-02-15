@@ -137,7 +137,35 @@ python -m narremgen.gui
 
 <br><img src="tutorials/gui_overview_v0.9.5.png" width="350" height="320" alt="Logo"><br>
 
-## Custom calls with python programming
+## Custom calls with python programming for pipeline
+
+```python
+import narremgen
+from narremgen import pipeline
+
+run_pipeline(
+    topic="Walking_in_the_city",
+    output_dir="./outputs",
+    assets_dir="./narremgen/settings",
+    n_batches=2,
+    n_per_batch=20,
+    output_format="txt",
+    verbose=False
+)
+```
+
+## Custom calls with python programming for llmcore
+
+| Provider | Required env var(s) or key file | Model example (`provider\\model`) | Notes |
+|---|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | `openai\\gpt-4o-mini` |  |
+| OpenRouter | `OPENROUTER_API_KEY` | `openrouter\\anthropic/claude-3.5-sonnet` | Model names depend on OpenRouter catalog |
+| Gemini | `GEMINI_API_KEY` or `GOOGLE_API_KEY` | `gemini\\gemini-2.0-flash` | Either env var works |
+| Mistral | `MISTRAL_API_KEY` | `mistral\\mistral-small-latest` | See provider documention |
+| xAI / Grok | `XAI_API_KEY` or `GROK_API_KEY` | `xai\\grok-2-mini` | Env var name depends on your setup |
+| HuggingFace | `HF_API_KEY` or `HUGGINGFACE_API_KEY` | `huggingface\\meta-llama/Llama-3.1-8B-Instruct` | Requires hosted inference / endpoint support |
+| Ollama (local) | `OLLAMA_HOST` (optional) | `ollama\\llama3.2:3b` | Default host: `http://localhost:11434` |
+
 
 ```python
 from narremgen.llmcore import LLMConnect
@@ -157,20 +185,6 @@ reply = llm.safe_chat_completion(model="gemini\\gemini-2.0-flash", messages=mess
 print(reply)
 ```
 
-```python
-import narremgen
-from narremgen import pipeline
-
-run_pipeline(
-    topic="Walking_in_the_city",
-    output_dir="./outputs",
-    assets_dir="./narremgen/settings",
-    n_batches=2,
-    n_per_batch=20,
-    output_format="txt",
-    verbose=False
-)
-```
 
 ## Warning
 
