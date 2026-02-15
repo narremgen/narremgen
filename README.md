@@ -81,7 +81,7 @@ narremgen --topic "Small walks, big effects" --default-model "openai\gpt-4o-mini
 OpenRouter for  DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
 
 `
-narremgen --topic "Walk habits in the city" --model-advice "openrouter\openai/gpt-4o-mini" --model-mapping "openrouter\deepseek/deepseek-reasoner" --model-context "openrouter\openai/gpt-4o-mini" --model-narrative "openrouter\meta-llama/llama-3.1-70b-instruct" --model-variants-generation "openrouter\openai/gpt-4o-mini"
+narremgen --topic "Walk habits in the city" --model-advice "openrouter\openai/gpt-4o-mini" --model-mapping "openrouter\deepseek/deepseek-r1" --model-context "openrouter\openai/gpt-4o-mini" --model-narrative "openrouter\meta-llama/llama-3.1-70b-instruct" --model-variants-generation "openrouter\openai/gpt-4o-mini"
 `
 
 Mistral direct (OpenAI-compatible api, use sys env key) + themes enabled with custom range and batch size  
@@ -146,7 +146,7 @@ run_pipeline(
 )
 ```
 
-## Custom calls with python programming for llmcore (free or charged tokens from providers)
+## Example of calls with python code for llmcore (free or charged tokens from providers)
 
 | Provider | Required env variables or key file | Model example (`provider\\model`) |
 |---|---|---|
