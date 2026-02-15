@@ -159,12 +159,11 @@ run_pipeline(
 | Provider | Required env variables or key file | Model example (`provider\\model`) |
 |---|---|---|
 | OpenAI | `OPENAI_API_KEY` | `openai\\gpt-4o-mini` |
-| OpenRouter | `OPENROUTER_API_KEY` | `openrouter\\anthropic/claude-3.5-sonnet` | 
 | Gemini | `GEMINI_API_KEY` or `GOOGLE_API_KEY` | `gemini\\gemini-2.0-flash` | 
 | Mistral | `MISTRAL_API_KEY` | `mistral\\mistral-small-latest` | 
 | xAI / Grok | `XAI_API_KEY` or `GROK_API_KEY` | `xai\\grok-2-mini` | 
 | Ollama (local) | `OLLAMA_HOST` (optional) | `ollama\\llama3.2:3b` | 
-
+| OpenRouter | `OPENROUTER_API_KEY` | `openrouter\\anthropic/claude-3.5-sonnet` | 
 
 ```python
 from narremgen.llmcore import LLMConnect
