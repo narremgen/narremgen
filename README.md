@@ -156,7 +156,7 @@ run_pipeline(
 
 ## Custom calls with python programming for llmcore
 
-| Provider | Required env var(s) or key file | Model example (`provider\\model`) |
+| Provider | Required env variables or key file | Model example (`provider\\model`) |
 |---|---|---|
 | OpenAI | `OPENAI_API_KEY` | `openai\\gpt-4o-mini` |
 | OpenRouter | `OPENROUTER_API_KEY` | `openrouter\\anthropic/claude-3.5-sonnet` | 
