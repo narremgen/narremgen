@@ -109,14 +109,19 @@ narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "olla
 
 ## With command lines in the terminal (use narremgen or python -m narremgen.main) <br>
 
-Example of equivalent call
+Example of equivalent call to narremgen
+
 `
 python -m narremgen.main --topic "Walking_in_the_city" --output-dir "./outputs" --batches 1 --per-batch 15 --output-format txt --skip-variants --verbose --default-model "openai\gpt-4o-mini" --skip-themes
 `
 
-Dry-test without generation pipeline
+Dry-test without generation pipeline with mandatory model(s) entry
+
 `
 python -m narremgen.main --diagnostic-dry-run --verbose --default-model "ollama\\phi3-chat:latest"
+`
+`
+narremgen --diagnostic-dry-run --verbose --default-model "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "openai\\gpt-4o" --model-context "ollama\\phi3-chat:latest" --model-narrative "gemini\\gemini-2.0-flash" --model-variants-generation "openai\\gpt-4o-mini"
 `
 
 ## Launch call for GUI <br>
