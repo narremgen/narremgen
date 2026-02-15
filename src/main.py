@@ -696,9 +696,9 @@ def _parse_args() -> argparse.Namespace:
 
     narremgen --topic "..." --batches 1 --per-batch 10 --skip-stats --skip-themes --default-model "<provider>/<model>"
 
-    narremgen --topic "..." --batches 1 --per-batch 20 --assets-dir .\my_settings --default-model "<provider>/<model>"
+    narremgen --topic "..." --advice-only-csv plan.csv --batches 2 --per-batch 10 --default-model "<provider>/<model>"    
 
-    narremgen --topic "..." --advice-only-csv plan.csv --batches 2 --per-batch 10 --default-model "<provider>/<model>"
+    narremgen --topic "..." --batches 1 --per-batch 20 --assets-dir .\my_settings --default-model "<provider>/<model>"
 
     narremgen --topic "..." --batches 2 --per-batch 10 --output-dir .\outputs --default-model "<provider>/<model>"
 
