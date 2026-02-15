@@ -78,19 +78,19 @@ OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead o
 narremgen --topic "Small walks, big effects" --default-model "openai\gpt-4o-mini" --export-book-tex
 `
 
-OpenRouter (OPENROUTER_API_KEY) mix: DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
+OpenRouter for  DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
 
 `
 narremgen --topic "Walk habits in the city" --model-advice "openrouter\openai/gpt-4o-mini" --model-mapping "openrouter\deepseek/deepseek-reasoner" --model-context "openrouter\openai/gpt-4o-mini" --model-narrative "openrouter\meta-llama/llama-3.1-70b-instruct" --model-variants-generation "openrouter\openai/gpt-4o-mini"
 `
 
-Mistral direct (OpenAI-compatible api, use also sys env key MISTRAL_API_KEY) + themes enabled with custom range and batch size  
+Mistral direct (OpenAI-compatible api, use sys env key) + themes enabled with custom range and batch size  
 
 `
 narremgen --topic "Healthy routines for a walk everyday" --default-model "mistral\mistral-large-latest" --themes-min 1 --themes-max 15 --themes-batch-size 30
 `
 
-Grok default (use also sys env key GROK_API_KEY) + bypass variants generation to local Phi-4 (Ollama) with larger token budget  
+Grok default (use sys env key) + bypass variants generation to local Phi-4 (Ollama) with larger token budget  
 
 `
 narremgen --topic "Walking around in a small town" --default-model "xai\grok-2-latest" --model-variants-generation "ollama\phi4:14b" --variant-batch-size 40 --variant-max-tokens 2500
