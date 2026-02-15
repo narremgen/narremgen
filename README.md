@@ -140,17 +140,18 @@ python -m narremgen.gui
 ## Custom calls with python programming for pipeline
 
 ```python
-import narremgen
-from narremgen import pipeline
-
+from importlib.resources import files
+from narremgen import LLMConnect, run_pipeline
+LLMConnect.init_global(default_model="openai/gpt-4o-mini")
+assets_dir = str(files("narremgen").joinpath("settings"))
 run_pipeline(
-    topic="Walking_in_the_city",
-    output_dir="./outputs",
-    assets_dir="./narremgen/settings",
+    topic="Walking in the city",
+    workdir="./outputs",
+    assets_dir=assets_dir,
     n_batches=2,
     n_per_batch=20,
     output_format="txt",
-    verbose=False
+    verbose=False,
 )
 ```
 
