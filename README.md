@@ -78,12 +78,6 @@ OpenAI gpt4o as the default model (use also sys env key OPENAI_API_KEY instead o
 narremgen --topic "Small walks, big effects" --default-model "openai\gpt-4o-mini" --export-book-tex
 `
 
-Ollama local (offline, no key required) as the default model to all the llm calls (dry test allows to check which models are in used) 
-
-`
-narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "ollama\\phi3-chat:latest" --model-variants-generation "ollama\\phi3-chat:latest"
-`
-
 OpenRouter (OPENROUTER_API_KEY) mix: DeepSeek for mapping, Llama for narrative, GPT-4o-mini for the rest + multiple variants  
 
 `
@@ -102,7 +96,8 @@ Grok default (use also sys env key GROK_API_KEY) + bypass variants generation to
 narremgen --topic "Walking around in a small town" --default-model "xai\grok-2-latest" --model-variants-generation "ollama\phi4:14b" --variant-batch-size 40 --variant-max-tokens 2500
 `
 
-Quick connectivity check (no files generated): diagnostic dry-run with longer timeout  
+Quick connectivity check (no files generated): diagnostic dry-run with longer timeout to check which models are available
+
 `
 narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "ollama\\phi3-chat:latest" --model-advice "ollama\\phi3-chat:latest" --model-mapping "ollama\\phi3-chat:latest" --model-context "ollama\\phi3-chat:latest" --model-narrative "google\\gemini-2.0-flash"
 `
