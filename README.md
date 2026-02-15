@@ -110,17 +110,6 @@ narremgen --diagnostic-dry-run --request-timeout 90 --model-theme-analysis "olla
 ## With command lines in the terminal (use narremgen or python -m narremgen.main) <br>
 
 ```python
-# Pipeline + variants (default, not user ones)
-python -m narremgen.main \
-  --topic "Walking_in_the_city" \
-  --output-dir "./outputs" \
-  --batches 2 \
-  --per-batch 20 \
-  --output-format txt \
-  --verbose
-```
-
-```python
 # Pipeline without variants (neutral only)
 python -m narremgen.main \
   --topic "Walking_in_the_city" \
