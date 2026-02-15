@@ -168,7 +168,7 @@ llm = LLMConnect(
 
 messages = [
     {"role": "system", "content": "Answer concisely."},
-    {"role": "user", "content": "Give 3 concrete micro-advice for walking in a city, 1 sentence each."},
+    {"role": "user", "content": "Write 3 advice for walking in a city, 1 sentence each."},
 ]
 
 reply = llm.safe_chat_completion(model="gemini\\gemini-2.0-flash", messages=messages)
