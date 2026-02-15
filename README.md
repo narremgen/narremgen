@@ -64,7 +64,7 @@ To do: improve genericity, generality and robutness, add parallelism, classes re
 pip install narremgen
 ```
 
-## Ask for help and first examples in the cli
+## Ask for help and the first examples in cli
 
 ```
 narremgen --help
