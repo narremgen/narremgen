@@ -151,6 +151,24 @@ python -m narremgen.gui
 ## Custom calls with python programming
 
 ```python
+from narremgen.llmcore import LLMConnect
+
+llm = LLMConnect(
+    default_model="ollama\\phi3-chat:latest",
+    max_tokens=400,
+    request_timeout=60,
+)
+
+messages = [
+    {"role": "system", "content": "Answer concisely."},
+    {"role": "user", "content": "Give 3 concrete micro-advice for walking in a city, 1 sentence each."},
+]
+
+reply = llm.safe_chat_completion(model="gemini\\gemini-2.0-flash", messages=messages)
+print(reply)
+```
+
+```python
 import narremgen
 from narremgen import pipeline
 
