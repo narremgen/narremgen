@@ -151,7 +151,7 @@ run_pipeline(
 )
 ```
 
-## Custom calls with python programming for llmcore
+## Custom calls with python programming for llmcore (free or charged tokens from providers)
 
 | Provider | Required env variables or key file | Model example (`provider\\model`) |
 |---|---|---|
